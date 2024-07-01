@@ -1,7 +1,9 @@
 import React from "react";
 import Home from '../../assets/Home.png';
 import './Hero.css'
+import { useNavigate } from "react-router-dom";
 const Hero = () => {
+  const navigate = useNavigate()
   return (
     <div className="Hero_Body">
     <div className="flex flex-col lg:flex-row items-center justify-between bg-transparent p-6 lg:p-16">
@@ -9,7 +11,7 @@ const Hero = () => {
         <h1 className="text-3xl text-blue-950 lg:text-5xl font-bold mb-4">
           Baby Essential <br /> Fashion & Nursery
         </h1>
-        <button className="bg-pink-500 text-white py-2 px-6 rounded-full hover:bg-pink-600 transition duration-300">
+        <button onClick={()=> navigate('/shop')} className="bg-pink-500 text-white py-2 px-6 rounded-full hover:bg-pink-600 transition duration-300">
           SHOP NOW
         </button>
       </div>

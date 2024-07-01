@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
@@ -12,6 +12,9 @@ import Register from "./Pages/Register";
 import Profile from "./Pages/Profile";
 import Testimonial from "./Pages/Testimonial";
 import Cart from "./Component/Cart/Cart";
+import CartItems from "./Component/Cart/CartItems";
+import CheckOut from "./Component/Payment/CheckOut";
+import ProtectRoute from "./Context/ProfileProtect/ProtectUserData";
 
 function App() {
   return (
@@ -25,8 +28,17 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectRoute>
+              <Profile />
+            </ProtectRoute>
+          }
+        />
         <Route path="/shop/:id" element={<Cart />} />
+        <Route path="/cartitems" element={<CartItems />} />
+        <Route path="/checkout" element={<CheckOut />} />
       </Routes>
     </>
   );

@@ -5,7 +5,7 @@ export let data_Product = [
     description: "Comfortable and safe stroller for your baby",
     price: 199.99,
     image: "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-12.jpg",
-    category: "Strollers",
+    category: "Toys",
     stars: 4.8,
   },
   {
@@ -32,7 +32,7 @@ export let data_Product = [
     description: "Monitor to keep an eye on your baby",
     price: 79.99,
     image: "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-9.jpg",
-    category: "Safety",
+    category: "Protein",
     stars: 3.4,
   },
   {
@@ -41,7 +41,7 @@ export let data_Product = [
     description: "Safe and comfortable car seat for babies",
     price: 149.99,
     image: "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-8.jpg",
-    category: "Car Seats",
+    category: "Clothing",
     stars: 4.3,
   },
   {
@@ -50,7 +50,7 @@ export let data_Product = [
     description: "Spacious diaper bag with multiple compartments",
     price: 39.99,
     image: "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-7.jpg",
-    category: "Diaper Bags",
+    category: "Toys",
     stars: 4.1,
   },
   {
@@ -59,7 +59,7 @@ export let data_Product = [
     description: "Adjustable and easy-to-clean high chair for babies",
     price: 59.99,
     image: "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-6.jpg",
-    category: "High Chairs",
+    category: "Protein",
     stars: 4.4,
   },
   {
@@ -86,7 +86,7 @@ export let data_Product = [
     description: "Soft and breathable swaddle blanket for babies",
     price: 19.99,
     image: "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-3.jpg",
-    category: "Bedding",
+    category: "Clothing",
     stars: 4.0,
   },
   {
@@ -95,7 +95,7 @@ export let data_Product = [
     description: "Waterproof and easy-to-clean changing pad for babies",
     price: 14.99,
     image: "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-2.jpg",
-    category: "Changing",
+    category: "Clothing",
     stars: 4.3,
   },
   {
@@ -104,7 +104,7 @@ export let data_Product = [
     description: "Colorful and engaging mobile for baby cribs",
     price: 24.99,
     image: "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-1.jpg",
-    category: "Nursery",
+    category: "Toys",
     stars: 4.5,
   },
 ];
