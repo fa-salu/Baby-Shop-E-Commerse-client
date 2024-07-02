@@ -1,12 +1,16 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../../Context/CartItem/ShopContext";
+import { useNavigate } from "react-router-dom";
 
 const CheckOut = () => {
-  const { cartItems } = useContext(ShopContext);
+  const { cartItems, clearCart } = useContext(ShopContext);
+  const navigate = useNavigate()
 
   const handleOrder = () => {
-    alert('You Orderd')
-  }
+    clearCart();
+    alert('You Ordered');
+    navigate('/');
+  };
 
   return (
     <div className="p-4 lg:p-6">

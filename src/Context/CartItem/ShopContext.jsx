@@ -1,79 +1,4 @@
-// import React, { createContext, useState } from "react";
-// import { data_Product } from "../../assets/data";
-
-// export const ShopContext = createContext();
-
-// const getItemCart = () => {
-//   let cart = {};
-//   for (let i = 1; i <= data_Product.length; i++) {
-//     cart[i] = 0;
-//   }
-//   return cart;
-// };
-// export const ShopContextProvider = (props) => {
-//   const [cart, setCart] = useState(getItemCart());
-//   const [total, setTotal] = useState(0);
-//   const [search, setSearch] = useState("");
-//   const [login, setLogin] = useState(false);
-//   console.log("login: ", login);
-//   console.log('cart: ', cart);
-
-//   console.log(search);
-//   console.log("total: ", total);
-
-//   const addToCart = (itemId) => {
-//     setCart((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-//   };
-//   const removeToCart = (itemId) => {
-//     if (cart[itemId] > 0) {
-//       setCart((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
-//     }
-//   };
-//   const deleteItem = (itemId) => {
-//     if (cart[itemId] > 0) {
-//       setCart((prev) => ({ ...prev, [itemId]: 0 }));
-//     }
-//   };
-
-//   const handleAddToCart = () => {
-//     setTotal(Object.values(cart).filter((itemId)=> itemId > 0).length)
-//   };
-
-//   const cartItems = Object.keys(cart)
-//     .filter((id) => cart[id] > 0)
-//     .map((id) => {
-//       const product = data_Product.find((prod) => prod.id === parseInt(id));
-//       return { ...product, quantity: cart[id] };
-//     });
-
-//   const filteredProducts = data_Product.filter((product) =>
-//     product.name.toLowerCase().includes(search.toLowerCase())
-//   );
-
-//   return (
-//     <ShopContext.Provider
-//       value={{
-//         cart,
-//         total,
-//         cartItems,
-//         filteredProducts,
-//         search,
-//         login,
-//         setLogin,
-//         setSearch,
-//         addToCart,
-//         removeToCart,
-//         handleAddToCart,
-//         deleteItem,
-//       }}
-//     >
-//       {props.children}
-//     </ShopContext.Provider>
-//   );
-// };
-
-
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { data_Product } from "../../assets/data";
 
 export const ShopContext = createContext();
@@ -89,7 +14,36 @@ const getItemCart = () => {
 export const ShopContextProvider = (props) => {
   const [cart, setCart] = useState(getItemCart());
   const [search, setSearch] = useState("");
-  const [login, setLogin] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (storedUser) {
+      setCurrentUser(storedUser);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      const storedCart = localStorage.getItem(`cart_${currentUser.username}`);
+      if (storedCart) {
+        setCart(JSON.parse(storedCart));
+      } else {
+        setCart(getItemCart());
+      }
+    } else {
+      setCart(getItemCart());
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem(
+        `cart_${currentUser.username}`,
+        JSON.stringify(cart)
+      );
+    }
+  }, [cart, currentUser]);
 
   const addToCart = (itemId) => {
     setCart((prevCart) => ({
@@ -114,8 +68,11 @@ export const ShopContextProvider = (props) => {
     }));
   };
 
-  const handleAddToCart = (itemId) => {
-    addToCart(itemId);
+  const clearCart = () => {
+    setCart(getItemCart());
+    if (currentUser) {
+      localStorage.removeItem(`cart_${currentUser.username}`);
+    }
   };
 
   const cartItems = Object.keys(cart)
@@ -129,6 +86,11 @@ export const ShopContextProvider = (props) => {
     product.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  const logout = () => {
+    setCurrentUser(null);
+    setCart(getItemCart());
+  };
+
   return (
     <ShopContext.Provider
       value={{
@@ -136,13 +98,14 @@ export const ShopContextProvider = (props) => {
         cartItems,
         filteredProducts,
         search,
-        login,
-        setLogin,
         setSearch,
         addToCart,
         removeToCart,
-        handleAddToCart,
         deleteItem,
+        setCurrentUser,
+        currentUser,
+        logout,
+        clearCart,
       }}
     >
       {props.children}
