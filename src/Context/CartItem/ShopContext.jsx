@@ -15,6 +15,8 @@ export const ShopContextProvider = (props) => {
   const [cart, setCart] = useState(getItemCart());
   const [search, setSearch] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
+  const [product, setProduct] = useState(null)
+  // console.log('Product: ',product);
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("currentUser"));
@@ -106,6 +108,7 @@ export const ShopContextProvider = (props) => {
         currentUser,
         logout,
         clearCart,
+        setProduct
       }}
     >
       {props.children}

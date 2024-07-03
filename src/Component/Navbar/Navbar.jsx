@@ -5,6 +5,7 @@ import {
   FaUser,
   FaBars,
   FaTimes,
+  FaUserCog
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { ShopContext } from "../../Context/CartItem/ShopContext";
@@ -97,6 +98,15 @@ const Navbar = () => {
           >
             {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
+          <FaUserCog
+            size={20}
+            className="hover:text-pink-500 cursor-pointer"
+            onClick={() => {
+              // Navigate to admin page or perform admin actions
+              // navigate("/admin")
+              // console.log("Admin icon clicked");
+            }}
+          />
         </div>
       </nav>
 

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
@@ -15,11 +15,13 @@ import Cart from "./Component/Cart/Cart";
 import CartItems from "./Component/Cart/CartItems";
 import CheckOut from "./Component/Payment/CheckOut";
 import ProtectRoute from "./Context/ProfileProtect/ProtectUserData";
+import Api from "./utils/Api";
 
 function App() {
   return (
     <>
       <Navbar />
+      <Api />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />

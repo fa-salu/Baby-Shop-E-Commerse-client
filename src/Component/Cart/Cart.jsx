@@ -17,9 +17,9 @@ const Cart = () => {
     const login = localStorage.getItem("isLogged");
     if (login) {
       addToCart(id);
-      // handleAddToCart();
     } else {
       alert("Please Login");
+      navigate("/login");
     }
   };
 
