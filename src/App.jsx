@@ -1,7 +1,5 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-
-import "./App.css";
 import Navbar from "./Component/Navbar/Navbar";
 import Shop from "./Pages/Shop";
 import About from "./Pages/About";
@@ -15,13 +13,19 @@ import Cart from "./Component/Cart/Cart";
 import CartItems from "./Component/Cart/CartItems";
 import CheckOut from "./Component/Payment/CheckOut";
 import ProtectRoute from "./Context/ProfileProtect/ProtectUserData";
-import Api from "./utils/Api";
+import AdminHome from "./Admin/Pages/AdminHome/AdminHome";
+import Dashboard from "./Admin/Pages/Dashboard";
+import Categories from "./Admin/Pages/Categories";
+import Products from "./Admin/Pages/Products";
+import Orders from "./Admin/Pages/Orders";
+import Customers from "./Admin/Pages/Customers";
+import ProtectAdmin from "./Admin/Pages/AdminHome/HomeProtect";
 
-function App() {
+const App = () => {
   return (
     <>
       <Navbar />
-      <Api />
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop />} />
@@ -30,6 +34,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
         <Route
           path="/profile"
           element={
@@ -38,12 +43,73 @@ function App() {
             </ProtectRoute>
           }
         />
+
         <Route path="/shop/:id" element={<Cart />} />
         <Route path="/cartitems" element={<CartItems />} />
         <Route path="/checkout" element={<CheckOut />} />
+
+        {/* Admin routes */}
+        <Route
+          path="/adminhome"
+          element={
+            <ProtectAdmin>
+              <AdminHome />
+            </ProtectAdmin>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectAdmin>
+              <AdminHome>
+                <Dashboard />
+              </AdminHome>
+            </ProtectAdmin>
+          }
+        />
+        <Route
+          path="/categories"
+          element={
+            <ProtectAdmin>
+              <AdminHome>
+                <Categories />
+              </AdminHome>
+            </ProtectAdmin>
+          }
+        />
+        <Route
+          path="/products"
+          element={
+            <ProtectAdmin>
+              <AdminHome>
+                <Products />
+              </AdminHome>
+            </ProtectAdmin>
+          }
+        />
+        <Route
+          path="/customers"
+          element={
+            <ProtectAdmin>
+              <AdminHome>
+                <Customers />
+              </AdminHome>
+            </ProtectAdmin>
+          }
+        />
+        <Route
+          path="/orders"
+          element={
+            <ProtectAdmin>
+              <AdminHome>
+                <Orders />
+              </AdminHome>
+            </ProtectAdmin>
+          }
+        />
       </Routes>
     </>
   );
-}
+};
 
 export default App;

@@ -1,4 +1,18 @@
 {
+  "user": [
+    {
+      "id": 1,
+      "username": "fasalu",
+      "email": "fasalu@gmail.com",
+      "password": "11111"
+    },
+    {
+      "id": 2,
+      "username": "Jhon",
+      "email": "jhon@gmail.com",
+      "password": "22222"
+    }
+  ],
   "db": [
     {
       "id": 1,

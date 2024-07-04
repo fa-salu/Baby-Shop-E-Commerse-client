@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/CartItem/ShopContext";
+import { AdminData } from "../Admin/AdminData/AdminData";
 
 const Login = () => {
   const [input, setInput] = useState({ email: "", password: "" });
@@ -21,8 +22,22 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const storedUsers = JSON.parse(localStorage.getItem("users"));
 
+    // if admin
+    const admin = AdminData.find(
+      (admin) => (admin.email === input.email || admin.username === input.email) &&
+      admin.password === input.password
+    );
+    if (admin) {
+      localStorage.setItem("isAdmin", JSON.stringify(true));
+      localStorage.setItem("admin", JSON.stringify(admin));
+      // localStorage.setItem("currentUser", JSON.stringify(admin));
+      setCurrentUser(admin);
+      navigate("/adminhome");
+      return;
+    }
+
+    const storedUsers = JSON.parse(localStorage.getItem("users"));
     if (storedUsers) {
       const user = storedUsers.find(
         (user) =>
@@ -33,9 +48,8 @@ const Login = () => {
       if (user) {
         setError("");
         localStorage.setItem("currentUser", JSON.stringify(user));
-        localStorage.setItem("isLogged", true);
+        localStorage.setItem("isLogged", "true");
         setCurrentUser(user);
-        // console.log('usr:', user);
         navigate("/profile");
       } else {
         setError("Invalid credentials");

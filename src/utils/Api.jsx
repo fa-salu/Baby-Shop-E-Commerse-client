@@ -1,23 +1,33 @@
-import React, { useContext, useEffect } from "react";
-import { ShopContext } from "../Context/CartItem/ShopContext";
+import { useState, useEffect } from 'react';
 
-const Api = () => {
-  const { setProduct } = useContext(ShopContext);
+const useFetch = (url) => {
+    const [data, setData] = useState(null);
+    const [isPending, setIsPending] = useState(true);
+    const [error, setError] = useState(null);
+    console.log(data);
 
-  useEffect(() => {
-    const fetchApi = async () => {
-      try {
-        const res = await fetch("http://localhost:8000/db");
-        const data = await res.json();
-        setProduct(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchApi();
-  }, [setProduct]);
+    useEffect(() => {
+        setTimeout(() => {
+            fetch(url)
+                .then(res => {
+                    if (!res.ok) {
+                        throw Error('Error fetching data');
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    setData(data);
+                    setIsPending(false);
+                    setError(null);
+                })
+                .catch(err => {
+                    setIsPending(false);
+                    setError(err.message);
+                });
+        }, 1000);
+    }, [url]);
 
-  return <div></div>;
-};
+    return { data, isPending, error };
+}
 
-export default Api;
+export default useFetch;
