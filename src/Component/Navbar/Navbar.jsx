@@ -5,11 +5,12 @@ import {
   FaUser,
   FaBars,
   FaTimes,
-  FaUserCog
+  // FaUserCog
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { ShopContext } from "../../Context/CartItem/ShopContext";
 import SlideBar from "../CartSlidBar/SlideBar";
+import AdminNavbar from "../../Admin/Component/AdminNavbar";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,6 +19,8 @@ const Navbar = () => {
   const { cart, search, setSearch, filteredProducts } = useContext(ShopContext);
   const isLogged = localStorage.getItem("isLogged");
   const login = isLogged === "true";
+  const isAdmin = localStorage.getItem("isAdmin");
+  const admin = isAdmin === "true"
 
   const handleClick = () => {
     navigate(login ? "/profile" : "/login");
@@ -39,7 +42,9 @@ const Navbar = () => {
   }, 0);
 
   return (
-    <div className="w-full bg-green-50 text-gray-800 sticky top-0 z-10">
+    <>
+    {!admin && (
+      <div className="w-full bg-green-50 text-gray-800 sticky top-0 z-10">
       <nav className="container mx-auto flex items-center justify-between py-4 px-4 lg:px-0">
         <div className="text-2xl font-bold ml-5">
           Little<span className="text-pink-500">Love</span>
@@ -98,15 +103,15 @@ const Navbar = () => {
           >
             {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
-          <FaUserCog
+          {/* <FaUserCog
             size={20}
             className="hover:text-pink-500 cursor-pointer"
             onClick={() => {
               // Navigate to admin page or perform admin actions
-              // navigate("/admin")
+              navigate("/adminlogin")
               // console.log("Admin icon clicked");
             }}
-          />
+          /> */}
         </div>
       </nav>
 
@@ -172,6 +177,8 @@ const Navbar = () => {
 
       <SlideBar isCartOpen={isCartOpen} toggleCart={toggleCart} />
     </div>
+    )}
+  </>
   );
 };
 
