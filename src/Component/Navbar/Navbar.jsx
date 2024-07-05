@@ -5,12 +5,10 @@ import {
   FaUser,
   FaBars,
   FaTimes,
-  // FaUserCog
 } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { ShopContext } from "../../Context/CartItem/ShopContext";
 import SlideBar from "../CartSlidBar/SlideBar";
-import AdminNavbar from "../../Admin/Component/AdminNavbar";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
