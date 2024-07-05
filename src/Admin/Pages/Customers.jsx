@@ -1,5 +1,6 @@
 import React from 'react';
 import useFetch from '../../utils/Api';
+import { Link, useParams } from 'react-router-dom'; // Import useParams
 
 const Customers = () => {
   const { data, isPending, error } = useFetch('http://localhost:8000/user');
@@ -16,6 +17,9 @@ const Customers = () => {
             <div key={item.id} className="border p-4 rounded shadow-lg">
               <h2 className="text-xl font-bold">User: {item.username}</h2>
               <p className="text-gray-600">Email: {item.email}</p>
+              <Link to={`/customers/${item.id}`} className="text-blue-500 hover:underline">
+                View Details
+              </Link>
             </div>
           ))}
         </div>

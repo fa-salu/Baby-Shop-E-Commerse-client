@@ -14,7 +14,7 @@ const Categories = () => {
 
   return (
     <div className="container align-middle p-4 h-[100vh] overflow-auto">
-      <h1 className="text-3xl font-bold text-center mt-20 mb-8">Product List</h1>
+      <h1 className="text-3xl font-bold text-center mb-8">Product List</h1>
 
       <div className="flex justify-center mb-8">
         {categories.map((category) => (

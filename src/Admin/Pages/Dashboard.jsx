@@ -1,18 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import useFetch from '../../utils/Api';
 
 const Dashboard = () => {
-  return (
-    <div>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestiae, dicta qui! Consectetur possimus aut excepturi cum, eos eius ad minima officiis quasi quae, obcaecati beatae, recusandae culpa! Provident, quas excepturi.
-   olore sunt, delectus iste ipsam est pariatur itaque magnam quas.
-      Officiis inventore at dolor fugiat in quos vitae magnam. Saepe quos placeat adipisci ipsa aliquid, incidunt officia quisquam illum ad aperiam minima labore deleniti molestiae neque natus impedit qui nam.
-      Vitae nisi inventoresse quasi similique repellat inventore deserunt. Nulla, unde. Temporibus, nisi adipisci. Fuga magnam suscipit, minima est fugit soluta adipisci ullam, ipsam exercitationem deleniti, hic ratione perferendis.
-      Placeat, ullam quos neque unde omnis eligendi sapiente soluta ipsa accusantium veritatis, nesciunt perspiciatis nobis corporis cum illo dolores quibusdam. Quisquam porro doloribus magnam accusamus veniam cum! Dolore, repellat atque!
-      Sapiente eos veniam iste impedit, corporis voluptatum sed ipsa, quidem corrupti delectus illo quisquam? Obcaecati officiis nobis culpa eveniet et voluptatibus laboriosam quaerat molestias ipsa recusandae, earum, eius veritatis cupiditate.
-      Molestias quos anisi dolorem aperiam maiores ut non rem numquam vitae error, aliquam quibusdam debitis sint eum? Rerum laborum ratione esse ducimus dolorem. Velit hic omnis esse repudiandae accusantium architecto cum.
-      Nesciunt vitae ad ex cupiditate ipsum odio, alias labore laudantium perspiciatis incidunt natus, totam dolor. Perspiciatis ratione quidem in, nam quam accusantium. Fugit quasi quis, dolores molestias facilis soluta voluptatem.
-    </div>
-  )
-}
+  const { data: userData, isPending: userPending, error: userError } = useFetch('http://localhost:8000/user');
+  const { data: dbData, isPending: dbPending, error: dbError } = useFetch('http://localhost:8000/db');
+  
+  const [numCategories, setNumCategories] = useState(0);
+  const [numUsers, setNumUsers] = useState(0);
+  const [numItems, setNumItems] = useState(0);
 
-export default Dashboard
+  useEffect(() => {
+    if (dbData) {
+      setNumCategories(dbData.length);
+      setNumItems(dbData.length);
+    }
+  }, [dbData]);
+
+  useEffect(() => {
+    if (userData) {
+      setNumUsers(userData.length);
+    }
+  }, [userData]);
+
+  if (userPending || dbPending) return <div>Loading...</div>;
+  if (userError || dbError) return <div>Error: {userError || dbError}</div>;
+
+  return (
+    <div className="container mx-auto p-6">
+      <h1 className="text-3xl font-bold text-center mb-8">Dashboard</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-xl font-bold mb-4">Number of Categories</h2>
+          <p className="text-3xl font-bold text-gray-800">{numCategories}</p>
+        </div>
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-xl font-bold mb-4">Number of Users</h2>
+          <p className="text-3xl font-bold text-gray-800">{numUsers}</p>
+        </div>
+        <div className="bg-white rounded-lg shadow-md p-6">
+          <h2 className="text-xl font-bold mb-4">Number of Items</h2>
+          <p className="text-3xl font-bold text-gray-800">{numItems}</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Dashboard;

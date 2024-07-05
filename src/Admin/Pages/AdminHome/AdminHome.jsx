@@ -7,7 +7,7 @@ const AdminHome = ({children}) => {
     <div>
       <Navbar />
       <Sidebar />
-      <div className="absolute top-0  ml-12">
+      <div className="absolute top-0  ml-16 mt-16">
           {children}
         </div>
     </div>
