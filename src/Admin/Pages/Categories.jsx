@@ -47,11 +47,7 @@ const Categories = () => {
               <p className="text-gray-600">{item.description}</p>
               <p className="text-lg font-semibold">${item.price}</p>
               <p className="text-gray-500">Category: {item.category}</p>
-              {/* <p className="text-yellow-500">Rating: {item.stars} stars</p> */}
-              <div className='flex justify-between mb-4'>
-                <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Delete</button>
-                <button className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Edit</button>
-              </div>
+              <p className="text-yellow-500">Rating: {item.stars} stars</p>
             </div>
           ))}
         </div>
@@ -61,3 +57,4 @@ const Categories = () => {
 };
 
 export default Categories;
+;

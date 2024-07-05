@@ -1,18 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { ShopContext } from "../../Context/CartItem/ShopContext";
 import { FaTimes } from "react-icons/fa";
-import { data_Product } from "../../assets/data";
 import { useNavigate } from "react-router-dom";
+import useFetch from "../../utils/Api";
 
 const SlideBar = ({ isCartOpen, toggleCart }) => {
-  const { cart, addToCart, removeToCart, deleteItem, uniqueItemsCount } =
+  const { cart, addToCart, removeToCart, deleteItem } =
     useContext(ShopContext);
   const navigate = useNavigate();
+  const { data: apiData, isPending, error } = useFetch('http://localhost:8000/db');
+
+  useEffect(() => {
+    // Optionally handle errors or loading state
+    if (error) {
+      console.error('Error fetching data:', error);
+    }
+  }, [error]);
 
   const cartItems = Object.keys(cart)
     .filter((id) => cart[id] > 0)
     .map((id) => {
-      const product = data_Product.find((prod) => prod.id === parseInt(id));
+      const product = apiData.find((prod) => prod.id == parseInt(id));
       return { ...product, quantity: cart[id] };
     });
 
@@ -46,6 +54,8 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
           <hr className="border-gray-300 my-4" />
         </div>
         <div className="flex-1 overflow-y-auto px-6">
+          {isPending && <div>Loading...</div>}
+          {error && <div>Error: {error}</div>}
           {cartItems.length === 0 ? (
             <p>Your cart is empty</p>
           ) : (

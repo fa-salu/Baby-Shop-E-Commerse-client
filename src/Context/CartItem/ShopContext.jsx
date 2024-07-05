@@ -1,18 +1,11 @@
 import React, { createContext, useState, useEffect } from "react";
-import { data_Product } from "../../assets/data";
+import useFetch from "../../utils/Api";  
 
 export const ShopContext = createContext();
 
-const getItemCart = () => {
-  let cart = {};
-  for (let i = 1; i <= data_Product.length; i++) {
-    cart[i] = 0;
-  }
-  return cart;
-};
-
 export const ShopContextProvider = (props) => {
-  const [cart, setCart] = useState(getItemCart());
+  const { data: products, isPending, error } = useFetch('http://localhost:8000/db');
+  const [cart, setCart] = useState({});
   const [search, setSearch] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
 
@@ -29,10 +22,10 @@ export const ShopContextProvider = (props) => {
       if (storedCart) {
         setCart(JSON.parse(storedCart));
       } else {
-        setCart(getItemCart());
+        setCart({});
       }
     } else {
-      setCart(getItemCart());
+      setCart({});
     }
   }, [currentUser]);
 
@@ -48,7 +41,7 @@ export const ShopContextProvider = (props) => {
   const addToCart = (itemId) => {
     setCart((prevCart) => ({
       ...prevCart,
-      [itemId]: prevCart[itemId] + 1,
+      [itemId]: (prevCart[itemId] || 0) + 1,
     }));
   };
 
@@ -69,7 +62,7 @@ export const ShopContextProvider = (props) => {
   };
 
   const clearCart = () => {
-    setCart(getItemCart());
+    setCart({});
     if (currentUser) {
       localStorage.removeItem(`cart_${currentUser.username}`);
     }
@@ -78,17 +71,21 @@ export const ShopContextProvider = (props) => {
   const cartItems = Object.keys(cart)
     .filter((id) => cart[id] > 0)
     .map((id) => {
-      const product = data_Product.find((prod) => prod.id === parseInt(id));
+      const product = products.find((prod) => prod.id == parseInt(id));
       return { ...product, quantity: cart[id] };
     });
 
-  const filteredProducts = data_Product.filter((product) =>
-    product.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredProducts = products
+    ? products.filter((product) =>
+        product.name.toLowerCase().includes(search.toLowerCase())
+      )
+    : [];
 
   const logout = () => {
     setCurrentUser(null);
-    setCart(getItemCart());
+    setCart({});
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("isLogged");
   };
 
   return (
@@ -106,6 +103,8 @@ export const ShopContextProvider = (props) => {
         currentUser,
         logout,
         clearCart,
+        isPending,
+        error
       }}
     >
       {props.children}
