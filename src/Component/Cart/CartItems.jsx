@@ -5,9 +5,6 @@ import { useNavigate } from "react-router-dom";
 const CartItems = () => {
   const { cartItems } = useContext(ShopContext);
   const navigate = useNavigate();
-  // console.log('cartiems: ',cartItems);
-
- 
 
   const calculateSubtotal = () => {
     return cartItems
@@ -82,11 +79,11 @@ const CartItems = () => {
             Apply
           </button>
           <button
-             onClick={() => {
+            onClick={() => {
               if (cartItems.length > 0) {
-                navigate('/checkout');
+                navigate("/checkout");
               } else {
-                alert('Your cart is empty.');
+                alert("Your cart is empty.");
               }
             }}
             className="w-full py-2 bg-green-600 text-white rounded-md"

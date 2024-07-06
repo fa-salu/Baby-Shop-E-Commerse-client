@@ -5,7 +5,6 @@ import {
   FaBox,
   FaTags,
   FaUsers,
-  FaShoppingCart,
 } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -64,15 +63,6 @@ const Sidebar = () => {
             <FaUsers className="mr-3" />
             {isOpen && <span>Customers</span>}
           </div>
-          <div
-            href="#"
-            className={`flex items-center py-2 px-4 text-white hover:bg-gray-700 rounded ${
-              isOpen ? "justify-start" : "justify-center"
-            }`}
-          >
-            <FaShoppingCart className="mr-3" />
-            {isOpen && <span>Orders</span>}
-          </div>
         </div>
       </div>
 
@@ -80,9 +70,7 @@ const Sidebar = () => {
         className={`flex-1 ml-${
           isOpen ? "64" : "16"
         } transition-all duration-300 ease-in-out`}
-      >
-        {/* other content add space */}
-      </div>
+      ></div>
     </div>
   );
 };

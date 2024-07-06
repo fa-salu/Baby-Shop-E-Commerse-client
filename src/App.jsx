@@ -1,4 +1,5 @@
 import React from "react";
+import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./Component/Navbar/Navbar";
 import Shop from "./Pages/Shop";
@@ -17,9 +18,9 @@ import AdminHome from "./Admin/Pages/AdminHome/AdminHome";
 import Dashboard from "./Admin/Pages/Dashboard";
 import Categories from "./Admin/Pages/Categories";
 import Products from "./Admin/Pages/Products";
-import Orders from "./Admin/Pages/Orders";
 import Customers from "./Admin/Pages/Customers";
 import ProtectAdmin from "./Admin/Pages/AdminHome/HomeProtect";
+import UserDetails from "./Admin/Pages/CustomerDetials";
 
 const App = () => {
   return (
@@ -98,11 +99,11 @@ const App = () => {
           }
         />
         <Route
-          path="/orders"
+          path="/customers/:id"
           element={
             <ProtectAdmin>
               <AdminHome>
-                <Orders />
+                <UserDetails />
               </AdminHome>
             </ProtectAdmin>
           }

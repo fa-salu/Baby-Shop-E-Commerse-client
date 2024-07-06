@@ -1,18 +1,18 @@
 {
   "user": [
     {
-      "id": "35aa",
+      "id": "f2c3",
       "username": "fa",
       "email": "fa@gmail.com",
       "password": "11111",
       "confirm_password": "11111"
     },
     {
-      "id": "e283",
-      "username": "sa",
-      "email": "sa@gnail.com",
-      "password": "33333",
-      "confirm_password": "33333"
+      "id": "ffb8",
+      "username": "da",
+      "email": "da@gmail.com",
+      "password": "22222",
+      "confirm_password": "22222"
     }
   ],
   "db": [
@@ -125,19 +125,10 @@
       "stars": 4.5
     },
     {
-      "id": "1720172905947",
-      "name": "sdfs",
-      "description": "sdfsd",
-      "price": 34,
-      "image": "dfsdf",
-      "category": "Bath",
-      "stars": 1
-    },
-    {
       "id": "1720172967419",
       "name": "hello",
       "description": "hai",
-      "price": 100,
+      "price": 110,
       "image": "https://staranddaisy.in/wp-content/uploads/2023/04/bath-tub-12dec23415-16.jpg",
       "category": "Toys",
       "stars": 4
