@@ -9,6 +9,7 @@ const Dashboard = () => {
   const [numUsers, setNumUsers] = useState(0);
   const [numItems, setNumItems] = useState(0);
 
+
   useEffect(() => {
     if (dbData) {
       setNumCategories(dbData.length);

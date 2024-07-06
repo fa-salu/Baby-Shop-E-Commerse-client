@@ -1,24 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import useFetch from '../../utils/Api';
-import { useNavigate, useParams } from 'react-router-dom';
+import useFetch from "../../utils/Api";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UserDetails = () => {
   const { id } = useParams();
-  const { data: user, isPending, error } = useFetch(`http://localhost:8000/user/${id}`);
-  const navigate = useNavigate()
+  const {
+    data: user,
+    isPending,
+    error,
+  } = useFetch(`http://localhost:8000/user/${id}`);
+  const navigate = useNavigate();
 
   const handleDeleteUser = async () => {
     try {
       const response = await fetch(`http://localhost:8000/user/${id}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
       if (!response.ok) {
-        throw new Error('Failed to delete user');
+        throw new Error("Failed to delete user");
       }
     } catch (error) {
-      console.error('Error deleting user:', error.message);
+      console.error("Error deleting user:", error.message);
     }
-    navigate('/customers')
+    navigate("/customers");
   };
 
   if (isPending) return <div className="p-4">Loading...</div>;
@@ -35,9 +38,9 @@ const UserDetails = () => {
         </div>
         <div>
           <h2 className="text-xl font-bold mb-2">Order List</h2>
-          <div className="mb-2">Item: {user.order && user.order.items}</div>
-          <div className="mb-2">Item: {user.order && user.order.items}</div>
-          <div className="mb-2">Item: {user.order && user.order.items}</div>
+          <div className="mb-2">Item: </div>
+          <div className="mb-2">Item: </div>
+          <div className="mb-2">Item: </div>
         </div>
         <button
           onClick={handleDeleteUser}

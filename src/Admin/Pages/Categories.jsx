@@ -1,16 +1,16 @@
-
-import React, { useState } from 'react';
-import useFetch from '../../utils/Api';
+import React, { useState } from "react";
+import useFetch from "../../utils/Api";
 
 const Categories = () => {
-  const { data, isPending, error } = useFetch('http://localhost:8000/db');
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const { data, isPending, error } = useFetch("http://localhost:8000/db");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const categories = ['All', 'Toys', 'Clothing', 'Feeding', 'Protein', 'Bath'];
+  const categories = ["All", "Toys", "Clothing", "Feeding", "Protein", "Bath"];
 
-  const filteredData = selectedCategory === 'All'
-    ? data
-    : data.filter(item => item.category === selectedCategory);
+  const filteredData =
+    selectedCategory === "All"
+      ? data
+      : data.filter((item) => item.category === selectedCategory);
 
   return (
     <div className="container align-middle p-4 h-[100vh] overflow-auto">
@@ -22,8 +22,8 @@ const Categories = () => {
             key={category}
             className={`px-4 py-2 mx-2 text-sm font-medium border rounded-md ${
               selectedCategory === category
-                ? 'bg-blue-600 text-white'
-                : 'bg-white text-blue-600 border-blue-600'
+                ? "bg-blue-600 text-white"
+                : "bg-white text-blue-600 border-blue-600"
             }`}
             onClick={() => setSelectedCategory(category)}
           >
@@ -38,10 +38,10 @@ const Categories = () => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filteredData.map((item) => (
             <div key={item.id} className="border p-4 rounded shadow-lg">
-              <img 
-                src={item.image} 
-                alt={item.name} 
-                className="w-full h-28 object-cover mb-4 rounded" 
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-28 object-cover mb-4 rounded"
               />
               <h2 className="text-xl font-bold">{item.name}</h2>
               <p className="text-gray-600">{item.description}</p>
@@ -57,4 +57,3 @@ const Categories = () => {
 };
 
 export default Categories;
-;

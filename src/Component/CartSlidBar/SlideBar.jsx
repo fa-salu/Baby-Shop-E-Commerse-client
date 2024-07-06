@@ -5,15 +5,17 @@ import { useNavigate } from "react-router-dom";
 import useFetch from "../../utils/Api";
 
 const SlideBar = ({ isCartOpen, toggleCart }) => {
-  const { cart, addToCart, removeToCart, deleteItem } =
-    useContext(ShopContext);
+  const { cart, addToCart, removeToCart, deleteItem } = useContext(ShopContext);
   const navigate = useNavigate();
-  const { data: apiData, isPending, error } = useFetch('http://localhost:8000/db');
+  const {
+    data: apiData,
+    isPending,
+    error,
+  } = useFetch("http://localhost:8000/db");
 
   useEffect(() => {
-    // Optionally handle errors or loading state
     if (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   }, [error]);
 
