@@ -1,18 +1,12 @@
 {
   "user": [
     {
-      "id": "ffb8",
-      "username": "da",
-      "email": "da@gmail.com",
-      "password": "22222",
-      "confirm_password": "22222"
-    },
-    {
-      "id": "f3e6",
+      "id": "988b",
       "username": "fa",
       "email": "fa@gmail.com",
       "password": "11111",
-      "confirm_password": "11111"
+      "confirm_password": "11111",
+      "cart": {}
     }
   ],
   "db": [
@@ -20,7 +14,7 @@
       "id": "1",
       "name": "Extra Soft Touch Lamb Doll",
       "description": "Comfortable and safe stroller for your baby",
-      "price": 56.99,
+      "price": 100.99,
       "image": "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-12.jpg",
       "category": "Toys",
       "stars": 4.8
@@ -123,15 +117,6 @@
       "image": "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-1.jpg",
       "category": "Toys",
       "stars": 4.5
-    },
-    {
-      "id": "1720409772778",
-      "name": "Bath Tub",
-      "description": " Baby Bath Tub",
-      "price": 233,
-      "image": "https://staranddaisy.in/wp-content/uploads/2023/04/bath-tub-12dec23415-16.jpg",
-      "category": "Bath",
-      "stars": 4
     }
   ]
 }
