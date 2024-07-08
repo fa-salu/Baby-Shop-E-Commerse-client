@@ -1,5 +1,3 @@
-
-
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -46,10 +44,10 @@ const Register = () => {
 
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await fetch('http://localhost:8000/user', {
-          method: 'POST',
+        const response = await fetch("http://localhost:8000/user", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(input),
         });
@@ -57,10 +55,10 @@ const Register = () => {
         if (response.ok) {
           navigate("/login");
         } else {
-          console.error('Failed to register user');
+          console.error("Failed to register user");
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error("Error:", error);
       }
     }
   };

@@ -1,18 +1,18 @@
 {
   "user": [
     {
-      "id": "f2c3",
-      "username": "fa",
-      "email": "fa@gmail.com",
-      "password": "11111",
-      "confirm_password": "11111"
-    },
-    {
       "id": "ffb8",
       "username": "da",
       "email": "da@gmail.com",
       "password": "22222",
       "confirm_password": "22222"
+    },
+    {
+      "id": "59f0",
+      "username": "fa",
+      "email": "fa@gmail.com",
+      "password": "11111",
+      "confirm_password": "11111"
     }
   ],
   "db": [
@@ -92,7 +92,7 @@
       "id": "9",
       "name": "ZooMate 3 Animal Set Toys",
       "description": "Comfortable and secure bath tub for babies",
-      "price": 29.99,
+      "price": 39.99,
       "image": "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-4.jpg",
       "category": "Bath",
       "stars": 4.2
@@ -128,7 +128,7 @@
       "id": "1720172967419",
       "name": "hello",
       "description": "hai",
-      "price": 110,
+      "price": 143,
       "image": "https://staranddaisy.in/wp-content/uploads/2023/04/bath-tub-12dec23415-16.jpg",
       "category": "Toys",
       "stars": 4

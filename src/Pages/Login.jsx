@@ -33,7 +33,7 @@ const Login = () => {
       localStorage.setItem("isAdmin", JSON.stringify(true));
       localStorage.setItem("admin", JSON.stringify(admin));
       setCurrentUser(admin);
-      navigate("/adminhome");
+      navigate("/dashboard");
       return;
     }
 

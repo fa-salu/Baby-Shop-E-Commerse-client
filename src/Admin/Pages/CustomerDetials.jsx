@@ -38,9 +38,9 @@ const UserDetails = () => {
         </div>
         <div>
           <h2 className="text-xl font-bold mb-2">Order List</h2>
-          <div className="mb-2">Item: </div>
-          <div className="mb-2">Item: </div>
-          <div className="mb-2">Item: </div>
+          <div className="mb-2">Item Name: Baby Suit</div>
+          <div className="mb-2">Color: Black </div>
+          <div className="mb-2">Price: $ 1200 </div>
         </div>
         <button
           onClick={handleDeleteUser}
