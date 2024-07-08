@@ -34,7 +34,7 @@ export const ShopContextProvider = (props) => {
       localStorage.setItem(
         `cart_${currentUser.username}`,
         JSON.stringify(cart)
-      );
+      );  
     }
   }, [cart, currentUser]);
 
