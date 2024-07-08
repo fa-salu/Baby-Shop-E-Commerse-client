@@ -8,7 +8,7 @@
       "confirm_password": "22222"
     },
     {
-      "id": "59f0",
+      "id": "f3e6",
       "username": "fa",
       "email": "fa@gmail.com",
       "password": "11111",
@@ -36,10 +36,10 @@
     },
     {
       "id": "3",
-      "name": "Colorful Birdies on Orange Bandana",
-      "description": "Set of feeding bottles for babies",
+      "name": "Baby Feeding Spoon",
+      "description": "Babies Bloom Pink Silicone Baby Feeding Spoon",
       "price": 15.99,
-      "image": "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-10.jpg",
+      "image": "https://babiesbloomstore.com/wp-content/uploads/2019/06/BBS-N17-FBP.jpg",
       "category": "Feeding",
       "stars": 3.2
     },
@@ -125,12 +125,12 @@
       "stars": 4.5
     },
     {
-      "id": "1720172967419",
-      "name": "hello",
-      "description": "hai",
-      "price": 143,
+      "id": "1720409772778",
+      "name": "Bath Tub",
+      "description": " Baby Bath Tub",
+      "price": 233,
       "image": "https://staranddaisy.in/wp-content/uploads/2023/04/bath-tub-12dec23415-16.jpg",
-      "category": "Toys",
+      "category": "Bath",
       "stars": 4
     }
   ]

@@ -26,7 +26,7 @@ const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
     try {
       const updatedProduct = {
         ...product,
-        id: editProduct ? editProduct.id : Date.now(),
+        id: editProduct ? editProduct.id : Date.now().toString(),
         price: parseFloat(product.price),
         stars: parseFloat(product.stars),
       };
