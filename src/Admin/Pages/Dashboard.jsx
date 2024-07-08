@@ -12,7 +12,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (dbData) {
-      setNumCategories(dbData.length);
+      setNumCategories(5);
       setNumItems(dbData.length);
     }
   }, [dbData]);

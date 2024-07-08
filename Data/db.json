@@ -1,18 +1,12 @@
 {
   "user": [
     {
-      "id": "ffb8",
-      "username": "da",
-      "email": "da@gmail.com",
-      "password": "22222",
-      "confirm_password": "22222"
-    },
-    {
-      "id": "59f0",
+      "id": "988b",
       "username": "fa",
       "email": "fa@gmail.com",
       "password": "11111",
-      "confirm_password": "11111"
+      "confirm_password": "11111",
+      "cart": {}
     }
   ],
   "db": [
@@ -20,7 +14,7 @@
       "id": "1",
       "name": "Extra Soft Touch Lamb Doll",
       "description": "Comfortable and safe stroller for your baby",
-      "price": 56.99,
+      "price": 100.99,
       "image": "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-12.jpg",
       "category": "Toys",
       "stars": 4.8
@@ -36,10 +30,10 @@
     },
     {
       "id": "3",
-      "name": "Colorful Birdies on Orange Bandana",
-      "description": "Set of feeding bottles for babies",
+      "name": "Baby Feeding Spoon",
+      "description": "Babies Bloom Pink Silicone Baby Feeding Spoon",
       "price": 15.99,
-      "image": "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-10.jpg",
+      "image": "https://babiesbloomstore.com/wp-content/uploads/2019/06/BBS-N17-FBP.jpg",
       "category": "Feeding",
       "stars": 3.2
     },
@@ -123,15 +117,6 @@
       "image": "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-1.jpg",
       "category": "Toys",
       "stars": 4.5
-    },
-    {
-      "id": "1720172967419",
-      "name": "hello",
-      "description": "hai",
-      "price": 143,
-      "image": "https://staranddaisy.in/wp-content/uploads/2023/04/bath-tub-12dec23415-16.jpg",
-      "category": "Toys",
-      "stars": 4
     }
   ]
 }
