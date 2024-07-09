@@ -1,10 +1,15 @@
 import React, { createContext, useState, useEffect } from "react";
-import useFetch from "../../utils/Api";  
+import useFetch from "../../utils/Api";
+import { AdminData } from "../../Admin/AdminData/AdminData";
 
 export const ShopContext = createContext();
 
 export const ShopContextProvider = (props) => {
-  const { data: products, isPending, error } = useFetch('http://localhost:8000/db');
+  const {
+    data: products,
+    isPending,
+    error,
+  } = useFetch("http://localhost:8000/db");
   const [cart, setCart] = useState({});
   const [search, setSearch] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
@@ -34,7 +39,8 @@ export const ShopContextProvider = (props) => {
       localStorage.setItem(
         `cart_${currentUser.username}`,
         JSON.stringify(cart)
-      );  
+      );
+      updateUserCart();
     }
   }, [cart, currentUser]);
 
@@ -45,7 +51,7 @@ export const ShopContextProvider = (props) => {
     }));
   };
 
-  const removeToCart = (itemId) => {
+  const removeFromCart = (itemId) => {
     if (cart[itemId] > 0) {
       setCart((prevCart) => ({
         ...prevCart,
@@ -55,10 +61,11 @@ export const ShopContextProvider = (props) => {
   };
 
   const deleteItem = (itemId) => {
-    setCart((prevCart) => ({
-      ...prevCart,
-      [itemId]: 0,
-    }));
+    setCart((prevCart) => {
+      const newCart = { ...prevCart };
+      delete newCart[itemId];
+      return newCart;
+    });
   };
 
   const clearCart = () => {
@@ -68,12 +75,15 @@ export const ShopContextProvider = (props) => {
     }
   };
 
-  const cartItems = Object.keys(cart)
-    .filter((id) => cart[id] > 0)
-    .map((id) => {
-      const product = products.find((prod) => prod.id == parseInt(id));
-      return { ...product, quantity: cart[id] };
-    });
+  const cartItems = products
+    ? Object.keys(cart)
+        .filter((id) => cart[id] > 0)
+        .map((id) => {
+          const product = products.find((prod) => prod.id == parseInt(id));
+          return product ? { ...product, quantity: cart[id] } : null;
+        })
+        .filter((item) => item !== null)
+    : [];
 
   const filteredProducts = products
     ? products.filter((product) =>
@@ -88,6 +98,31 @@ export const ShopContextProvider = (props) => {
     localStorage.removeItem("isLogged");
   };
 
+  const updateUserCart = async () => {
+    if (!currentUser) return;
+    // Check if the current user is an admin
+    const isAdmin = AdminData.some((admin) => admin.id === currentUser.id);
+    if (isAdmin) return; // Skip server call for admin
+
+    const userId = currentUser.id;
+    try {
+      const response = await fetch(`http://localhost:8000/user/${userId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...currentUser, cart }),
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const updatedUser = await response.json();
+      setCurrentUser(updatedUser);
+    } catch (error) {
+      console.error("Error updating user cart:", error);
+    }
+  };
+
   return (
     <ShopContext.Provider
       value={{
@@ -97,14 +132,14 @@ export const ShopContextProvider = (props) => {
         search,
         setSearch,
         addToCart,
-        removeToCart,
+        removeFromCart,
         deleteItem,
         setCurrentUser,
         currentUser,
         logout,
         clearCart,
         isPending,
-        error
+        error,
       }}
     >
       {props.children}

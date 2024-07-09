@@ -34,6 +34,7 @@ const Register = () => {
     email: "",
     password: "",
     confirm_password: "",
+    cart: {},
   });
   const [errors, setErrors] = useState({});
 

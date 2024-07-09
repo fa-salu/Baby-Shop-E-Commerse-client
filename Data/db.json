@@ -1,11 +1,21 @@
 {
   "user": [
     {
-      "id": "988b",
+      "id": "b712",
       "username": "fa",
       "email": "fa@gmail.com",
-      "password": "11111",
-      "confirm_password": "11111",
+      "password": "fffff",
+      "confirm_password": "fffff",
+      "cart": {
+        "2": 2
+      }
+    },
+    {
+      "id": "daee",
+      "username": "sa",
+      "email": "sa@gnail.com",
+      "password": "sssss",
+      "confirm_password": "sssss",
       "cart": {}
     }
   ],
@@ -117,6 +127,15 @@
       "image": "https://websitedemos.net/baby-store-04/wp-content/uploads/sites/750/2020/12/baby-store-product-img-1.jpg",
       "category": "Toys",
       "stars": 4.5
+    },
+    {
+      "id": "1720533871511",
+      "name": "Bath Tub",
+      "description": "Baby Bath Essentials Checklist | Firstcry ",
+      "price": 232,
+      "image": "https://staranddaisy.in/wp-content/uploads/2023/04/bath-tub-12dec23415-16.jpg",
+      "category": "Bath",
+      "stars": 4
     }
   ]
 }
