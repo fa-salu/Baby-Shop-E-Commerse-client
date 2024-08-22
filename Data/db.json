@@ -6,9 +6,7 @@
       "email": "fa@gmail.com",
       "password": "fffff",
       "confirm_password": "fffff",
-      "cart": {
-        "2": 2
-      }
+      "cart": {}
     },
     {
       "id": "daee",
@@ -132,7 +130,7 @@
       "id": "1720533871511",
       "name": "Bath Tub",
       "description": "Baby Bath Essentials Checklist | Firstcry ",
-      "price": 232,
+      "price": 23,
       "image": "https://staranddaisy.in/wp-content/uploads/2023/04/bath-tub-12dec23415-16.jpg",
       "category": "Bath",
       "stars": 4
