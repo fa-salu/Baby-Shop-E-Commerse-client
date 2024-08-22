@@ -1,17 +1,18 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { ShopContext } from "../Context/CartItem/ShopContext";
-import { AdminData } from "../Admin/AdminData/AdminData";
+// import { ShopContext } from "../Context/CartItem/ShopContext";
+import Cookie from "js-cookie";
 
 const Login = () => {
   const [input, setInput] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-  const { setCurrentUser } = useContext(ShopContext);
+  // const { setCurrentUser } = useContext(ShopContext);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    if (currentUser) {
+    const token = Cookie.get("token");
+    if (token) {
       navigate("/profile");
     }
   }, [navigate]);
@@ -23,42 +24,34 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if admin
-    const admin = AdminData.find(
-      (admin) =>
-        (admin.email === input.email || admin.username === input.email) &&
-        admin.password === input.password
-    );
-    if (admin) {
-      localStorage.setItem("isAdmin", JSON.stringify(true));
-      localStorage.setItem("admin", JSON.stringify(admin));
-      setCurrentUser(admin);
-      navigate("/dashboard");
-      return;
-    }
-
     try {
-      const response = await fetch("http://localhost:8000/user");
-      const users = await response.json();
+      const response = await fetch("http://localhost:5000/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(input),
+      });
 
-      const user = users.find(
-        (user) =>
-          (user.email === input.email || user.username === input.email) &&
-          user.password === input.password
-      );
+      const data = await response.json();
 
-      if (user) {
-        setError("");
-        localStorage.setItem("currentUser", JSON.stringify(user));
-        localStorage.setItem("isLogged", "true");
-        setCurrentUser(user);
+      if (response.ok) {
+        Cookie.set("token", data.token, { expires: 1 });
+
+        // Store the currentUser in cookies
+        Cookie.set("currentUser", JSON.stringify(data.user), { expires: 1 });
+        // console.log("loginnnnnn", data.user);
+
+        // Also set the currentUser in the context
+        // setCurrentUser(data.user);
+
         navigate("/profile");
       } else {
-        setError("Invalid credentials");
+        setError(data.message);
       }
     } catch (error) {
-      console.error("Error fetching users:", error);
-      setError("Error fetching users. Please try again later.");
+      console.error("Error logging in:", error);
+      setError("An unexpected error occurred. Please try again.");
     }
   };
 

@@ -4,14 +4,17 @@ import { Link, useNavigate } from "react-router-dom";
 const validate = (values) => {
   const errors = {};
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+
   if (!values.username) {
     errors.username = "Username is required";
   }
+
   if (!values.email) {
     errors.email = "Email is required";
   } else if (!regex.test(values.email)) {
     errors.email = "This is not a valid email format!";
   }
+
   if (!values.password) {
     errors.password = "Password is required";
   } else if (values.password.length < 4) {
@@ -19,11 +22,13 @@ const validate = (values) => {
   } else if (values.password.length > 10) {
     errors.password = "Password cannot exceed more than 10 characters";
   }
+
   if (!values.confirm_password) {
     errors.confirm_password = "Confirm Password is required";
   } else if (values.password !== values.confirm_password) {
     errors.confirm_password = "Passwords do not match";
   }
+
   return errors;
 };
 
@@ -34,9 +39,9 @@ const Register = () => {
     email: "",
     password: "",
     confirm_password: "",
-    cart: {},
   });
   const [errors, setErrors] = useState({});
+  const [serverError, setServerError] = useState(""); // To store server error messages
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,7 +50,7 @@ const Register = () => {
 
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const response = await fetch("http://localhost:8000/user", {
+        const response = await fetch("http://localhost:5000/users/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -56,10 +61,12 @@ const Register = () => {
         if (response.ok) {
           navigate("/login");
         } else {
-          console.error("Failed to register user");
+          const errorData = await response.json();
+          setServerError(errorData.message); 
         }
       } catch (error) {
         console.error("Error:", error);
+        setServerError("An unexpected error occurred. Please try again.");
       }
     }
   };
@@ -161,6 +168,9 @@ const Register = () => {
               Sign Up
             </button>
           </div>
+          {serverError && (
+            <p className="text-red-500 text-xs mt-1">{serverError}</p>
+          )}
         </form>
         <div className="text-center">
           <p className="text-sm text-gray-600">
