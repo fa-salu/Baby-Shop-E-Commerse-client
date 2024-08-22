@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-// import { ShopContext } from "../Context/CartItem/ShopContext";
+import { ShopContext } from "../Context/CartItem/ShopContext";
 import Cookie from "js-cookie";
 
 const Login = () => {
   const [input, setInput] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-  // const { setCurrentUser } = useContext(ShopContext);
+  const { setCurrentUser } = useContext(ShopContext);
 
   const navigate = useNavigate();
 
@@ -40,10 +40,10 @@ const Login = () => {
 
         // Store the currentUser in cookies
         Cookie.set("currentUser", JSON.stringify(data.user), { expires: 1 });
-        // console.log("loginnnnnn", data.user);
+        console.log("loginnnnnn", JSON.stringify(data.user));
 
         // Also set the currentUser in the context
-        // setCurrentUser(data.user);
+        setCurrentUser(data.user);
 
         navigate("/profile");
       } else {
