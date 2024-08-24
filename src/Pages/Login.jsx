@@ -40,7 +40,7 @@ const Login = () => {
 
         // Store the currentUser in cookies
         Cookie.set("currentUser", JSON.stringify(data.user), { expires: 1 });
-        console.log("loginnnnnn", JSON.stringify(data.user));
+        // console.log("loginnnnnn", JSON.stringify(data.user));
 
         // Also set the currentUser in the context
         setCurrentUser(data.user);

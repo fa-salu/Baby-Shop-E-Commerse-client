@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useFetch from '../utils/Api';
 
 const Shop = () => {
-  const { data, isPending, error } = useFetch('http://localhost:8000/db');
+  const { data, isPending, error } = useFetch('http://localhost:5000/users/products');
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 

@@ -7,17 +7,19 @@ export const ShopContext = createContext();
 
 export const ShopContextProvider = (props) => {
   const { data: products, isPending, error } = useFetch("http://localhost:5000/users/products");
+  console.log(products);
+  
   const [cart, setCart] = useState({});
   const [search, setSearch] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
-  console.log("con: currentUser:", currentUser);
+  // console.log("con: currentUser:", currentUser);
   
   
 
   // Load currentUser from cookies on initial load
   useEffect(() => {
     const storedUser = Cookies.get("currentUser");
-    console.log("con: storedUser:" , storedUser);
+    // console.log("con: storedUser:" , storedUser);
     
     if (storedUser) {
       setCurrentUser(JSON.parse(storedUser));
