@@ -121,7 +121,7 @@ const Cart = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
-  console.log('rel;', relatedProducts);
+  // console.log('rel;', relatedProducts);
   
   const navigate = useNavigate();
   const { addToCart, currentUser } = useContext(ShopContext);

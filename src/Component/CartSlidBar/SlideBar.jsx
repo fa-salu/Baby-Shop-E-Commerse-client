@@ -124,35 +124,30 @@
 
 // export default SlideBar;
 
-import React, { useContext, useEffect } from "react";
+
+
+
+
+import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../../Context/CartItem/ShopContext";
 import { FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import useFetch from "../../utils/Api";
 
 const SlideBar = ({ isCartOpen, toggleCart }) => {
-  const { cart, addToCart, removeFromCart, deleteItem } = useContext(ShopContext);
+  const { cart, addToCart, removeFromCart, deleteItem, getCartItems, currentUser } = useContext(ShopContext);
   const navigate = useNavigate();
-  const { data: apiData, isPending, error } = useFetch("http://localhost:8000/db");
+  const userId = currentUser ? currentUser.id : null;
+  // const [hasFetched, setHasFetched] = useState(false); // Track if cart items have been fetched
+
+  // No need for additional state; use the cart directly
+  const cartItems = Array.isArray(cart) ? cart : [];
 
   useEffect(() => {
-    if (error) {
-      console.error("Error fetching data:", error);
+    if (isCartOpen) {
+      getCartItems(userId);
+      // setHasFetched(true); // Set the flag to true after fetching cart items
     }
-  }, [error]);
-
-  const cartItems = apiData ? Object.keys(cart)
-    .filter((id) => cart[id] > 0)
-    .map((id) => {
-      const product = apiData.find((prod) => prod.id == parseInt(id));
-      return product ? { ...product, quantity: cart[id] } : null;
-    }).filter(item => item !== null) : [];
-
-  const calculateSubtotal = () => {
-    return cartItems
-      .reduce((acc, item) => acc + item.price * item.quantity, 0)
-      .toFixed(2);
-  };
+  }, [isCartOpen]);
 
   const handleViewCart = () => {
     navigate("/cartitems");
@@ -178,44 +173,42 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
           <hr className="border-gray-300 my-4" />
         </div>
         <div className="flex-1 overflow-y-auto px-6">
-          {isPending && <div>Loading...</div>}
-          {error && <div>Error: {error}</div>}
           {cartItems.length === 0 ? (
             <p>Your cart is empty</p>
           ) : (
             cartItems.map((item) => (
               <div
-                key={item.id}
+                key={item._id}
                 className="flex items-center justify-between mb-4"
               >
                 <img
-                  src={item.image}
-                  alt={item.name}
+                  src={item.productId.image}
+                  alt={item.productId.name}
                   className="w-16 h-16 object-cover rounded-md"
                 />
                 <div className="flex-1 mx-4">
-                  <p className="text-lg font-semibold">{item.name}</p>
+                  <p className="text-lg font-semibold">{item.productId.name}</p>
                   <div className="flex items-center mt-1">
                     <button
-                      onClick={() => removeFromCart(item.id)}
+                      onClick={() => removeFromCart(item._id)}
                       className="text-gray-500 px-2 py-1 rounded-md border border-gray-300"
                     >
                       -
                     </button>
                     <p className="text-gray-600 mx-2">{item.quantity}</p>
                     <button
-                      onClick={() => addToCart(item.id)}
+                      onClick={() => addToCart(item._id)}
                       className="text-gray-500 px-2 py-1 rounded-md border border-gray-300"
                     >
                       +
                     </button>
                   </div>
                   <p className="text-gray-600">
-                    ${(item.price * item.quantity).toFixed(2)}
+                    ${(item.productId.price * item.quantity).toFixed(2)}
                   </p>
                 </div>
                 <button
-                  onClick={() => deleteItem(item.id)}
+                  onClick={() => deleteItem(item._id)}
                   className="px-3 py-1 bg-red-500 text-white rounded-md"
                 >
                   Remove
@@ -227,7 +220,7 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
         <div className="p-6 flex-shrink-0">
           <div>
             <hr className="border-gray-300" />
-            <p className="text-lg mt-2">Subtotal: ${calculateSubtotal()}</p>
+            <p className="text-lg mt-2">Subtotal: ${cartItems.reduce((total, item) => total + (item.productId.price * item.quantity), 0).toFixed(2)}</p>
             <hr className="border-gray-300 mt-2" />
           </div>
           <div className="mt-6">

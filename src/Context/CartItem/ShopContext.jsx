@@ -7,9 +7,11 @@ export const ShopContext = createContext();
 
 export const ShopContextProvider = (props) => {
   const { data: products, isPending, error } = useFetch("http://localhost:5000/users/products");
-  console.log(products);
+  // console.log(products);
   
   const [cart, setCart] = useState({});
+  console.log('cart', cart);
+  
   const [search, setSearch] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
   // console.log("con: currentUser:", currentUser);
@@ -29,14 +31,24 @@ export const ShopContextProvider = (props) => {
   // Fetch cart items
   const getCartItems = async (userId) => {
     try {
-      const response = await fetch(`/cart/${userId}`);
-      if (!response.ok) throw new Error('Failed to fetch cart items');
+      const token = Cookies.get('token'); 
+      console.log('getcartitem token', token);
+      
+      const response = await fetch(`http://localhost:5000/users/cart/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch cart items");
+      }
       const data = await response.json();
       setCart(data);
     } catch (error) {
-      console.error('Error fetching cart items:', error);
+      console.error("Error fetching cart items:", error);
     }
   };
+  
 
   const addToCart = async (userId, productId) => {
     try {
