@@ -14,14 +14,14 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const navigate = useNavigate();
-  const { cart, search, setSearch, filteredProducts } = useContext(ShopContext);
-  const isLogged = localStorage.getItem("isLogged");
-  const login = isLogged === "true";
+  const { cart, search, setSearch, filteredProducts, currentUser} = useContext(ShopContext);
+  // const isLogged = localStorage.getItem("isLogged");
+  // const login = isLogged === "true";
   const isAdmin = localStorage.getItem("isAdmin");
   const admin = isAdmin === "true";
 
   const handleClick = () => {
-    navigate(login ? "/profile" : "/login");
+    navigate(currentUser ? "/profile" : "/login");
   };
 
   const toggleMenu = () => {
@@ -76,7 +76,7 @@ const Navbar = () => {
                 />
                 <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
               </div>
-              {login && (
+              {currentUser && (
                 <div className="relative">
                   <FaCartArrowDown
                     onClick={toggleCart}

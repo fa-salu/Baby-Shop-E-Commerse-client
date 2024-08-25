@@ -26,6 +26,63 @@ export const ShopContextProvider = (props) => {
     }
   }, []);
 
+  // Fetch cart items
+  const getCartItems = async (userId) => {
+    try {
+      const response = await fetch(`/cart/${userId}`);
+      if (!response.ok) throw new Error('Failed to fetch cart items');
+      const data = await response.json();
+      setCart(data);
+    } catch (error) {
+      console.error('Error fetching cart items:', error);
+    }
+  };
+
+  const addToCart = async (userId, productId) => {
+    try {
+      const token = Cookies.get('token'); // Assuming you store your JWT token in localStorage
+      const response = await fetch('http://localhost:5000/users/cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Add the JWT token here
+        },
+        body: JSON.stringify({ userId, productId }),
+      });
+      if (!response.ok) throw new Error('Failed to add item to cart');
+      alert('Product added to cart');
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
+    }
+  };
+  
+
+  // Delete item from cart
+  const deleteCartItem = async (userId, productId) => {
+    try {
+      const response = await fetch(`/cart/${userId}/${productId}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('Failed to delete cart item');
+      await getCartItems(userId);
+    } catch (error) {
+      console.error('Error deleting cart item:', error);
+    }
+  };
+
+  // Clear cart
+  const clearCart = async (userId) => {
+    try {
+      const response = await fetch(`/cart/${userId}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) throw new Error('Failed to clear cart');
+      setCart([]);
+    } catch (error) {
+      console.error('Error clearing cart:', error);
+    }
+  };
+
   // // Load cart from cookies when currentUser changes
   // useEffect(() => {
   //   if (currentUser) {
@@ -48,36 +105,36 @@ export const ShopContextProvider = (props) => {
   //   }
   // }, [cart, currentUser]);
 
-  const addToCart = (itemId) => {
-    setCart((prevCart) => ({
-      ...prevCart,
-      [itemId]: (prevCart[itemId] || 0) + 1,
-    }));
-  };
+  // const addToCart = (itemId) => {
+  //   setCart((prevCart) => ({
+  //     ...prevCart,
+  //     [itemId]: (prevCart[itemId] || 0) + 1,
+  //   }));
+  // };
 
-  const removeFromCart = (itemId) => {
-    if (cart[itemId] > 0) {
-      setCart((prevCart) => ({
-        ...prevCart,
-        [itemId]: prevCart[itemId] - 1,
-      }));
-    }
-  };
+  // const removeFromCart = (itemId) => {
+  //   if (cart[itemId] > 0) {
+  //     setCart((prevCart) => ({
+  //       ...prevCart,
+  //       [itemId]: prevCart[itemId] - 1,
+  //     }));
+  //   }
+  // };
 
-  const deleteItem = (itemId) => {
-    setCart((prevCart) => {
-      const newCart = { ...prevCart };
-      delete newCart[itemId];
-      return newCart;
-    });
-  };
+  // const deleteItem = (itemId) => {
+  //   setCart((prevCart) => {
+  //     const newCart = { ...prevCart };
+  //     delete newCart[itemId];
+  //     return newCart;
+  //   });
+  // };
 
-  const clearCart = () => {
-    setCart({});
-    if (currentUser) {
-      Cookies.remove(`cart_${currentUser.username}`);
-    }
-  };
+  // const clearCart = () => {
+  //   setCart({});
+  //   if (currentUser) {
+  //     Cookies.remove(`cart_${currentUser.username}`);
+  //   }
+  // };
 
   const cartItems = products
     ? Object.keys(cart)
@@ -136,10 +193,10 @@ export const ShopContextProvider = (props) => {
         search,
         setSearch,
         addToCart,
-        removeFromCart,
-        deleteItem,
+        deleteCartItem,
         setCurrentUser,
         currentUser,
+        getCartItems,
         logout,
         clearCart,
         isPending,

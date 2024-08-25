@@ -106,6 +106,12 @@
 
 // export default Cart;
 
+
+
+
+
+
+
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ShopContext } from "../../Context/CartItem/ShopContext";
@@ -113,67 +119,55 @@ import useFetch from "../../utils/Api";
 
 const Cart = () => {
   const { id } = useParams();
-  const { data, isPending, error } = useFetch("http://localhost:8000/db");
   const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  console.log('rel;', relatedProducts);
+  
   const navigate = useNavigate();
-  const { addToCart } = useContext(ShopContext);
+  const { addToCart, currentUser } = useContext(ShopContext);
+  
 
+  // Fetch the product by ID from the backend
   useEffect(() => {
-    if (data) {
-      const selectedProduct = data.find((item) => item.id == parseInt(id));
-      setProduct(selectedProduct);
+    const fetchProduct = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/users/product/${id}`);
+        
+        const data = await response.json();
+        // console.log(data.category);
+        setProduct(data);
 
-      if (selectedProduct) {
-        const filteredProducts = data.filter(
-          (prod) =>
-            prod.category == selectedProduct.category &&
-            prod.id !== selectedProduct.id
-        );
-        setRelatedProducts(filteredProducts);
-      } else {
-        setRelatedProducts([]);
+        // Fetch related products based on category
+        if (data.category) {
+          const response = await fetch(`http://localhost:5000/users/products/${data.category}`);
+          const relatedData = await response.json();
+          // console.log(relatedData);
+          setRelatedProducts(relatedData)
+        }
+      } catch (error) {
+        console.error("Error fetching product:", error);
       }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  // Handle Add to Cart Click
+const handleAddToCartClick = async () => {
+  if (currentUser) {
+    try {
+      await addToCart(currentUser.id, id);  
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
     }
-  }, [data, id]);
+  } else {
+    alert("Please login to add items to your cart.");
+    navigate("/login");
+  }
+};
 
-  const fetchUserData = async () => {
-    const response = await fetch("http://localhost:8000/user");
-    const userData = await response.json();
-    return userData[0]; 
-  };
 
-  const updateUserCart = async (user) => {
-    const response = await fetch(`http://localhost:8000/user/${user.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
-    return response.json();
-  };
-
-  const handleAddToCartClick = async () => {
-    const login = localStorage.getItem("isLogged");
-    if (login) {
-      const user = await fetchUserData();
-      if (!user.cart[id]) {
-        user.cart[id] = 1;
-      } else {
-        user.cart[id]++;
-      }
-      await updateUserCart(user);
-      addToCart(id); 
-    } else {
-      alert("Please Login");
-      navigate("/login");
-    }
-  };
-
-  if (isPending) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!product) return <div>Product not found</div>;
+  if (!product) return <div>Loading...</div>;
 
   return (
     <div className="container mx-auto p-6">
@@ -210,7 +204,7 @@ const Cart = () => {
           {relatedProducts.map((item) => (
             <div
               key={item.id}
-              onClick={() => navigate(`/shop/${item.id}`)}
+              onClick={() => navigate(`/shop/${item._id}`)}
               className="bg-white shadow-md rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transform hover:scale-105 transition-transform duration-300"
             >
               <img

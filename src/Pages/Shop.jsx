@@ -25,7 +25,7 @@ const Shop = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {products.map((item, ind) => (
             <div
-              onClick={() => navigate(`${item.id}`)}
+              onClick={() => navigate(`${item._id}`)}
               key={ind}
               className="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
             >
