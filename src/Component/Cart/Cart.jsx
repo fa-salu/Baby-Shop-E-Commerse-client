@@ -111,38 +111,30 @@
 
 
 
-
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ShopContext } from "../../Context/CartItem/ShopContext";
-import useFetch from "../../utils/Api";
 
 const Cart = () => {
   const { id } = useParams();
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const [product, setProduct] = useState()
-  // console.log('rel;', relatedProducts);
-  
+  const [product, setProduct] = useState(null);
   const navigate = useNavigate();
   const { addToCart, currentUser } = useContext(ShopContext);
-  
 
   // Fetch the product by ID from the backend
   useEffect(() => {
     const fetchProduct = async () => {
       try {
         const response = await fetch(`http://localhost:5000/users/product/${id}`);
-        
         const data = await response.json();
-        // console.log(data.category);
         setProduct(data);
 
         // Fetch related products based on category
         if (data.category) {
           const response = await fetch(`http://localhost:5000/users/products/${data.category}`);
           const relatedData = await response.json();
-          // console.log(relatedData);
-          setRelatedProducts(relatedData)
+          setRelatedProducts(relatedData);
         }
       } catch (error) {
         console.error("Error fetching product:", error);
@@ -153,19 +145,18 @@ const Cart = () => {
   }, [id]);
 
   // Handle Add to Cart Click
-const handleAddToCartClick = () => {
-  if (currentUser) {
-    try {
-       addToCart(currentUser.id, id);  
-    } catch (error) {
-      console.error("Error adding item to cart:", error);
+  const handleAddToCartClick = async () => {
+    if (currentUser) {
+      try {
+        await addToCart(currentUser.id, id);
+      } catch (error) {
+        console.error("Error adding item to cart:", error);
+      }
+    } else {
+      alert("Please login to add items to your cart.");
+      navigate("/login");
     }
-  } else {
-    alert("Please login to add items to your cart.");
-    navigate("/login");
-  }
-};
-
+  };
 
   if (!product) return <div>Loading...</div>;
 

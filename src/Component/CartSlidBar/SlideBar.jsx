@@ -131,20 +131,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import { ShopContext } from "../../Context/CartItem/ShopContext";
 
 const SlideBar = ({ isCartOpen, toggleCart }) => {
   const [cartItems, setCartItems] = useState([]);
-  const { addToCart } = useContext(ShopContext); 
+  const { addToCart } = useContext(ShopContext);
 
   const navigate = useNavigate();
-  const currentUser = Cookies.get('currentUser');
+  const currentUser = Cookies.get("currentUser");
   const userId = currentUser ? JSON.parse(currentUser).id : null;
 
   const getCartItems = async () => {
     try {
-      const token = Cookies.get('token');
+      const token = Cookies.get("token");
       const response = await fetch(`http://localhost:5000/users/cart/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -163,9 +163,8 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
   };
 
   useEffect(() => {
-    if (isCartOpen ) {
+    if (isCartOpen) {
       getCartItems();
-      // setHasFetched(true);
     }
   }, [isCartOpen]);
 
@@ -174,8 +173,13 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
     toggleCart();
   };
 
-  const handleAddToCart = (productId) => {
-    addToCart(userId, productId); // Using the correct productId
+  const handleAddToCart = async (productId) => {
+    try {
+      await addToCart(userId, productId);
+      getCartItems(); // Re-fetch the cart items after adding to cart
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+    }
   };
 
   const removeFromCart = (itemId) => {
@@ -221,7 +225,9 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
                       className="w-16 h-16 object-cover rounded-md"
                     />
                     <div className="flex-1 mx-4">
-                      <p className="text-lg font-semibold">{item.productId.name}</p>
+                      <p className="text-lg font-semibold">
+                        {item.productId.name}
+                      </p>
                       <div className="flex items-center mt-1">
                         <button
                           onClick={() => removeFromCart(item._id)}
@@ -258,20 +264,21 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
             <hr className="border-gray-300" />
             <p className="text-lg mt-2">
               Subtotal: $
-              {cartItems.reduce(
-                (total, item) => 
-                  item.productId ? total + (item.productId.price * item.quantity) : total,
-                0
-              ).toFixed(2)}
+              {cartItems
+                .reduce(
+                  (total, item) =>
+                    item.productId
+                      ? total + item.productId.price * item.quantity
+                      : total,
+                  0
+                )
+                .toFixed(2)}
             </p>
-            <hr className="border-gray-300 mt-2" />
-          </div>
-          <div className="mt-6">
             <button
               onClick={handleViewCart}
-              className="w-full py-2 bg-gray-800 text-white rounded-md"
+              className="w-full mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700"
             >
-              VIEW CART
+              View Cart
             </button>
           </div>
         </div>
