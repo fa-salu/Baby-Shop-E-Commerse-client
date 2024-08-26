@@ -136,18 +136,15 @@ import { ShopContext } from "../../Context/CartItem/ShopContext";
 
 const SlideBar = ({ isCartOpen, toggleCart }) => {
   const [cartItems, setCartItems] = useState([]);
-  const {addToCart, productId} = useContext(ShopContext)
-  // console.log('cartitems from slidebar: ', cartItems);
-  const [hasFetched, setHasFetched] = useState(false);
-  const navigate = useNavigate();
-  const currentUser = Cookies.get('currentUser'); 
-  const userId = currentUser ? JSON.parse(currentUser).id : null; 
+  const { addToCart } = useContext(ShopContext); 
 
-  console.log('slidebar userId: ', userId);
+  const navigate = useNavigate();
+  const currentUser = Cookies.get('currentUser');
+  const userId = currentUser ? JSON.parse(currentUser).id : null;
 
   const getCartItems = async () => {
     try {
-      const token = Cookies.get('token'); 
+      const token = Cookies.get('token');
       const response = await fetch(`http://localhost:5000/users/cart/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -166,30 +163,19 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
   };
 
   useEffect(() => {
-    if (isCartOpen && !hasFetched) {
+    if (isCartOpen ) {
       getCartItems();
-      setHasFetched(true);
+      // setHasFetched(true);
     }
-  }, [isCartOpen, hasFetched]);
+  }, [isCartOpen]);
 
   const handleViewCart = () => {
     navigate("/cartitems");
     toggleCart();
   };
 
-  const handleAddToCart = () => {
-    
-    if (currentUser) {
-      try {
-         addToCart(userId, productId);
-         console.log('slide item: ',userId, productId);  
-      } catch (error) {
-        console.error("Error adding item to cart:", error);
-      }
-    } else {
-      alert("Please login to add items to your cart.");
-      navigate("/login");
-    }
+  const handleAddToCart = (productId) => {
+    addToCart(userId, productId); // Using the correct productId
   };
 
   const removeFromCart = (itemId) => {
@@ -245,7 +231,7 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
                         </button>
                         <p className="text-gray-600 mx-2">{item.quantity}</p>
                         <button
-                          onClick={() => handleAddToCart(item.id)}
+                          onClick={() => handleAddToCart(item.productId._id)} // Pass the correct productId
                           className="text-gray-500 px-2 py-1 rounded-md border border-gray-300"
                         >
                           +
