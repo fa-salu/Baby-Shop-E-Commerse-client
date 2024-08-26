@@ -129,29 +129,75 @@
 
 
 import React, { useContext, useEffect, useState } from "react";
-import { ShopContext } from "../../Context/CartItem/ShopContext";
 import { FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
+import { ShopContext } from "../../Context/CartItem/ShopContext";
 
 const SlideBar = ({ isCartOpen, toggleCart }) => {
-  const { cart, addToCart, removeFromCart, deleteItem, getCartItems, currentUser } = useContext(ShopContext);
+  const [cartItems, setCartItems] = useState([]);
+  const {addToCart, productId} = useContext(ShopContext)
+  // console.log('cartitems from slidebar: ', cartItems);
+  const [hasFetched, setHasFetched] = useState(false);
   const navigate = useNavigate();
-  const userId = currentUser ? currentUser.id : null;
-  // const [hasFetched, setHasFetched] = useState(false); // Track if cart items have been fetched
+  const currentUser = Cookies.get('currentUser'); 
+  const userId = currentUser ? JSON.parse(currentUser).id : null; 
 
-  // No need for additional state; use the cart directly
-  const cartItems = Array.isArray(cart) ? cart : [];
+  console.log('slidebar userId: ', userId);
+
+  const getCartItems = async () => {
+    try {
+      const token = Cookies.get('token'); 
+      const response = await fetch(`http://localhost:5000/users/cart/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch cart items");
+      }
+
+      const data = await response.json();
+      setCartItems(data);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  };
 
   useEffect(() => {
-    if (isCartOpen) {
-      getCartItems(userId);
-      // setHasFetched(true); // Set the flag to true after fetching cart items
+    if (isCartOpen && !hasFetched) {
+      getCartItems();
+      setHasFetched(true);
     }
-  }, [isCartOpen]);
+  }, [isCartOpen, hasFetched]);
 
   const handleViewCart = () => {
     navigate("/cartitems");
     toggleCart();
+  };
+
+  const handleAddToCart = () => {
+    
+    if (currentUser) {
+      try {
+         addToCart(userId, productId);
+         console.log('slide item: ',userId, productId);  
+      } catch (error) {
+        console.error("Error adding item to cart:", error);
+      }
+    } else {
+      alert("Please login to add items to your cart.");
+      navigate("/login");
+    }
+  };
+
+  const removeFromCart = (itemId) => {
+    // Logic for removing from cart can be implemented here
+  };
+
+  const deleteItem = (itemId) => {
+    // Logic for deleting item from cart can be implemented here
   };
 
   return (
@@ -181,38 +227,42 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
                 key={item._id}
                 className="flex items-center justify-between mb-4"
               >
-                <img
-                  src={item.productId.image}
-                  alt={item.productId.name}
-                  className="w-16 h-16 object-cover rounded-md"
-                />
-                <div className="flex-1 mx-4">
-                  <p className="text-lg font-semibold">{item.productId.name}</p>
-                  <div className="flex items-center mt-1">
+                {item.productId && (
+                  <>
+                    <img
+                      src={item.productId.image}
+                      alt={item.productId.name}
+                      className="w-16 h-16 object-cover rounded-md"
+                    />
+                    <div className="flex-1 mx-4">
+                      <p className="text-lg font-semibold">{item.productId.name}</p>
+                      <div className="flex items-center mt-1">
+                        <button
+                          onClick={() => removeFromCart(item._id)}
+                          className="text-gray-500 px-2 py-1 rounded-md border border-gray-300"
+                        >
+                          -
+                        </button>
+                        <p className="text-gray-600 mx-2">{item.quantity}</p>
+                        <button
+                          onClick={() => handleAddToCart(item.id)}
+                          className="text-gray-500 px-2 py-1 rounded-md border border-gray-300"
+                        >
+                          +
+                        </button>
+                      </div>
+                      <p className="text-gray-600">
+                        ${(item.productId.price * item.quantity).toFixed(2)}
+                      </p>
+                    </div>
                     <button
-                      onClick={() => removeFromCart(item._id)}
-                      className="text-gray-500 px-2 py-1 rounded-md border border-gray-300"
+                      onClick={() => deleteItem(item._id)}
+                      className="px-3 py-1 bg-red-500 text-white rounded-md"
                     >
-                      -
+                      Remove
                     </button>
-                    <p className="text-gray-600 mx-2">{item.quantity}</p>
-                    <button
-                      onClick={() => addToCart(item._id)}
-                      className="text-gray-500 px-2 py-1 rounded-md border border-gray-300"
-                    >
-                      +
-                    </button>
-                  </div>
-                  <p className="text-gray-600">
-                    ${(item.productId.price * item.quantity).toFixed(2)}
-                  </p>
-                </div>
-                <button
-                  onClick={() => deleteItem(item._id)}
-                  className="px-3 py-1 bg-red-500 text-white rounded-md"
-                >
-                  Remove
-                </button>
+                  </>
+                )}
               </div>
             ))
           )}
@@ -220,7 +270,14 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
         <div className="p-6 flex-shrink-0">
           <div>
             <hr className="border-gray-300" />
-            <p className="text-lg mt-2">Subtotal: ${cartItems.reduce((total, item) => total + (item.productId.price * item.quantity), 0).toFixed(2)}</p>
+            <p className="text-lg mt-2">
+              Subtotal: $
+              {cartItems.reduce(
+                (total, item) => 
+                  item.productId ? total + (item.productId.price * item.quantity) : total,
+                0
+              ).toFixed(2)}
+            </p>
             <hr className="border-gray-300 mt-2" />
           </div>
           <div className="mt-6">

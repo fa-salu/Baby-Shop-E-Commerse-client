@@ -14,6 +14,7 @@ export const ShopContextProvider = (props) => {
   
   const [search, setSearch] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
+  const [productId, setProductId] = useState(null)
   // console.log("con: currentUser:", currentUser);
   
   
@@ -51,6 +52,9 @@ export const ShopContextProvider = (props) => {
   
 
   const addToCart = async (userId, productId) => {
+    console.log('addtocart context: ', userId, productId);
+    setProductId(productId)
+    
     try {
       const token = Cookies.get('token'); // Assuming you store your JWT token in localStorage
       const response = await fetch('http://localhost:5000/users/cart', {
@@ -199,6 +203,7 @@ export const ShopContextProvider = (props) => {
   return (
     <ShopContext.Provider
       value={{
+        productId,
         cart,
         cartItems,
         filteredProducts,

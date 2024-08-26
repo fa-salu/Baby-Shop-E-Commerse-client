@@ -119,8 +119,8 @@ import useFetch from "../../utils/Api";
 
 const Cart = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
   const [relatedProducts, setRelatedProducts] = useState([]);
+  const [product, setProduct] = useState()
   // console.log('rel;', relatedProducts);
   
   const navigate = useNavigate();
@@ -153,10 +153,10 @@ const Cart = () => {
   }, [id]);
 
   // Handle Add to Cart Click
-const handleAddToCartClick = async () => {
+const handleAddToCartClick = () => {
   if (currentUser) {
     try {
-      await addToCart(currentUser.id, id);  
+       addToCart(currentUser.id, id);  
     } catch (error) {
       console.error("Error adding item to cart:", error);
     }
@@ -203,7 +203,7 @@ const handleAddToCartClick = async () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {relatedProducts.map((item) => (
             <div
-              key={item.id}
+              key={item._id}
               onClick={() => navigate(`/shop/${item._id}`)}
               className="bg-white shadow-md rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transform hover:scale-105 transition-transform duration-300"
             >
