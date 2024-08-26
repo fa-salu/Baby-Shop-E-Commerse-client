@@ -136,7 +136,7 @@ import { ShopContext } from "../../Context/CartItem/ShopContext";
 
 const SlideBar = ({ isCartOpen, toggleCart }) => {
   const [cartItems, setCartItems] = useState([]);
-  const { addToCart } = useContext(ShopContext);
+  const { addToCart, deleteCartItem, clearCart } = useContext(ShopContext);
 
   const navigate = useNavigate();
   const currentUser = Cookies.get("currentUser");
@@ -182,13 +182,24 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
     }
   };
 
-  const removeFromCart = (itemId) => {
-    // Logic for removing from cart can be implemented here
+  const handleRemoveFromCart = async (productId) => {
+    try {
+      await deleteCartItem(userId, productId);
+      getCartItems(userId); // Re-fetch the cart items after deletion
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
+    }
   };
 
-  const deleteItem = (itemId) => {
-    // Logic for deleting item from cart can be implemented here
+  const handleClearCart = async () => {
+    try {
+      await clearCart(userId);
+      getCartItems(userId)
+    } catch (error) {
+      console.error("Error clearing cart:", error);
+    }
   };
+
 
   return (
     <div
@@ -230,7 +241,7 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
                       </p>
                       <div className="flex items-center mt-1">
                         <button
-                          onClick={() => removeFromCart(item._id)}
+                          onClick={() => handleRemoveFromCart(item.productId._id)}
                           className="text-gray-500 px-2 py-1 rounded-md border border-gray-300"
                         >
                           -
@@ -248,7 +259,7 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
                       </p>
                     </div>
                     <button
-                      onClick={() => deleteItem(item._id)}
+                      onClick={() => handleClearCart(item.productId._id)}
                       className="px-3 py-1 bg-red-500 text-white rounded-md"
                     >
                       Remove

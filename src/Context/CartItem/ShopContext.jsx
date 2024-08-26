@@ -66,38 +66,48 @@ export const ShopContextProvider = (props) => {
         body: JSON.stringify({ userId, productId }),
       });
       if (!response.ok) throw new Error('Failed to add item to cart');
-      alert('Product added to cart');
+      // alert('Product added to cart');
     } catch (error) {
       console.error('Error adding item to cart:', error);
     }
   };
   
 
-  // Delete item from cart
+  // delete cart item
   const deleteCartItem = async (userId, productId) => {
     try {
-      const response = await fetch(`/cart/${userId}/${productId}`, {
+      const token = Cookies.get('token'); // Get the JWT token
+      const response = await fetch(`http://localhost:5000/users/cart/${userId}/${productId}`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`, // Include the JWT token
+        },
       });
       if (!response.ok) throw new Error('Failed to delete cart item');
-      await getCartItems(userId);
+      await getCartItems(userId); // Re-fetch cart items after deletion
     } catch (error) {
       console.error('Error deleting cart item:', error);
     }
   };
+  
 
-  // Clear cart
+  // clear cart item
   const clearCart = async (userId) => {
     try {
-      const response = await fetch(`/cart/${userId}`, {
+      const token = Cookies.get('token'); // Get the JWT token
+      const response = await fetch(`http://localhost:5000/users/cart/${userId}`, {
         method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`, // Include the JWT token
+        },
       });
       if (!response.ok) throw new Error('Failed to clear cart');
-      setCart([]);
+      // setCartItems([]); // Clear cart in frontend
     } catch (error) {
       console.error('Error clearing cart:', error);
     }
   };
+  
 
   // // Load cart from cookies when currentUser changes
   // useEffect(() => {
