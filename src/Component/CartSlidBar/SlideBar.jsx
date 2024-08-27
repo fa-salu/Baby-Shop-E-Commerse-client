@@ -136,7 +136,7 @@ import { ShopContext } from "../../Context/CartItem/ShopContext";
 
 const SlideBar = ({ isCartOpen, toggleCart }) => {
   const [cartItems, setCartItems] = useState([]);
-  const { addToCart, deleteCartItem, clearCart } = useContext(ShopContext);
+  const { addToCart, removeCartItem, deleteCartItem, clearCart } = useContext(ShopContext);
 
   const navigate = useNavigate();
   const currentUser = Cookies.get("currentUser");
@@ -184,12 +184,21 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
 
   const handleRemoveFromCart = async (productId) => {
     try {
-      await deleteCartItem(userId, productId);
+      await removeCartItem(userId, productId);
       getCartItems(userId); // Re-fetch the cart items after deletion
     } catch (error) {
       console.error("Error removing item from cart:", error);
     }
   };
+
+  const handleDeleteFromCart = async (productId) => {
+    try {
+      await deleteCartItem(userId, productId);
+      getCartItems(userId)
+    } catch (error) {
+      console.error("Error deleting item from cart: " , error)
+    }
+  }
 
   const handleClearCart = async () => {
     try {
@@ -259,7 +268,7 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
                       </p>
                     </div>
                     <button
-                      onClick={() => handleClearCart(item.productId._id)}
+                      onClick={() => handleDeleteFromCart(item.productId._id)}
                       className="px-3 py-1 bg-red-500 text-white rounded-md"
                     >
                       Remove

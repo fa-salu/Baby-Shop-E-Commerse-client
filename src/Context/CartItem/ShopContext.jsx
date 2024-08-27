@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import Cookies from "js-cookie"; // Import js-cookie for managing cookies
 import useFetch from "../../utils/Api";
-import { AdminData } from "../../Admin/AdminData/AdminData";
+// import { AdminData } from "../../Admin/AdminData/AdminData";
 
 export const ShopContext = createContext();
 
@@ -9,8 +9,8 @@ export const ShopContextProvider = (props) => {
   const { data: products, isPending, error } = useFetch("http://localhost:5000/users/products");
   // console.log(products);
   
-  const [cart, setCart] = useState({});
-  console.log('cart', cart);
+  // const [cart, setCart] = useState({});
+  // console.log('data from get cart item : ', cart);
   
   const [search, setSearch] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
@@ -30,27 +30,33 @@ export const ShopContextProvider = (props) => {
   }, []);
 
   // Fetch cart items
-  const getCartItems = async (userId) => {
-    try {
-      const token = Cookies.get('token'); 
-      console.log('getcartitem token', token);
-      
-      const response = await fetch(`http://localhost:5000/users/cart/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch cart items");
-      }
-      const data = await response.json();
-      setCart(data);
-    } catch (error) {
-      console.error("Error fetching cart items:", error);
-    }
-  };
+  // ShopContext.jsx
+const getCartItems = async (userId) => {
+  console.log('userid from getcart item: ', userId);
   
+  try {
+    const token = Cookies.get("token");
+    const response = await fetch(`http://localhost:5000/users/cart/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
+    if (!response.ok) {
+      throw new Error("Failed to fetch cart items");
+    }
+
+    const data = await response.json();
+    console.log("data from get cart item :", data);
+    return data; 
+  } catch (error) {
+    console.error("Error fetching cart items:", error);
+  }
+};
+
+
+
+  // add to cart
   const addToCart = async (userId, productId) => {
     console.log('addtocart context: ', userId, productId);
     setProductId(productId)
@@ -74,10 +80,10 @@ export const ShopContextProvider = (props) => {
   
 
   // delete cart item
-  const deleteCartItem = async (userId, productId) => {
+  const removeCartItem = async (userId, productId) => {
     try {
       const token = Cookies.get('token'); // Get the JWT token
-      const response = await fetch(`http://localhost:5000/users/cart/${userId}/${productId}`, {
+      const response = await fetch(`http://localhost:5000/users/cart/remove/${userId}/${productId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`, // Include the JWT token
@@ -90,6 +96,23 @@ export const ShopContextProvider = (props) => {
     }
   };
   
+
+  // delete cart item
+  const deleteCartItem = async (userId, productId) => {
+    try {
+      const token = Cookies.get('token'); // Get the JWT token
+      const response = await fetch(`http://localhost:5000/users/cart/delete/${userId}/${productId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`, // Include the JWT token
+        },
+      });
+      if (!response.ok) throw new Error('Failed to delete cart item');
+      await getCartItems(userId); // Re-fetch cart items after deletion
+    } catch (error) {
+      console.error('Error deleting cart item:', error);
+    }
+  };
 
   // clear cart item
   const clearCart = async (userId) => {
@@ -108,6 +131,7 @@ export const ShopContextProvider = (props) => {
     }
   };
   
+
 
   // // Load cart from cookies when currentUser changes
   // useEffect(() => {
@@ -162,15 +186,15 @@ export const ShopContextProvider = (props) => {
   //   }
   // };
 
-  const cartItems = products
-    ? Object.keys(cart)
-        .filter((id) => cart[id] > 0)
-        .map((id) => {
-          const product = products.find((prod) => prod.id === parseInt(id));
-          return product ? { ...product, quantity: cart[id] } : null;
-        })
-        .filter((item) => item !== null)
-    : [];
+  // const cartItems = products
+  //   ? Object.keys(cart)
+  //       .filter((id) => cart[id] > 0)
+  //       .map((id) => {
+  //         const product = products.find((prod) => prod.id === parseInt(id));
+  //         return product ? { ...product, quantity: cart[id] } : null;
+  //       })
+  //       .filter((item) => item !== null)
+  //   : [];
 
   const filteredProducts = products
     ? products.filter((product) =>
@@ -180,46 +204,46 @@ export const ShopContextProvider = (props) => {
 
   const logout = () => {
     setCurrentUser(null);
-    setCart({});
+    // setCart({});
     Cookies.remove("currentUser");
     Cookies.remove("token");
   };
 
-  const updateUserCart = async () => {
-    if (!currentUser) return;
+  // const updateUserCart = async () => {
+  //   if (!currentUser) return;
 
-    const isAdmin = AdminData.some((admin) => admin.id === currentUser.id);
-    if (isAdmin) return; 
+  //   const isAdmin = AdminData.some((admin) => admin.id === currentUser.id);
+  //   if (isAdmin) return; 
 
-    const userId = currentUser.id;
-    try {
-      const response = await fetch(`http://localhost:8000/user/${userId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...currentUser, cart }),
-      });
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const updatedUser = await response.json();
-      setCurrentUser(updatedUser);
-    } catch (error) {
-      console.error("Error updating user cart:", error);
-    }
-  };
+  //   const userId = currentUser.id;
+  //   try {
+  //     const response = await fetch(`http://localhost:8000/user/${userId}`, {
+  //       method: "PUT",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ ...currentUser, cart }),
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error("Network response was not ok");
+  //     }
+  //     const updatedUser = await response.json();
+  //     setCurrentUser(updatedUser);
+  //   } catch (error) {
+  //     console.error("Error updating user cart:", error);
+  //   }
+  // };
 
   return (
     <ShopContext.Provider
       value={{
         productId,
-        cart,
-        cartItems,
+        // cart,
         filteredProducts,
         search,
         setSearch,
         addToCart,
+        removeCartItem,
         deleteCartItem,
         setCurrentUser,
         currentUser,
