@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import useFetch from '../../utils/Api';
 
 const Dashboard = () => {
-  const { data: userData, isPending: userPending, error: userError } = useFetch('http://localhost:5000/user');
-  const { data: dbData, isPending: dbPending, error: dbError } = useFetch('http://localhost:8000/db');
+  const { data: userData, isPending: userPending, error: userError } = useFetch('http://localhost:5000/admin/users');
+  const { data: dbData, isPending: dbPending, error: dbError } = useFetch('http://localhost:5000/admin/products');
   
   const [numCategories, setNumCategories] = useState(0);
   const [numUsers, setNumUsers] = useState(0);

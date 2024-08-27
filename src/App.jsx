@@ -99,7 +99,7 @@ const App = () => {
           }
         />
         <Route
-          path="/customers/:id"
+          path="/customers/:userId"
           element={
             <ProtectAdmin>
               <AdminHome>
