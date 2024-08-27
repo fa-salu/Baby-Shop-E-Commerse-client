@@ -5,7 +5,7 @@ import { ShopContext } from "../Context/CartItem/ShopContext";
 const Profile = () => {
   const navigate = useNavigate();
   const { currentUser, logout } = useContext(ShopContext);
-
+  
   useEffect(() => {
     if (!currentUser) {
       navigate("/login");
@@ -13,8 +13,6 @@ const Profile = () => {
   }, [navigate, currentUser]);
 
   const handleLogout = () => {
-    localStorage.removeItem("currentUser");
-    localStorage.removeItem("isLogged");
     logout();
     navigate("/login");
   };
@@ -30,9 +28,7 @@ const Profile = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-center text-gray-900">
-          Profile
-        </h2>
+        <h2 className="text-2xl font-bold text-center text-gray-900">Profile</h2>
         <div className="text-center">
           <div className="flex justify-center mb-4">
             <img
@@ -43,8 +39,7 @@ const Profile = () => {
           </div>
           <div className="text-left">
             <p className="text-lg font-medium text-gray-700">
-              Username:{" "}
-              <span className="font-normal">{currentUser.username}</span>
+              Username: <span className="font-normal">{currentUser.username}</span>
             </p>
             <p className="text-lg font-medium text-gray-700">
               Email: <span className="font-normal">{currentUser.email}</span>

@@ -1,9 +1,12 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import Cookie from "js-cookie";
 
 const ProtectRoute = ({ children }) => {
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-  return currentUser ? children : <Navigate to="/login" />;
+  const token = Cookie.get("token");
+
+  return token ? children : <Navigate to="/login" />;
 };
 
 export default ProtectRoute;
+
