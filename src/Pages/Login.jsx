@@ -7,13 +7,19 @@ const Login = () => {
   const [input, setInput] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const { setCurrentUser } = useContext(ShopContext);
-
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = Cookie.get("token");
+    const isAdmin = Cookie.get("isAdmin");
+    console.log("Token:", token); // Debugging
+    console.log("Is Admin:", isAdmin); // Debugging
     if (token) {
-      navigate("/profile");
+      if (isAdmin === "true") {
+        navigate("/adminhome");
+      } else {
+        navigate("/profile");
+      }
     }
   }, [navigate]);
 
@@ -23,7 +29,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await fetch("http://localhost:5000/users/login", {
         method: "POST",
@@ -32,20 +38,25 @@ const Login = () => {
         },
         body: JSON.stringify(input),
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
-        Cookie.set("token", data.token, { expires: 1 });
-
-        // Store the currentUser in cookies
-        Cookie.set("currentUser", JSON.stringify(data.user), { expires: 1 });
-        // console.log("loginnnnnn", JSON.stringify(data.user));
-
-        // Also set the currentUser in the context
+        Cookie.set("token", data.token);
+  
+        // Check if the user is an admin
+        if (data.user.isAdmin) {
+          Cookie.set("isAdmin", "true");
+          // console.log("Admin logged"); 
+          navigate("/dashboard");
+        } else {
+          Cookie.remove("isAdmin");
+          console.log("Regular user logged"); 
+          navigate("/profile");
+        }
+  
+        Cookie.set("currentUser", JSON.stringify(data.user));
         setCurrentUser(data.user);
-
-        navigate("/profile");
       } else {
         setError(data.message);
       }

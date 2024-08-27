@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Cookie from "js-cookie";
 
 const AdminNavbar = () => {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
-  const userData = JSON.parse(localStorage.getItem("admin"));
+
+  // Get user data from cookies
+  const userData = JSON.parse(Cookie.get("currentUser") || "{}");
 
   const handleLogout = () => {
-    localStorage.removeItem("admin");
-    localStorage.removeItem("isAdmin");
+    // Clear cookies
+    Cookie.remove("token");
+    Cookie.remove("isAdmin");
+    Cookie.remove("currentUser");
+
+    // Redirect to login or home page
     navigate("/");
   };
 
