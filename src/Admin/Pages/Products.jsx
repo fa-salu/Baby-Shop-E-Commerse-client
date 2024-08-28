@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import useFetch from "../../utils/Api";
+import useFetch from "../../utils/Api"; // Assuming useFetch is a custom hook for fetching data
 import AddProductModal from "./AddProduct";
+import Cookies from "js-cookie";
 
 const Products = () => {
+  const [products, setProducts] = useState([]); // Initialize with an empty array
   const { data, isPending, error } = useFetch("http://localhost:5000/admin/products");
-  const [products, setProducts] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editProduct, setEditProduct] = useState(null);
 
   useEffect(() => {
     if (data) {
@@ -14,61 +13,10 @@ const Products = () => {
     }
   }, [data]);
 
-  const handleAddProduct = async (newProduct) => {
-    try {
-      const response = await fetch("http://localhost:5000/admin/product", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newProduct),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to add product");
-      }
-      const result = await response.json();
-      setProducts([...products, result.newProduct]);
-    } catch (error) {
-      console.error("Error adding product:", error);
-    }
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editProduct, setEditProduct] = useState(null);
 
-  const handleUpdateProduct = async (updatedProduct) => {
-    try {
-      const response = await fetch(`http://localhost:5000/admin/product/${updatedProduct.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedProduct),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to update product");
-      }
-      const result = await response.json();
-      setProducts(
-        products.map((product) =>
-          product.id === updatedProduct.id ? result.updateProduct : product
-        )
-      );
-    } catch (error) {
-      console.error("Error updating product:", error);
-    }
-  };
-
-  const handleDeleteProduct = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:5000/admin/delete/product/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) {
-        throw new Error("Failed to delete product");
-      }
-      setProducts(products.filter((product) => product.id !== id));
-    } catch (error) {
-      console.error("Error deleting product:", error);
-    }
-  };
+  const token = Cookies.get("token");
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -85,6 +33,34 @@ const Products = () => {
     setEditProduct(null);
   };
 
+  const handleDeleteProduct = async (productId) => {
+    try {
+      const response = await fetch(`http://localhost:5000/admin/product/delete/${productId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete product");
+      }
+      setProducts(products.filter((item) => item._id !== productId)); // Remove the deleted product from the state
+      console.log("Product deleted successfully");
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+
+  const handleAddProduct = (newProduct) => {
+    setProducts([...products, newProduct]); // Add the new product to the state
+    console.log("Product added:", newProduct);
+  };
+
+  const handleUpdateProduct = (updatedProduct) => {
+    setProducts(products.map((product) => product._id === updatedProduct._id ? updatedProduct : product)); // Update the product in the state
+    console.log("Product updated:", updatedProduct);
+  };
+
   return (
     <div className="container align-middle p-4 h-[100vh] overflow-auto">
       <h1 className="text-3xl font-bold text-center mb-8">Products</h1>
@@ -98,7 +74,7 @@ const Products = () => {
       {error && <div>Error: {error}</div>}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((item) => (
-          <div key={item.id} className="border p-4 rounded shadow-lg">
+          <div key={item._id} className="border p-4 rounded shadow-lg">
             <img
               src={item.image}
               alt={item.name}
@@ -110,7 +86,7 @@ const Products = () => {
             <p className="text-gray-500">Category: {item.category}</p>
             <div className="flex justify-between">
               <button
-                onClick={() => handleDeleteProduct(item.id)}
+                onClick={() => handleDeleteProduct(item._id)}
                 className="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-md shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
               >
                 Delete
@@ -138,6 +114,8 @@ const Products = () => {
 };
 
 export default Products;
+
+
 
 
 

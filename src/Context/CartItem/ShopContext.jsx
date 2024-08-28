@@ -196,11 +196,13 @@ const getCartItems = async (userId) => {
   //       .filter((item) => item !== null)
   //   : [];
 
-  const filteredProducts = products
-    ? products.filter((product) =>
-        product.name.toLowerCase().includes(search.toLowerCase())
-      )
-    : [];
+  const filteredProducts = Array.isArray(products)
+  ? products.filter((product) =>
+      product.name && search &&
+      product.name.toLowerCase().includes(search.toLowerCase())
+    )
+  : [];
+
 
   const logout = () => {
     setCurrentUser(null);
