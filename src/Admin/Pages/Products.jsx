@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import useFetch from "../../utils/Api"; // Assuming useFetch is a custom hook for fetching data
+import useFetch from "../../utils/Api"; 
 import AddProductModal from "./AddProduct";
 import Cookies from "js-cookie";
 
 const Products = () => {
-  const [products, setProducts] = useState([]); // Initialize with an empty array
+  const [products, setProducts] = useState([]); 
   const { data, isPending, error } = useFetch("http://localhost:5000/admin/products");
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const Products = () => {
       if (!response.ok) {
         throw new Error("Failed to delete product");
       }
-      setProducts(products.filter((item) => item._id !== productId)); // Remove the deleted product from the state
+      setProducts(products.filter((item) => item._id !== productId)); 
       console.log("Product deleted successfully");
     } catch (error) {
       console.error("Error deleting product:", error);
@@ -52,12 +52,12 @@ const Products = () => {
   };
 
   const handleAddProduct = (newProduct) => {
-    setProducts([...products, newProduct]); // Add the new product to the state
+    setProducts([...products, newProduct]);
     console.log("Product added:", newProduct);
   };
 
   const handleUpdateProduct = (updatedProduct) => {
-    setProducts(products.map((product) => product._id === updatedProduct._id ? updatedProduct : product)); // Update the product in the state
+    setProducts(products.map((product) => product._id === updatedProduct._id ? updatedProduct : product)); 
     console.log("Product updated:", updatedProduct);
   };
 

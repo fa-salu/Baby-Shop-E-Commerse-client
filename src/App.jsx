@@ -108,6 +108,16 @@ const App = () => {
             </ProtectAdmin>
           }
         />
+        <Route
+          path="/checkout/:orderId"
+          element={
+            <ProtectAdmin>
+              <AdminHome>
+                <CheckOut />
+              </AdminHome>
+            </ProtectAdmin>
+          }
+        />
       </Routes>
     </>
   );
