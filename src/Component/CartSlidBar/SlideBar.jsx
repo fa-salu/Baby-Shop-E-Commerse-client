@@ -200,14 +200,14 @@ const SlideBar = ({ isCartOpen, toggleCart }) => {
     }
   }
 
-  const handleClearCart = async () => {
-    try {
-      await clearCart(userId);
-      getCartItems(userId)
-    } catch (error) {
-      console.error("Error clearing cart:", error);
-    }
-  };
+  // const handleClearCart = async () => {
+  //   try {
+  //     await clearCart(userId);
+  //     getCartItems(userId)
+  //   } catch (error) {
+  //     console.error("Error clearing cart:", error);
+  //   }
+  // };
 
 
   return (

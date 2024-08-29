@@ -117,19 +117,12 @@ const CartItems = () => {
 
             const verifyData = await verifyResponse.json();
             console.log("Payment verified:", verifyData);
-            // navigate(``)
+            getCartItems()
+            navigate(`/orderDetails`)
           } catch (error) {
             console.error("Error verifying payment:", error);
           }
         },
-        // prefill: {
-        //   name: "fasalu",
-        //   email: "fasalu@gmail.com",
-        //   contact: 22222222222,
-        // },
-        // theme: {
-        //   color: "#3399cc",
-        // },
       };
 
       const rzp = new window.Razorpay(options);
