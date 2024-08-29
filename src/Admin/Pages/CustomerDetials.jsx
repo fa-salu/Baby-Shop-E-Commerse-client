@@ -1,89 +1,111 @@
-import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../utils/Api";
+import { useState } from "react";
 
 const CustomerDetail = () => {
   const { userId } = useParams();
-  console.log( 'userId from customer details: ',userId);
-  
-  const { data, isPending, error } = useFetch(`http://localhost:5000/admin/user/${userId}`);
+  console.log("userId from customer details: ", userId);
+
+  // Fetching user details
+  const {
+    data: user,
+    isPending,
+    error,
+  } = useFetch(`http://localhost:5000/admin/user/${userId}`);
+
+  // Fetching user's orders
+  const { data: orders } = useFetch(`http://localhost:5000/admin/order`);
+
+  // State for accordion
+  const [expandedOrder, setExpandedOrder] = useState(null);
+
+  // Function to toggle accordion
+  const toggleAccordion = (orderId) => {
+    setExpandedOrder(expandedOrder === orderId ? null : orderId);
+  };
 
   return (
-    <div className="container align-middle p-4 h-[100vh] overflow-auto">
-      <h1 className="text-3xl font-bold text-center mt-20 mb-8">User Details</h1>
+    <div className="container p-4 overflow-auto w-full">
+      <h1 className="text-3xl font-bold text-center mt-20 mb-8 w-full">
+        User Details
+      </h1>
       {isPending && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
-      {data && (
-        <div className="border p-4 rounded shadow-lg">
-          <h2 className="text-xl font-bold">User: {data.username}</h2>
-          <p className="text-gray-600">Email: {data.email}</p>
-          {/* Add more user details here as needed */}
+      {user && (
+        <div className="border p-4 rounded shadow-lg mb-6 w-full">
+          <h2 className="text-xl font-bold">User: {user.username}</h2>
+          <p className="text-gray-600">Email: {user.email}</p>
         </div>
+      )}
+
+      <h2 className="text-2xl font-semibold mt-8 mb-4 w-full">Orders</h2>
+      {orders && orders.length > 0 ? (
+        <div className="space-y-4 w-full">
+          {orders.map((order) => (
+            <div key={order._id} className="border p-4 rounded shadow-lg w-full">
+              <div
+                onClick={() => toggleAccordion(order._id)}
+                className="cursor-pointer flex justify-between items-center"
+              >
+                <h3 className="text-lg font-bold">Order ID: {order.orderId}</h3>
+                <button className="text-blue-500 focus:outline-none">
+                  {expandedOrder === order._id ? "-" : "+"}
+                </button>
+              </div>
+              {expandedOrder === order._id && (
+                <div className="mt-4">
+                   <p >
+                <strong>Name:</strong> {order.userDetails.name}
+              </p>
+              <p>
+                <strong>Place:</strong> {order.userDetails.place}
+              </p>
+              <p >
+                <strong>Phone:</strong> {order.userDetails.phone}
+              </p>
+              <p >
+                <strong>Address:</strong> {order.userDetails.address}
+              </p>
+              <hr className="p-2"/>
+                  <p>
+                    <strong>Total Price:</strong> ${order.totalPrice}
+                  </p>
+                  <p>
+                    <strong>Total Items:</strong> {order.totalItems}
+                  </p>
+                  <p>
+                    <strong>Total Quantity:</strong> {order.totalQuantity}
+                  </p>
+                  <p>
+                    <strong>Purchase Date:</strong>{" "}
+                    {new Date(order.purchaseDate).toLocaleString()}
+                  </p>
+                  <p>
+                    <strong>Payment Status:</strong> {order.paymentStatus}
+                  </p>
+                  <h4 className="text-lg font-semibold mt-2">Products</h4>
+                  <ul className="list-disc ml-5">
+                    {order.products.map((product, idx) => (
+                      <li key={product.productId} className="mb-2">
+                        <p>
+                          <strong>Product ID:</strong> {product.productId}
+                        </p>
+                        <p>
+                          <strong>Quantity:</strong> {product.quantity}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p>No orders found.</p>
       )}
     </div>
   );
 };
 
 export default CustomerDetail;
-
-
-
-
-
-
-// import useFetch from "../../utils/Api";
-// import { useNavigate, useParams } from "react-router-dom";
-
-// const UserDetails = () => {
-//   const { id } = useParams();
-//   const {
-//     data: user,
-//     isPending,
-//     error,
-//   } = useFetch(`http://localhost:8000/user/${id}`);
-//   const navigate = useNavigate();
-
-//   const handleDeleteUser = async () => {
-//     try {
-//       const response = await fetch(`http://localhost:8000/user/${id}`, {
-//         method: "DELETE",
-//       });
-//       if (!response.ok) {
-//         throw new Error("Failed to delete user");
-//       }
-//     } catch (error) {
-//       console.error("Error deleting user:", error.message);
-//     }
-//     navigate("/customers");
-//   };
-
-//   if (isPending) return <div className="p-4">Loading...</div>;
-//   if (error) return <div className="p-4">Error: {error}</div>;
-//   if (!user) return <div className="p-4">User not found</div>;
-
-//   return (
-//     <div className="container mx-auto p-4">
-//       <h2 className="text-2xl font-bold mb-4">User Details</h2>
-//       <div className="border p-4 rounded shadow-lg">
-//         <div className="mb-4">
-//           <h2 className="text-xl font-bold mb-2">User: {user.username}</h2>
-//           <p className="text-gray-600">Email: {user.email}</p>
-//         </div>
-//         <div>
-//           <h2 className="text-xl font-bold mb-2">Order List</h2>
-//           <div className="mb-2">Item Name: Baby Suit</div>
-//           <div className="mb-2">Color: Black </div>
-//           <div className="mb-2">Price: $ 1200 </div>
-//         </div>
-//         <button
-//           onClick={handleDeleteUser}
-//           className="px-4 py-2 mt-4 bg-red-500 text-white rounded-md hover:bg-red-700"
-//         >
-//           Delete User
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default UserDetails;

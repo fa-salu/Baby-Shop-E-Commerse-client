@@ -1,17 +1,44 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useFetch from '../utils/Api';
+import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
+import { ShopContext } from "../Context/CartItem/ShopContext";
+import useFetch from "../utils/Api";
 
 const Shop = () => {
-  const { data, isPending, error } = useFetch('http://localhost:5000/users/products');
+  const { addToWishlist, wishlistItems, currentUser, getWishlist } =
+    useContext(ShopContext);
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+
+  // Fetch products from API
+  const { data, isPending, error } = useFetch(
+    "http://localhost:5000/users/products"
+  );
 
   useEffect(() => {
     if (data) {
       setProducts(data);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (currentUser) {
+      getWishlist(currentUser.id);
+    }
+  }, [currentUser, getWishlist]);
+
+  const isProductInWishlist = (productId) =>
+    wishlistItems.some((item) => item._id === productId);
+
+  const toggleWishlist = (productId) => {
+    if (!currentUser) {
+      alert("Please log in to manage your wishlist.");
+      return;
+    }
+    addToWishlist(currentUser.id, productId);
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
@@ -25,18 +52,41 @@ const Shop = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {products.map((item, ind) => (
             <div
-              onClick={() => navigate(`${item._id}`)}
               key={ind}
               className="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
             >
-              <img src={item.image} alt={item.name} className="w-full h-52 object-cover" />
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-52 object-cover"
+                onClick={() => navigate(`${item._id}`)}
+              />
               <div className="p-4">
-                <h4 className="text-lg font-semibold mb-2 text-gray-900">{item.name}</h4>
+                <h4 className="text-lg font-semibold mb-2 text-gray-900">
+                  {item.name}
+                </h4>
                 <p className="text-gray-700 mb-2">${item.price}</p>
                 <p className="text-yellow-500">
-                  {'★'.repeat(item.stars)}
-                  {'☆'.repeat(5 - item.stars)}
+                  {"★".repeat(item.stars)}
+                  {"☆".repeat(5 - item.stars)}
                 </p>
+                {/* Wishlist Icon */}
+                <button
+                  onClick={() => toggleWishlist(item._id)}
+                  className="mt-2"
+                >
+                  <FontAwesomeIcon
+                    icon={
+                      isProductInWishlist(item._id) ? solidHeart : regularHeart
+                    }
+                    size="lg"
+                    className={`${
+                      isProductInWishlist(item._id)
+                        ? "text-red-500"
+                        : "text-gray-400"
+                    } transition-colors duration-300`}
+                  />
+                </button>
               </div>
             </div>
           ))}

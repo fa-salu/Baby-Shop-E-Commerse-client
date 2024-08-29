@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/CartItem/ShopContext";
 
 const Profile = () => {
@@ -59,6 +59,8 @@ const Profile = () => {
           Go Home
         </button>
       </div>
+      <Link to={'/orderDetails'}><h2 className="w-full px-4 py-2 mt-3 bg-blue-500 text-white-center rounded-md">Order Details</h2></Link>
+      <Link to={'/wishlist'}><h2 className="w-full px-4 py-2 mt-3 bg-blue-500 text-white-center rounded-md">Wishlist Details</h2></Link>
     </div>
   );
 };

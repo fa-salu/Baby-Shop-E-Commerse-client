@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../../Context/CartItem/ShopContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 const CartItems = () => {
@@ -117,18 +117,19 @@ const CartItems = () => {
 
             const verifyData = await verifyResponse.json();
             console.log("Payment verified:", verifyData);
+            // navigate(``)
           } catch (error) {
             console.error("Error verifying payment:", error);
           }
         },
-        prefill: {
-          name: "fasalu",
-          email: "fasalu@gmail.com",
-          contact: 22222222222,
-        },
-        theme: {
-          color: "#3399cc",
-        },
+        // prefill: {
+        //   name: "fasalu",
+        //   email: "fasalu@gmail.com",
+        //   contact: 22222222222,
+        // },
+        // theme: {
+        //   color: "#3399cc",
+        // },
       };
 
       const rzp = new window.Razorpay(options);
@@ -268,6 +269,7 @@ const CartItems = () => {
             </button>
           </div>
         </div>
+        <Link to={'/orderDetails'}><h2 className="w-full px-4 py-2 mt-3 bg-blue-500 text-white-center rounded-md">Order Details</h2></Link>
       </div>
     </div>
   );

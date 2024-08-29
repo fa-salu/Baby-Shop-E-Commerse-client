@@ -12,7 +12,6 @@ import Profile from "./Pages/Profile";
 import Testimonial from "./Pages/Testimonial";
 import Cart from "./Component/Cart/Cart";
 import CartItems from "./Component/Cart/CartItems";
-import CheckOut from "./Component/Payment/CheckOut";
 import ProtectRoute from "./Context/ProfileProtect/ProtectUserData";
 import AdminHome from "./Admin/Pages/AdminHome/AdminHome";
 import Dashboard from "./Admin/Pages/Dashboard";
@@ -21,6 +20,8 @@ import Products from "./Admin/Pages/Products";
 import Customers from "./Admin/Pages/Customers";
 import ProtectAdmin from "./Admin/Pages/AdminHome/HomeProtect";
 import UserDetails from "./Admin/Pages/CustomerDetials";
+import OrderDetails from "./Component/Payment/OrderDetails";
+import Wishlist from "./Pages/wishlist";
 
 const App = () => {
   return (
@@ -47,7 +48,8 @@ const App = () => {
 
         <Route path="/shop/:id" element={<Cart />} />
         <Route path="/cartitems" element={<CartItems />} />
-        <Route path="/checkout" element={<CheckOut />} />
+        <Route path="/orderDetails" element={<OrderDetails />} />
+        <Route path="/wishlist" element={<Wishlist />} />
 
         {/* Admin routes */}
         <Route
@@ -108,16 +110,16 @@ const App = () => {
             </ProtectAdmin>
           }
         />
-        <Route
-          path="/checkout/:orderId"
+        {/* <Route
+          path="/checkout/:userId"
           element={
             <ProtectAdmin>
               <AdminHome>
-                <CheckOut />
+                <OrderDetails />
               </AdminHome>
             </ProtectAdmin>
           }
-        />
+        /> */}
       </Routes>
     </>
   );
