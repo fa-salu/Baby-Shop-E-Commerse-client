@@ -68,7 +68,7 @@ const Shop = () => {
                 <h4 className="text-lg font-semibold mb-2 text-gray-900">
                   {item.name}
                 </h4>
-                <p className="text-gray-700 mb-2">${item.price}</p>
+                <p className="text-gray-700 mb-2">₹{item.price}</p>
                 <p className="text-yellow-500">
                   {"★".repeat(item.stars)}
                   {"☆".repeat(5 - item.stars)}

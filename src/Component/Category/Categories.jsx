@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useFetch from "../../utils/Api";
 
 const CategoryProducts = () => {
-  const { category } = useParams(); // Get category from URL params
+  const { category } = useParams(); 
   const navigate = useNavigate();
   
   // Fetch products based on the category
@@ -14,15 +13,14 @@ const CategoryProducts = () => {
   );  
 
   const handleProductClick = (productId) => {
-    // navigate(`/shop/${productId}`);
-    navigate('/shop')
+    navigate(`/shop/${productId}`);
   };
 
   const categories = ["All", "Toys", "Clothing", "Feeding", "Footwear", "Bath"];
 
   return (
     <div className="container align-middle p-4 h-[100vh] overflow-auto">
-      <h1 className="text-3xl font-bold text-center mb-8">Product List</h1>
+      <h1 className="text-3xl font-bold text-center mb-8">Categories </h1>
 
       <div className="flex justify-center mb-8">
         {categories.map((item) => (
@@ -50,7 +48,7 @@ const CategoryProducts = () => {
                 src={item.image}
                 alt={item.name}
                 className="w-full h-28 object-cover mb-4 rounded"
-                onClick={() => handleProductClick()} 
+                onClick={() => handleProductClick(item._id)}
               />
               <h2 className="text-xl font-bold">{item.name}</h2>
               <p className="text-gray-600">{item.description}</p>

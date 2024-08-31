@@ -12,7 +12,7 @@ const PaymentPage = () => {
   const token = Cookies.get("token");
   const currentUser = Cookies.get("currentUser");
   const userId = currentUser ? JSON.parse(currentUser).id : null;
-  const { getCartItems, setCartItems, clearCart } = useContext(ShopContext);
+  const { setCartItems, clearCart } = useContext(ShopContext);
 
   const handlePlaceOrder = async () => {
     try {

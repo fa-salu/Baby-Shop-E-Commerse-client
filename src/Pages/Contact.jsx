@@ -1,59 +1,135 @@
-import React from 'react';
-import Footer from '../Component/Footer/Footer';
+import React from "react";
 
 const Contact = () => {
   return (
-    <div className="bg-white py-12">
-      <div className="container mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold mb-4">Contact Us</h2>
-        <p className="text-gray-700 mb-6">
-          Have any questions or want to get in touch? We'd love to hear from you!
-        </p>
-        <form className="max-w-md mx-auto">
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-              Name
-            </label>
-            <input 
-              type="text" 
-              id="name" 
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-              placeholder="Your name" 
-            />
+    <section className="bg-white dark:bg-gray-900">
+      <div className="container px-6 py-12 mx-auto">
+        <div>
+        <div className="p-8 bg-darkblue">
+        <p className="font-medium text-white-500 dark:text-blue-400">
+            Contact us
+          </p>
+        </div>
+          <h1 className="mt-2 text-2xl font-semibold text-gray-800 md:text-3xl dark:text-white">
+            Get in touch
+          </h1>
+          <p className="mt-3 text-gray-500 dark:text-gray-400">
+            Our friendly team at Baby Shop would love to hear from you.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-12 mt-10 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-1">
+            {/* Email Section */}
+            <div>
+              <span className="inline-block p-3 text-blue-500 rounded-full bg-blue-100/80 dark:bg-gray-800">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                  />
+                </svg>
+              </span>
+              <h2 className="mt-4 text-base font-medium text-gray-800 dark:text-white">
+                Email
+              </h2>
+              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                Our customer service is here to assist you.
+              </p>
+              <p className="mt-2 text-sm text-blue-500 dark:text-blue-400">
+                support@babyshop.com
+              </p>
+            </div>
+
+            {/* Office Section */}
+            <div>
+              <span className="inline-block p-3 text-blue-500 rounded-full bg-blue-100/80 dark:bg-gray-800">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                  />
+                </svg>
+              </span>
+              <h2 className="mt-4 text-base font-medium text-gray-800 dark:text-white">
+                Office
+              </h2>
+              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                Visit us at our Baby Shop HQ.
+              </p>
+              <p className="mt-2 text-sm text-blue-500 dark:text-blue-400">
+                123 Baby Lane, Malappuram, Manjeri city
+              </p>
+            </div>
+
+            {/* Phone Section */}
+            <div>
+              <span className="inline-block p-3 text-blue-500 rounded-full bg-blue-100/80 dark:bg-gray-800">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="1.5"
+                  stroke="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
+                  />
+                </svg>
+              </span>
+              <h2 className="mt-4 text-base font-medium text-gray-800 dark:text-white">
+                Phone
+              </h2>
+              <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                Available Mon-Fri from 8am to 5pm.
+              </p>
+              <p className="mt-2 text-sm text-blue-500 dark:text-blue-400">
+                +1 (555) 123-4567
+              </p>
+            </div>
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-              Email
-            </label>
-            <input 
-              type="email" 
-              id="email" 
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-              placeholder="Your email" 
-            />
+
+          {/* Map Section */}
+          <div className="overflow-hidden rounded-lg lg:col-span-2 h-96 lg:h-auto">
+            <iframe
+              width="100%"
+              height="100%"
+              frameBorder="0"
+              title="map"
+              marginHeight="0"
+              marginWidth="0"
+              scrolling="no"
+              src="https://maps.google.com/maps?q=Manjeri,Malappuram,Kerala,India&hl=en&z=14&amp;output=embed"
+            ></iframe>
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="message">
-              Message
-            </label>
-            <textarea 
-              id="message" 
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
-              placeholder="Your message" 
-              rows="4"
-            ></textarea>
-          </div>
-          <button 
-            type="submit" 
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          >
-            Send Message
-          </button>
-        </form>
+        </div>
       </div>
-      <Footer />
-    </div>
+    </section>
   );
-}
+};
 
 export default Contact;
