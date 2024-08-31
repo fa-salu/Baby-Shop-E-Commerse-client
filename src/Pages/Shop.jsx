@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
@@ -11,10 +11,13 @@ const Shop = () => {
     useContext(ShopContext);
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
+  const { category } = useParams();
 
   // Fetch products from API
   const { data, isPending, error } = useFetch(
-    "http://localhost:5000/users/products"
+    category
+      ? `http://localhost:5000/users/products/category/${category}`
+      : "http://localhost:5000/users/products"
   );
 
   useEffect(() => {

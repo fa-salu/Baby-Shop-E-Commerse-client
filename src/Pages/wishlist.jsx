@@ -2,7 +2,6 @@ import React, { useEffect, useContext } from "react";
 import { ShopContext } from "../Context/CartItem/ShopContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
-import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 
@@ -12,8 +11,7 @@ const Wishlist = () => {
     wishlistItems,
     getWishlist,
     removeFromWishlist,
-    addToWishlist,
-    addToCart
+    addToCart,
   } = useContext(ShopContext);
   const navigate = useNavigate();
 
@@ -30,14 +28,6 @@ const Wishlist = () => {
       alert("Please log in to manage your wishlist.");
     }
   };
-
-//   const handleAddToWishlist = (productId) => {
-//     if (currentUser) {
-//       addToWishlist(currentUser.id, productId);
-//     } else {
-//       alert("Please log in to manage your wishlist.");
-//     }
-//   };
 
   const handleAddToCart = (productId) => {
     if (currentUser) {
@@ -56,7 +46,9 @@ const Wishlist = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {wishlistItems.length === 0 ? (
-            <div className="text-center text-gray-700">Your wishlist is empty.</div>
+            <div className="text-center text-gray-700">
+              Your wishlist is empty.
+            </div>
           ) : (
             wishlistItems.map((item) => (
               <div

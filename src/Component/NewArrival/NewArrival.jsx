@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import useFetch from "../../utils/Api";
 
 const NewArrival = () => {
-  const { data, isPending, error } = useFetch("http://localhost:5000/users/products");
+  const { data, isPending, error } = useFetch(
+    "http://localhost:5000/users/products"
+  );
   const navigate = useNavigate();
 
   if (isPending) return <div>Loading...</div>;
@@ -19,14 +21,15 @@ const NewArrival = () => {
           NEW ARRIVALS
         </h1>
         <p className="text-gray-700 my-8 text-center">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. <br />
-          beatae cupiditate amet itaque cumque consectetur dignissimos eligendi
-          optio mollitia? Illo.
+          Discover the latest additions to our collection! <br />Explore top-quality
+          baby essentials that are perfect for your little one's needs. <br /> From
+          charming toys to stylish clothing, <br />find something special for every
+          stage of growth.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
           {New_Arrivals.map((item) => (
             <div
-              key={item.id}
+              key={item._id} onClick={() => navigate("/shop")}
               className="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
             >
               <img
@@ -45,12 +48,12 @@ const NewArrival = () => {
                 </p>
               </div>
               <div>
-                <button
+                {/* <button
                   onClick={() => navigate("/shop")}
-                  className="flex items-center justify-center bg-red-400 hover:bg-red-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  className="flex items-center justify-center bg-[#51BDAD] hover:bg-[#51BDBC] text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                   SHOP NOW <FaArrowRight className="ml-1" />
-                </button>
+                </button> */}
               </div>
             </div>
           ))}

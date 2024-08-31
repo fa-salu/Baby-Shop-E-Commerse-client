@@ -22,6 +22,9 @@ import ProtectAdmin from "./Admin/Pages/AdminHome/HomeProtect";
 import UserDetails from "./Admin/Pages/CustomerDetials";
 import OrderDetails from "./Component/Payment/OrderDetails";
 import Wishlist from "./Pages/wishlist";
+import PaymentPage from "./Component/Payment/PlaceOrder";
+import Category from "./Component/Category/Category";
+import CategoryProducts from "./Component/Category/Categories";
 
 const App = () => {
   return (
@@ -48,8 +51,11 @@ const App = () => {
 
         <Route path="/shop/:id" element={<Cart />} />
         <Route path="/cartitems" element={<CartItems />} />
+        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/orderDetails" element={<OrderDetails />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/category" element={<Category />} />
+        <Route path="/categories/:category" element={<CategoryProducts />} />
 
         {/* Admin routes */}
         <Route

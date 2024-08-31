@@ -38,17 +38,19 @@ const OrderDetails = () => {
     };
 
     fetchOrderDetails();
-  }, [userId]);
+  }, [userId, token]);
 
   if (loading) return <div className="text-center mt-5">Loading...</div>;
-  if (error) return <div className="text-center mt-5 text-red-500">Error: {error}</div>;
+  // if (error) return <div className="text-center mt-5 text-red-500">Error: {error}</div>;
 
   return (
     <div className="p-4">
       <h1 className="text-3xl font-bold mb-6 text-center">Order Details</h1>
-      {orders.length > 0 ? (
+      {orders.length === 0 ? (
+        <p className="text-center">No orders found.</p>
+      ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {orders.map((order, index) => (
+          {orders.map((order) => (
             <div key={order._id} className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
               <p className="mb-2">
                 <strong>Order ID:</strong> {order.orderId}
@@ -63,8 +65,7 @@ const OrderDetails = () => {
                 <strong>Total Quantity:</strong> {order.totalQuantity}
               </p>
               <p className="mb-2">
-                <strong>Purchase Date:</strong>{" "}
-                {new Date(order.purchaseDate).toLocaleString()}
+                <strong>Purchase Date:</strong> {new Date(order.purchaseDate).toLocaleString()}
               </p>
               <p className="mb-2">
                 <strong>Payment Status:</strong> {order.paymentStatus}
@@ -84,7 +85,7 @@ const OrderDetails = () => {
               </p>
               <h2 className="text-xl font-semibold mt-4">Products</h2>
               <ul className="list-disc ml-5">
-                {order.products.map((product, idx) => (
+                {order.products.map((product) => (
                   <li key={product.productId} className="mb-2">
                     <p>
                       <strong>Product ID:</strong> {product.productId}
@@ -98,8 +99,6 @@ const OrderDetails = () => {
             </div>
           ))}
         </div>
-      ) : (
-        <p className="text-center">No orders found.</p>
       )}
     </div>
   );

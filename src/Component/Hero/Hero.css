@@ -1,4 +1,39 @@
 .Hero_Body {
-    background-image: url(../../assets/Home_Body.jpg);
-    background-size: cover;
-}
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  
+  @media (max-width: 768px) {
+    .Hero_Body {
+      background-size: cover; 
+      background-position: center; 
+      height: auto; 
+    }
+  
+    .Hero_Body div {
+      padding: 4rem 2rem; 
+    }
+  }
+
+  
+  @keyframes outline-fade {
+    0% {
+      outline-color: transparent;
+      outline-width: 0;
+    }
+    50% {
+      outline-color: green;
+      outline-width: 2px;
+    }
+    100% {
+      outline-color: transparent;
+      outline-width: 0;
+    }
+  }
+  
+  .animate-outline {
+    animation: outline-fade 2s infinite;
+  }
+  

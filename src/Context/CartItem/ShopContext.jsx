@@ -17,6 +17,7 @@ export const ShopContextProvider = (props) => {
   const [wishlistItems, setWishlistItems]= useState([])
   const [productId, setProductId] = useState(null);
 
+
   useEffect(() => {
     const storedUser = Cookies.get("currentUser");
 
@@ -24,6 +25,8 @@ export const ShopContextProvider = (props) => {
       setCurrentUser(JSON.parse(storedUser));
     }
   }, []);
+
+  
 
   const getCartItems = async (userId) => {
     try {
@@ -119,7 +122,7 @@ export const ShopContextProvider = (props) => {
         }
       );
       if (!response.ok) throw new Error("Failed to clear cart");
-      setCartItems([]); // Clear cart in frontend
+      setCartItems([]);
     } catch (error) {
       console.error("Error clearing cart:", error);
     }
@@ -224,6 +227,7 @@ export const ShopContextProvider = (props) => {
         logout,
         clearCart,
         cartItems,
+        setCartItems,
         addToWishlist,
         wishlistItems,
         removeFromWishlist,

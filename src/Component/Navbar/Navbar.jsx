@@ -36,7 +36,7 @@ const Navbar = () => {
   return (
     <>
       {!isAdmin && (
-        <div className="w-full bg-green-50 text-gray-800 sticky top-0 z-10">
+        <div className="w-full bg-[#FFFFFF] text-gray-800 sticky top-0 z-10">
           <nav className="container mx-auto flex items-center justify-between py-4 px-4 lg:px-0">
             <div className="text-2xl font-bold ml-5">
               Little<span className="text-pink-500">Love</span>
