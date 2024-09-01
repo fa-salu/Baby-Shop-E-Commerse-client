@@ -17,7 +17,6 @@ import {
 } from "recharts";
 
 const Dashboard = () => {
-  // Fetch existing data
   const {
     data: userData,
     isPending: userPending,
@@ -29,7 +28,6 @@ const Dashboard = () => {
     error: dbError,
   } = useFetch("http://localhost:5000/admin/products");
 
-  // Fetch new metrics
   const {
     data: revenueData,
     isPending: revenuePending,
@@ -40,13 +38,13 @@ const Dashboard = () => {
     isPending: purchasedPending,
     error: purchasedError,
   } = useFetch("http://localhost:5000/admin/purchase");
-  console.log("revenue date", revenueData);
 
   const [numUsers, setNumUsers] = useState(0);
   const [numItems, setNumItems] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [totalPurchased, setTotalPurchased] = useState(0);
   const [revenueDataPoints, setRevenueDataPoints] = useState([]);
+  const [monthlyRevenue, setMonthlyRevenue] = useState([]);
 
   useEffect(() => {
     if (dbData) {
@@ -80,9 +78,11 @@ const Dashboard = () => {
         }));
 
         setRevenueDataPoints(cumulativeData);
+        setMonthlyRevenue(revenueData.monthly);
       } else {
         console.warn("Monthly data is missing or empty");
-        setRevenueDataPoints([]); // Set to empty array or handle as needed
+        setRevenueDataPoints([]);
+        setMonthlyRevenue([]);
       }
     }
   }, [revenueData]);
@@ -100,9 +100,8 @@ const Dashboard = () => {
       <div>Error: {userError || dbError || revenueError || purchasedError}</div>
     );
 
-  console.log("Revenue Data Points:", revenueDataPoints); // Debugging line
+  console.log("Revenue Data Points:", revenueDataPoints);
 
-  // Define the data for the PieChart
   const pieData = [
     { name: "Total Products", value: numItems },
     { name: "Total Orders", value: totalPurchased },
@@ -209,36 +208,33 @@ const Dashboard = () => {
         <div className="bg-white rounded-lg shadow-md p-6">
           <h2 className="text-xl font-bold mb-4">Total Revenue Over Time</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <LineChart
-              data={revenueDataPoints}
-              margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
+            <LineChart data={revenueDataPoints}>
               <XAxis dataKey="month" />
-              <YAxis tickCount={5} />
+              <YAxis dataKey="totalRevenue" />
+              <CartesianGrid strokeDasharray="3 3" />
               <Tooltip />
               <Legend />
               <Line
                 type="monotone"
                 dataKey="totalRevenue"
                 stroke="#8884d8"
-                activeDot={{ r: 8 }}
+                strokeWidth={2}
               />
             </LineChart>
           </ResponsiveContainer>
         </div>
 
-        {/* Top-Selling Products Graph */}
+        {/* Monthly Revenue Bar Chart */}
         <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-xl font-bold mb-4">Top-Selling Products</h2>
+          <h2 className="text-xl font-bold mb-4">Monthly Revenue</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={dbData}>
+            <BarChart data={monthlyRevenue}>
+              <XAxis dataKey="month" />
+              <YAxis />
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="productName" />
-              <YAxis tickCount={5} />
               <Tooltip />
               <Legend />
-              <Bar dataKey="sales" fill="#82ca9d" />
+              <Bar dataKey="revenue" fill="#82ca9d" />
             </BarChart>
           </ResponsiveContainer>
         </div>

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 import Cookies from "js-cookie";
 import useFetch from "../../utils/Api";
 
@@ -146,6 +146,7 @@ export const ShopContextProvider = (props) => {
 
       const data = await response.json();
       setWishlistItems(data.wishlist.products); 
+      getWishlist(userId)
     } catch (error) {
       console.error("Error adding item to wishlist:", error);
     }
@@ -166,13 +167,14 @@ export const ShopContextProvider = (props) => {
   
       const data = await response.json();
       setWishlistItems(data.wishlist.products); 
+      getWishlist(userId)
     } catch (error) {
       console.error("Error removing item from wishlist:", error);
     }
   };
 
 
-  const getWishlist = async (userId) => {
+  const getWishlist = useCallback(async (userId) => {
     try {
       const token = Cookies.get("token");
       const response = await fetch(`http://localhost:5000/users/wishlist/${userId}`, {
@@ -182,15 +184,15 @@ export const ShopContextProvider = (props) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       if (!response.ok) throw new Error("Failed to fetch wishlist");
 
       const data = await response.json();
-      setWishlistItems(data); 
+      setWishlistItems(data);
     } catch (error) {
       console.error("Error fetching wishlist:", error);
     }
-  };
+  }, []);
 
   
   

@@ -7,7 +7,6 @@ const AdminNavbar = () => {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
-  // Get user data from cookies
   const userData = JSON.parse(Cookie.get("currentUser") || "{}");
 
   const handleLogout = () => {
@@ -16,7 +15,6 @@ const AdminNavbar = () => {
     Cookie.remove("isAdmin");
     Cookie.remove("currentUser");
 
-    // Redirect to login or home page
     navigate("/");
   };
 
@@ -24,13 +22,6 @@ const AdminNavbar = () => {
     <div className="w-full bg-gray-800 text-white shadow-lg fixed top-0 left-0 right-0 z-10">
       <nav className="container mx-auto flex items-center justify-between py-4 px-4 lg:px-0">
         <div className="text-2xl font-bold ml-8">Admin</div>
-        <div className="flex-grow max-w-md px-4">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="w-full py-2 px-4 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none"
-          />
-        </div>
         <div className="relative">
           <FaUser
             className="text-2xl mr-8 hover:text-gray-300 cursor-pointer"

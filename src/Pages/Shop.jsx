@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
@@ -27,10 +27,13 @@ const Shop = () => {
   }, [data]);
 
   useEffect(() => {
-    if (currentUser) {
+    if (currentUser && wishlistItems.length === 0) {
       getWishlist(currentUser.id);
     }
-  }, [currentUser, getWishlist]);
+  }, [currentUser, getWishlist, wishlistItems]);
+  
+  console.log('hello');
+  
 
   const isProductInWishlist = (productId) =>
     wishlistItems.some((item) => item._id === productId);

@@ -81,18 +81,7 @@ const Wishlist = () => {
                         size="lg"
                         className="text-red-500"
                       />
-                    </button>
-                    {/* <button
-                      onClick={() => handleAddToWishlist(item._id)}
-                      className="mr-2"
-                      aria-label="Add to Wishlist"
-                    >
-                      <FontAwesomeIcon
-                        icon={regularHeart}
-                        size="lg"
-                        className="text-gray-400"
-                      />
-                    </button> */}
+                    </button> 
                     <button
                       onClick={() => handleAddToCart(item._id)}
                       aria-label="Add to Cart"

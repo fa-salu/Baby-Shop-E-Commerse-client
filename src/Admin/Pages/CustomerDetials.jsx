@@ -9,12 +9,16 @@ const CustomerDetail = () => {
   // Fetching user details
   const {
     data: user,
-    isPending,
-    error,
+    isPending: userIsPending,
+    error: userError,
   } = useFetch(`http://localhost:5000/admin/user/${userId}`);
 
   // Fetching user's orders
-  const { data: orders } = useFetch(`http://localhost:5000/admin/order`);
+  const {
+    data: orders,
+    isPending: ordersIsPending,
+    error: ordersError,
+  } = useFetch(`http://localhost:5000/admin/order/${userId}`);
 
   // State for accordion
   const [expandedOrder, setExpandedOrder] = useState(null);
@@ -26,26 +30,31 @@ const CustomerDetail = () => {
 
   return (
     <div className="container p-4 overflow-auto w-full">
-      <h1 className="text-3xl font-bold text-center mt-20 mb-8 w-full">
-        User Details
-      </h1>
-      {isPending && <div>Loading...</div>}
-      {error && <div>Error: {error}</div>}
+      {userIsPending && <div className="text-center">Loading user details...</div>}
+      {userError && <div className="text-center text-red-500">Error: {userError}</div>}
       {user && (
-        <div className="border p-4 rounded shadow-lg mb-6 w-full">
+        <div className="border p-4 rounded mb-6 w-full text-center bg-white shadow-md">
+          <h1 className="text-3xl font-bold text-center mb-4 bg-gray-50 p-4 rounded-md shadow-lg">
+            User Details
+          </h1>
           <h2 className="text-xl font-bold">User: {user.username}</h2>
           <p className="text-gray-600">Email: {user.email}</p>
         </div>
       )}
 
-      <h2 className="text-2xl font-semibold mt-8 mb-4 w-full">Orders</h2>
+      <h2 className="text-2xl bg-gray rounded-md font-semibold mt-8 mb-4 w-full">Orders</h2>
+      {ordersIsPending && <div className="text-center">Loading orders...</div>}
+      {ordersError && <div className="text-center text-red-500">Error: {ordersError}</div>}
       {orders && orders.length > 0 ? (
-        <div className="space-y-4 w-full">
+        <div className="grid grid-cols-1 gap-4">
           {orders.map((order) => (
-            <div key={order._id} className="border p-4 rounded shadow-lg w-full">
+            <div
+              key={order._id}
+              className="border p-4 rounded-lg bg-white shadow-md"
+            >
               <div
                 onClick={() => toggleAccordion(order._id)}
-                className="cursor-pointer flex justify-between items-center"
+                className="cursor-pointer flex justify-between items-center mb-4 border-b pb-2"
               >
                 <h3 className="text-lg font-bold">Order ID: {order.orderId}</h3>
                 <button className="text-blue-500 focus:outline-none">
@@ -54,47 +63,73 @@ const CustomerDetail = () => {
               </div>
               {expandedOrder === order._id && (
                 <div className="mt-4">
-                   <p >
-                <strong>Name:</strong> {order.userDetails.name}
-              </p>
-              <p>
-                <strong>Place:</strong> {order.userDetails.place}
-              </p>
-              <p >
-                <strong>Phone:</strong> {order.userDetails.phone}
-              </p>
-              <p >
-                <strong>Address:</strong> {order.userDetails.address}
-              </p>
-              <hr className="p-2"/>
-                  <p>
-                    <strong>Total Price:</strong> ${order.totalPrice}
-                  </p>
-                  <p>
-                    <strong>Total Items:</strong> {order.totalItems}
-                  </p>
-                  <p>
-                    <strong>Total Quantity:</strong> {order.totalQuantity}
-                  </p>
-                  <p>
-                    <strong>Purchase Date:</strong>{" "}
-                    {new Date(order.purchaseDate).toLocaleString()}
-                  </p>
-                  <p>
-                    <strong>Payment Status:</strong> {order.paymentStatus}
-                  </p>
-                  <h4 className="text-lg font-semibold mt-2">Products</h4>
+                  <div className="mb-4">
+                    <p>
+                      <strong>Name:</strong> {order.userDetails?.name || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Place:</strong> {order.userDetails?.place || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Phone:</strong> {order.userDetails?.phone || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Address:</strong> {order.userDetails?.address || "N/A"}
+                    </p>
+                  </div>
+                  <hr className="my-2" />
+                  <div className="mb-4">
+                    <p>
+                      <strong>Total Price:</strong> ${order.totalPrice || "0.00"}
+                    </p>
+                    <p>
+                      <strong>Total Items:</strong> {order.totalItems || 0}
+                    </p>
+                    <p>
+                      <strong>Total Quantity:</strong> {order.totalQuantity || 0}
+                    </p>
+                    <p>
+                      <strong>Purchase Date:</strong> {order.purchaseDate ? new Date(order.purchaseDate).toLocaleString() : "N/A"}
+                    </p>
+                    <p>
+                      <strong>Payment Status:</strong> {order.paymentStatus || "N/A"}
+                    </p>
+                  </div>
+                  <h4 className="text-lg font-semibold mt-2 mb-2">Products</h4>
                   <ul className="list-disc ml-5">
-                    {order.products.map((product, idx) => (
-                      <li key={product.productId} className="mb-2">
-                        <p>
-                          <strong>Product ID:</strong> {product.productId}
-                        </p>
-                        <p>
-                          <strong>Quantity:</strong> {product.quantity}
-                        </p>
-                      </li>
-                    ))}
+                    {order.products && order.products.length > 0 ? (
+                      order.products.map((product, index) => (
+                        <li key={index} className="mb-4 flex items-center bg-gray-50 p-4 rounded-lg shadow-sm">
+                          <img
+                            src={
+                              product.productId?.image ||
+                              "http://example.com/default.jpg"
+                            }
+                            alt={`Product ${product.productId?.name}`}
+                            className="w-16 h-16 object-cover mr-4"
+                          />
+                          <div>
+                            <p>
+                              <strong>Product Name:</strong>{" "}
+                              {product.productId?.name || "N/A"}
+                            </p>
+                            <p>
+                              <strong>Description:</strong>{" "}
+                              {product.productId?.description || "N/A"}
+                            </p>
+                            <p>
+                              <strong>Price:</strong> $
+                              {product.productId?.price || "0.00"}
+                            </p>
+                            <p>
+                              <strong>Quantity:</strong> {product.quantity || 0}
+                            </p>
+                          </div>
+                        </li>
+                      ))
+                    ) : (
+                      <li>No products found.</li>
+                    )}
                   </ul>
                 </div>
               )}
@@ -102,7 +137,7 @@ const CustomerDetail = () => {
           ))}
         </div>
       ) : (
-        <p>No orders found.</p>
+        <p className="text-center">No orders found.</p>
       )}
     </div>
   );
