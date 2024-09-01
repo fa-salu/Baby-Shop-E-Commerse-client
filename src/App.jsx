@@ -56,6 +56,8 @@ const App = () => {
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/category" element={<Category />} />
         <Route path="/categories/:category" element={<CategoryProducts />} />
+        <Route path="/category/:category" element={<Shop />} />
+
 
         {/* Admin routes */}
         <Route

@@ -5,18 +5,22 @@ import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 import { ShopContext } from "../Context/CartItem/ShopContext";
 import useFetch from "../utils/Api";
+import CategoryProducts from "../Component/Category/Categories";
+import Footer from "../Component/Footer/Footer";
 
 const Shop = () => {
   const { addToWishlist, wishlistItems, currentUser, getWishlist } =
     useContext(ShopContext);
   const [products, setProducts] = useState([]);
-  const navigate = useNavigate();
   const { category } = useParams();
+  console.log(category);
 
-  // Fetch products from API
+  const navigate = useNavigate();
+
+  // Fetch products based on category
   const { data, isPending, error } = useFetch(
-    category
-      ? `http://localhost:5000/users/products/category/${category}`
+    category && category !== "All"
+      ? `http://localhost:5000/users/products/${category}`
       : "http://localhost:5000/users/products"
   );
 
@@ -31,9 +35,6 @@ const Shop = () => {
       getWishlist(currentUser.id);
     }
   }, [currentUser, getWishlist, wishlistItems]);
-  
-  console.log('hello');
-  
 
   const isProductInWishlist = (productId) =>
     wishlistItems.some((item) => item._id === productId);
@@ -48,6 +49,7 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
+      <CategoryProducts />
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
           <h1 className="text-5xl font-bold text-gray-800">Shop</h1>
@@ -56,16 +58,16 @@ const Shop = () => {
         {isPending && <div>Loading...</div>}
         {error && <div>Error: {error}</div>}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {products.map((item, ind) => (
+          {products.map((item) => (
             <div
-              key={ind}
+              key={item._id}
               className="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
             >
               <img
                 src={item.image}
                 alt={item.name}
                 className="w-full h-52 object-cover"
-                onClick={() => navigate(`${item._id}`)}
+                onClick={() => navigate(`/shop/${item._id}`)}
               />
               <div className="p-4">
                 <h4 className="text-lg font-semibold mb-2 text-gray-900">
@@ -98,6 +100,8 @@ const Shop = () => {
           ))}
         </div>
       </div>
+      <hr className="bg-gray mt-5" />
+      <Footer />
     </div>
   );
 };

@@ -1,154 +1,71 @@
-// import { useParams, useNavigate } from "react-router-dom";
-// import useFetch from "../../utils/Api";
-
-// const CategoryProducts = () => {
-//   const { category } = useParams(); 
-//   const navigate = useNavigate();
-  
-//   // Fetch products based on the category
-//   const { data, isPending, error } = useFetch(
-//     category === "All"
-//       ? `http://localhost:5000/users/products`
-//       : `http://localhost:5000/users/products/${category}`
-//   );  
-
-//   const handleProductClick = (productId) => {
-//     navigate(`/shop/${productId}`);
-//   };
-
-//   const categories = ["All", "Toys", "Clothing", "Feeding", "Footwear", "Bath"];
-
-//   return (
-//     <div className="container align-middle p-4 h-[100vh] overflow-auto">
-//       <h1 className="text-3xl font-bold text-center mb-8">Categories </h1>
-
-//       <div className="flex justify-center mb-8">
-//         {categories.map((item) => (
-//           <button
-//             key={item}
-//             className={`px-4 py-2 mx-2 text-sm font-medium border rounded-md ${
-//               category === item
-//                 ? "bg-blue-600 text-white"
-//                 : "bg-white text-blue-600 border-blue-600"
-//             }`}
-//             onClick={() => navigate(`/categories/${item}`)}
-//           >
-//             {item}
-//           </button>
-//         ))}
-//       </div>
-
-//       {isPending && <div>Loading...</div>}
-//       {error && <div>Error: {error}</div>}
-//       {data && (
-//         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-//           {data.map((item) => (
-//             <div key={item.id} className="border p-4 rounded shadow-lg">
-//               <img
-//                 src={item.image}
-//                 alt={item.name}
-//                 className="w-full h-28 object-cover mb-4 rounded"
-//                 onClick={() => handleProductClick(item._id)}
-//               />
-//               <h2 className="text-xl font-bold">{item.name}</h2>
-//               <p className="text-gray-600">{item.description}</p>
-//               <p className="text-lg font-semibold">${item.price}</p>
-//               <p className="text-gray-500">Category: {item.category}</p>
-//               <p className="text-yellow-500">Rating: {item.stars} stars</p>
-//             </div>
-//           ))}
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default CategoryProducts;
-
-
-
-import { useParams, useNavigate } from "react-router-dom";
-import useFetch from "../../utils/Api";
+import { useNavigate } from "react-router-dom";
 
 const CategoryProducts = () => {
-  const { category } = useParams();
   const navigate = useNavigate();
 
-  // Fetch products based on the category
-  const { data, isPending, error } = useFetch(
-    category === "All"
-      ? `http://localhost:5000/users/products`
-      : `http://localhost:5000/users/products/${category}`
-  );
-
-  const handleProductClick = (productId) => {
-    navigate(`/shop/${productId}`);
-  };
-
+  // Define categories
   const categories = [
-    { name: "All", image: "path/to/all-category-image.jpg" },
-    { name: "Toys", image: "path/to/toys-image.jpg" },
-    { name: "Clothing", image: "path/to/clothing-image.jpg" },
-    { name: "Feeding", image: "path/to/feeding-image.jpg" },
-    { name: "Footwear", image: "path/to/footwear-image.jpg" },
-    { name: "Bath", image: "path/to/bath-image.jpg" },
+    {
+      name: "All",
+      image:
+        "https://img.freepik.com/free-photo/top-view-yellow-sweater-with-toys_23-2148251496.jpg?size=626&ext=jpg&ga=GA1.1.1683462813.1724928307&semt=ais_hybrid",
+    },
+    {
+      name: "Toys",
+      image:
+        "https://img.freepik.com/free-photo/close-up-new-born-baby-with-toys_23-2151004176.jpg?ga=GA1.1.1683462813.1724928307&semt=ais_hybrid",
+    },
+    {
+      name: "Clothing",
+      image:
+        "https://img.freepik.com/premium-photo/pastel-knitted-romper-with-jumper-shoes-cotton-crown-pacifier-set-baby-clothes-accessories-little-princess-beige-background-fashion-newborn-flat-lay-top-view_479776-3800.jpg?ga=GA1.1.1683462813.1724928307&semt=ais_hybrid",
+    },
+    {
+      name: "Feeding",
+      image:
+        "https://img.freepik.com/premium-photo/horizontal-shot-unrecognizable-woman-feeding-her-little-baby-son-with-solid-food_236854-26411.jpg?ga=GA1.1.1683462813.1724928307&semt=ais_hybrid",
+    },
+    {
+      name: "Footwear",
+      image:
+        "https://img.freepik.com/free-photo/top-view-cute-little-baby-accesories-with-copy-space_23-2148415499.jpg?ga=GA1.1.1683462813.1724928307&semt=ais_hybrid",
+    },
+    {
+      name: "Bath",
+      image:
+        "https://img.freepik.com/free-photo/sweet-baby-girl-bathroom_1328-2528.jpg?ga=GA1.1.1683462813.1724928307&semt=ais_hybrid",
+    },
   ];
 
+  const handleCategoryClick = (category) => {
+    navigate(`/category/${category}`);
+  };
+
   return (
-    <div className="container align-middle ">
+    <div className="container mx-auto py-8">
       <h1 className="text-3xl font-bold text-center mb-8">Categories</h1>
 
       {/* Category Image Box */}
-      <div className="flex justify-center mb-8 p-4 border rounded-md shadow-lg bg-white">
-        <div className="grid grid-cols-3 md:grid-cols-4 gap-4">
-          {categories.map((item) => (
-            <div
-              key={item.name}
-              className="cursor-pointer transition-transform transform hover:scale-105"
-              onClick={() => navigate(`/categories/${item.name}`)}
-            >
-              <img
-                src={item.image}
-                alt={item.name}
-                className={`w-full h-32 object-cover rounded-lg ${
-                  category === item.name
-                    ? "border-4 border-blue-600"
-                    : "border-2 border-transparent"
-                }`}
-              />
-              <p className="text-center mt-2 font-medium text-sm text-gray-700">
-                {item.name}
-              </p>
+      <div className="grid grid-cols-3 gap-2">
+        {categories.map((item) => (
+          <div
+            key={item.name}
+            className="relative overflow-hidden cursor-pointer"
+            onClick={() => handleCategoryClick(item.name)}
+          >
+            <img
+              src={item.image}
+              alt={item.name}
+              className="w-full h-40 object-cover"
+            />
+            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white text-lg font-semibold">
+              {item.name}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-
-      {/* Product Display Section */}
-      {isPending && <div>Loading...</div>}
-      {error && <div>Error: {error}</div>}
-      {data && (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {data.map((item) => (
-            <div key={item._id} className="border p-4 rounded shadow-lg">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-28 object-cover mb-4 rounded"
-                onClick={() => handleProductClick(item._id)}
-              />
-              <h2 className="text-xl font-bold">{item.name}</h2>
-              <p className="text-gray-600">{item.description}</p>
-              <p className="text-lg font-semibold">${item.price}</p>
-              <p className="text-gray-500">Category: {item.category}</p>
-              <p className="text-yellow-500">Rating: {item.stars} stars</p>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 };
 
 export default CategoryProducts;
-
