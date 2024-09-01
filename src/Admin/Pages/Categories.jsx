@@ -5,7 +5,7 @@ const Categories = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const { data, isPending, error } = useFetch(`http://localhost:5000/admin/products`);
 
-  const categories = ["All", "Toys", "Clothing", "Feeding", "Protein", "Bath"];
+  const categories = ["All", "Toys", "Clothing", "Feeding", "Footwear", "Bath"];
 
   const filteredData =
     selectedCategory === "All"

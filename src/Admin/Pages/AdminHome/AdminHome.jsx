@@ -4,10 +4,16 @@ import Sidebar from "../../Component/AdminSidebar";
 
 const AdminHome = ({ children }) => {
   return (
-    <div>
-      <Navbar />
+    <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      <div className="absolute top-0  ml-16 mt-16">{children}</div>
+
+      <div className="flex flex-col flex-1">
+        <Navbar />
+
+        <div className="relative flex-1 p-6 overflow-y-auto mt-16 ml-16">
+          {children}
+        </div>
+      </div>
     </div>
   );
 };
