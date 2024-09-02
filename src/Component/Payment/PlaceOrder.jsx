@@ -44,7 +44,7 @@ const PaymentPage = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/users/order", {
+      const response = await fetch("https://babyshop-backend.onrender.com/users/order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const PaymentPage = () => {
         handler: async function (response) {
           try {
             const verifyResponse = await fetch(
-              "http://localhost:5000/users/order/verify",
+              "https://babyshop-backend.onrender.com/users/order/verify",
               {
                 method: "POST",
                 headers: {
