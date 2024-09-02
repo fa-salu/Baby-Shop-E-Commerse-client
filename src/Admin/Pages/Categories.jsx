@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import useFetch from "../../utils/Api";
+import Spinner from "../../Component/Spinner/Spinner";
 
 const Categories = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -36,17 +37,19 @@ const Categories = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold text-center mb-8">Product List</h1>
+    <div className="container mx-auto p-4 text-white">
+      <h1 className="text-3xl font-bold text-center mb-8 bg-[#193351] p-4 rounded-md shadow-lg">
+        Category
+      </h1>
 
       <div className="flex justify-center mb-8 flex-wrap">
         {categories.map((category) => (
           <button
             key={category}
-            className={`px-4 py-2 mx-2 text-sm font-medium border rounded-md ${
+            className={`px-4 py-2 mx-2 text-sm font-medium rounded-md ${
               selectedCategory === category
-                ? "bg-blue-600 text-white"
-                : "bg-white text-blue-600 border-blue-600"
+                ? "bg-[#193351] text-white"
+                : "bg-gray-300   text-black border-blue-600"
             }`}
             onClick={() => {
               setSelectedCategory(category);
@@ -58,13 +61,13 @@ const Categories = () => {
         ))}
       </div>
 
-      {isPending && <div className="text-center">Loading...</div>}
+      {isPending && <Spinner />}
       {error && <div className="text-center text-red-500">Error: {error}</div>}
       {filteredData.length > 0 ? (
         <div className="overflow-x-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {paginatedData.map((item) => (
-              <div key={item.id} className="border p-4 rounded shadow-lg">
+              <div key={item.id} className="p-4 rounded bg-[#193351] shadow-lg text-center font-serif">
                 <img
                   src={item.image}
                   alt={item.name}
@@ -74,7 +77,10 @@ const Categories = () => {
                 <p className="text-gray-600">{item.description}</p>
                 <p className="text-lg font-semibold">${item.price}</p>
                 <p className="text-gray-500">Category: {item.category}</p>
-                <p className="text-yellow-500">Rating: {item.stars} stars</p>
+                <p className="text-yellow-500">
+                  {"★".repeat(item.stars)}
+                  {"☆".repeat(5 - item.stars)}
+                </p>
               </div>
             ))}
           </div>

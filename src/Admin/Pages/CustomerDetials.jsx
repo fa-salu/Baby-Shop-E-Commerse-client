@@ -1,6 +1,9 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useFetch from "../../utils/Api";
 import { useState } from "react";
+import Spinner from "../../Component/Spinner/Spinner";
+import { BsFillArrowLeftSquareFill } from "react-icons/bs";
+
 
 const CustomerDetail = () => {
   const { userId } = useParams();
@@ -29,28 +32,29 @@ const CustomerDetail = () => {
   };
 
   return (
-    <div className="container p-4 overflow-auto w-full">
-      {userIsPending && <div className="text-center">Loading user details...</div>}
+    <div className="container p-4 overflow-auto w-full text-white">
+      {userIsPending && <Spinner />}
       {userError && <div className="text-center text-red-500">Error: {userError}</div>}
       {user && (
-        <div className="border p-4 rounded mb-6 w-full text-center bg-white shadow-md">
-          <h1 className="text-3xl font-bold text-center mb-4 bg-gray-50 p-4 rounded-md shadow-lg">
+        <div className="border p-4 rounded mb-6 w-full text-center bg-[#172F4A] shadow-md">
+          <h1 className="text-3xl font-bold text-center mb-4 bg-[#193351] p-4 rounded-md shadow-lg">
             User Details
           </h1>
+          <Link to={'/customers'}><BsFillArrowLeftSquareFill size={32} /></Link>
           <h2 className="text-xl font-bold">User: {user.username}</h2>
-          <p className="text-gray-600">Email: {user.email}</p>
+          <p className="text-gray-600 text-white">Email: {user.email}</p>
         </div>
       )}
 
-      <h2 className="text-2xl bg-gray rounded-md font-semibold mt-8 mb-4 w-full">Orders</h2>
-      {ordersIsPending && <div className="text-center">Loading orders...</div>}
+      <h2 className="text-2xl rounded-md font-semibold mt-8 mb-4 w-full">Orders</h2>
+      {ordersIsPending && <Spinner />}
       {ordersError && <div className="text-center text-red-500">Error: {ordersError}</div>}
       {orders && orders.length > 0 ? (
         <div className="grid grid-cols-1 gap-4">
           {orders.map((order) => (
             <div
               key={order._id}
-              className="border p-4 rounded-lg bg-white shadow-md"
+              className="border p-4 rounded-lg bg-[#193351] shadow-md"
             >
               <div
                 onClick={() => toggleAccordion(order._id)}
@@ -99,7 +103,7 @@ const CustomerDetail = () => {
                   <ul className="list-disc ml-5">
                     {order.products && order.products.length > 0 ? (
                       order.products.map((product, index) => (
-                        <li key={index} className="mb-4 flex items-center bg-gray-50 p-4 rounded-lg shadow-sm">
+                        <li key={index} className="mb-4 flex items-center bg-[#172F4A] p-4 rounded-lg shadow-sm">
                           <img
                             src={
                               product.productId?.image ||

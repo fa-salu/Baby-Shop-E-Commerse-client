@@ -15,7 +15,7 @@ const Sidebar = () => {
   return (
     <div className="flex">
       <div
-        className={`bg-gray-800 text-white fixed top-16 h-screen inset-y-0 left-0 transform z-10 ${
+        className={`bg-[#13233A] text-white fixed top-16 h-screen inset-y-0 left-0 transform z-10 ${
           isOpen ? "w-64" : "w-16"
         } transition-all duration-300 ease-in-out`}
       >

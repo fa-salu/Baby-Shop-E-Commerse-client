@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ShopContext } from "../Context/CartItem/ShopContext";
+import { FaHeart, FaInfoCircle } from "react-icons/fa";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const Profile = () => {
             ></span>
           </div>
         </section>
-        <section className="relative py-16 bg-gray-100">
+        <section className="relative px-[300px] py-16 bg-gray-100">
           <div className="container mx-auto px-4">
             <div className="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-xl rounded-lg -mt-64">
               <div className="px-6">
@@ -94,16 +95,26 @@ const Profile = () => {
                         This is the profile of {currentUser.username}. Feel free
                         to explore more details by clicking on the links below.
                       </p>
-                      <Link to={"/orderDetails"}>
-                        <h2 className="w-full px-4 py-2 mt-3 bg-blue-500 text-white-center rounded-md">
+                     <div className="flex justify-between">
+                     <Link to={"/orderDetails"}>
+                        <button
+                          className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          title="Order Details"
+                        >
+                          <FaInfoCircle className="mr-2" />
                           Order Details
-                        </h2>
+                        </button>
                       </Link>
                       <Link to={"/wishlist"}>
-                        <h2 className="w-full px-4 py-2 mt-3 bg-blue-500 text-white-center rounded-md">
-                          Wishlist Details
-                        </h2>
+                        <button
+                          className="flex items-center px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500"
+                          title="Add to Wishlist"
+                        >
+                          <FaHeart className="mr-2" />
+                          Wishlist
+                        </button>
                       </Link>
+                     </div>
                     </div>
                   </div>
                 </div>

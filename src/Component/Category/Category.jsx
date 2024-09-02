@@ -15,21 +15,21 @@ const Category = () => {
   const navigate = useNavigate();
 
   const handleCategoryClick = (category) => {
-    navigate(`/categories/${category}`);
+    navigate(`/category/${category}`);
   };
 
   return (
     <div className="bg-white py-8">
       <div className="container mx-auto px-4">
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-800">CATEGORIES 🧨</h1>
+          <h1 className="text-2xl font-bold text-gray-800 font-serif">CATEGORIES 🧨</h1>
         </div>
         <div className="flex flex-wrap justify-center items-center gap-6">
           {categories.map((item) => (
             <div
               key={item.name}
               onClick={() => handleCategoryClick(item.name)}
-              className="cursor-pointer flex flex-col items-center text-center hover:bg-gray-100 p-4 rounded-lg transition-all"
+              className="cursor-pointer flex flex-col items-center font-mono text-center hover:bg-gray-100 p-4 rounded-lg transition-all"
             >
               <img
                 src={item.image}

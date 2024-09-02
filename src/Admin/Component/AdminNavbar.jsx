@@ -19,7 +19,7 @@ const AdminNavbar = () => {
   };
 
   return (
-    <div className="w-full bg-gray-800 text-white shadow-lg fixed top-0 left-0 right-0 z-10">
+    <div className="w-full bg-[#13233A] text-white shadow-lg fixed top-0 left-0 right-0 z-10">
       <nav className="container mx-auto flex items-center justify-between py-4 px-4 lg:px-0">
         <div className="text-2xl font-bold ml-8">Admin</div>
         <div className="relative">

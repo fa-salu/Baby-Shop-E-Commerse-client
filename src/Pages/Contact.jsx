@@ -7,14 +7,14 @@ const Contact = () => {
       <div className="container px-6 py-12 mx-auto">
         <div>
         <div className="p-8 bg-darkblue">
-        <p className="font-medium text-white-500 dark:text-blue-400">
-            Contact us
+        <p className="font-bold text-3xl text-center text-black">
+            Contact <span className="text-blue-500">us</span>
           </p>
         </div>
-          <h1 className="mt-2 text-2xl font-semibold text-gray-800 md:text-3xl dark:text-white">
+          <h1 className="mt-2 text-2xl font-semibold text-red">
             Get in touch
           </h1>
-          <p className="mt-3 text-gray-500 dark:text-gray-400">
+          <p className="mt-3 text-gray-500 ">
             Our friendly team at Baby Shop would love to hear from you.
           </p>
         </div>
@@ -129,6 +129,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
+      <hr className="m-8" />
       <Footer />
     </section>
   );

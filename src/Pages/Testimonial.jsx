@@ -159,28 +159,7 @@ const Testimonial = () => {
                 </div>
               </div>
             </div>
-            <div
-              ref={(el) => (slideRefs.current[1] = el)}
-              className="flex-shrink-0 w-full lg:w-1/2 px-4"
-            >
-              <div className="relative flex flex-col overflow-hidden bg-white shadow-lg rounded-lg p-8">
-                <p className="text-gray-600 mb-6">
-                  "Exceptional quality and service. I would recommend them to
-                  anyone!"
-                </p>
-                <div className="flex items-center">
-                  <img
-                    src="https://via.placeholder.com/150"
-                    alt="Avatar"
-                    className="w-12 h-12 rounded-full mr-4"
-                  />
-                  <div>
-                    <p className="font-semibold">John Smith</p>
-                    <p className="text-gray-500">Manager at Business</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+           
 
           </div>
           <div className="flex justify-center mt-8">

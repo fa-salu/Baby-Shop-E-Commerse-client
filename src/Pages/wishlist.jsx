@@ -3,7 +3,8 @@ import { ShopContext } from "../Context/CartItem/ShopContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { BsFillArrowLeftSquareFill } from "react-icons/bs";
 
 const Wishlist = () => {
   const {
@@ -39,9 +40,15 @@ const Wishlist = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
+      <Link to={"/"} className="flex items-center ml-28 mt-8">
+        <BsFillArrowLeftSquareFill size={32} />
+        <span className="ml-2 text-lg">Home</span>
+      </Link>
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold text-gray-800">Your Wishlist</h1>
+          <h1 className="text-5xl font-bold text-gray-800 font-serif">
+            Your Wishlist
+          </h1>
           <hr className="m-10" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -81,7 +88,7 @@ const Wishlist = () => {
                         size="lg"
                         className="text-red-500"
                       />
-                    </button> 
+                    </button>
                     <button
                       onClick={() => handleAddToCart(item._id)}
                       aria-label="Add to Cart"

@@ -4,7 +4,7 @@ import shirt2 from "../../Assets/offer/t_shirt_2.png";
 import pant1 from "../../Assets/offer/pant_1.png";
 import pant2 from "../../Assets/offer/pant_2.png";
 
-// Data for offers
+// Data for Trending
 const offerData = [
   {
     title: "MONOTONE LOVE CARDIAN IN PINK",
@@ -32,14 +32,14 @@ const offerData = [
   },
 ];
 
-const Offers = () => {
+const Trending = () => {
   return (
     <div className="px-4 py-8">
       <div className="text-center mb-6">
         <h2 className="text-xl font-semibold text-gray-700 uppercase">Trending 💫</h2>
       </div>
       <div className="text-center mb-10">
-        <h1 className="text-3xl font-bold text-gray-800">
+        <h1 className="text-3xl font-bold text-gray-800 font-serif">
           Shop Our Popular <br /> Baby Products
         </h1>
       </div>
@@ -55,7 +55,7 @@ const Offers = () => {
               alt={item.title} 
               className="h-48 object-contain mb-4 drop-shadow-lg animate-float"
             />
-            <h3 className="text-lg font-medium text-gray-900">{item.title}</h3>
+            <h3 className="text-lg font-medium text-gray-900 font-serif text-center">{item.title}</h3>
             <h6 className="text-sm text-gray-500">{item.subTitle}</h6>
             <h4 className="text-sm font-bold text-black-600 mt-2">₹{item.price}</h4>
           </div>
@@ -66,4 +66,4 @@ const Offers = () => {
   );
 }
 
-export default Offers;
+export default Trending;

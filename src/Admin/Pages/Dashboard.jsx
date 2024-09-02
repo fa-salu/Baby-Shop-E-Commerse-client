@@ -15,6 +15,7 @@ import {
   Pie,
   Cell,
 } from "recharts";
+import Spinner from "../../Component/Spinner/Spinner";
 
 const Dashboard = () => {
   const {
@@ -94,7 +95,7 @@ const Dashboard = () => {
   }, [purchasedData]);
 
   if (userPending || dbPending || revenuePending || purchasedPending)
-    return <div>Loading...</div>;
+    return <Spinner />;
   if (userError || dbError || revenueError || purchasedError)
     return (
       <div>Error: {userError || dbError || revenueError || purchasedError}</div>
@@ -110,15 +111,15 @@ const Dashboard = () => {
   const COLORS = ["#0088FE", "#FF8042"];
 
   return (
-    <div className="w-full mx-auto p-6 bg-gradient-to-b from-gray-100 to-gray-200 min-h-screen">
-      <h1 className="text-3xl font-bold text-center mb-8 bg-gray-50 p-4 rounded-md shadow-lg">
+    <div className="w-full mx-auto p-6 bg-[#172F4A] from-gray-100 to-gray-200 min-h-screen text-white">
+      <h1 className="text-3xl font-bold text-center mb-8 p-4 rounded-md shadow-lg">
         Dashboard
       </h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 ">
         {/* Left Column for Cards */}
         <div className="space-y-6">
-          <div className="bg-white rounded-lg shadow-md p-6 h-32 flex items-center space-x-4">
+          <div className="bg-[#193351] rounded-lg shadow-md p-6 h-32 flex items-center space-x-4">
             <div className="bg-blue-100 p-3 rounded-full">
               {/* Icon for Number of Users */}
               <svg
@@ -138,11 +139,11 @@ const Dashboard = () => {
             </div>
             <div>
               <h2 className="text-xl font-bold mb-2">Number of Users</h2>
-              <p className="text-3xl font-bold text-gray-800">{numUsers}</p>
+              <p className="text-3xl font-bold">{numUsers}</p>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow-md p-6 h-32 flex items-center space-x-4">
+          <div className="bg-[#193351]rounded-lg shadow-md p-6 h-32 flex items-center space-x-4">
             <div className="bg-green-100 p-3 rounded-full">
               {/* Icon for Total Revenue */}
               <svg
@@ -162,7 +163,7 @@ const Dashboard = () => {
             </div>
             <div>
               <h2 className="text-xl font-bold mb-2">Total Revenue</h2>
-              <p className="text-3xl font-bold text-gray-800">
+              <p className="text-3xl font-bold">
                 ₹ {totalRevenue.toFixed(2)}
               </p>
             </div>
@@ -171,7 +172,7 @@ const Dashboard = () => {
 
         {/* Right Column for Round Colorful Graph */}
         <div className="space-y-6">
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-[#193351] rounded-lg shadow-md p-6">
             <h2 className="text-xl font-bold mb-4">
               Products and Orders Overview
             </h2>
@@ -205,7 +206,7 @@ const Dashboard = () => {
       {/* Full Width Graphs */}
       <div className="space-y-6">
         {/* Total Revenue Over Time Graph */}
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-[#193351] rounded-lg shadow-md p-6">
           <h2 className="text-xl font-bold mb-4">Total Revenue Over Time</h2>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={revenueDataPoints}>
@@ -225,7 +226,7 @@ const Dashboard = () => {
         </div>
 
         {/* Monthly Revenue Bar Chart */}
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-[#193351] rounded-lg shadow-md p-6">
           <h2 className="text-xl font-bold mb-4">Monthly Revenue</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={monthlyRevenue}>
