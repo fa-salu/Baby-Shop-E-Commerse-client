@@ -7,6 +7,7 @@ import { ShopContext } from "../Context/CartItem/ShopContext";
 import useFetch from "../utils/Api";
 import CategoryProducts from "../Component/Category/Categories";
 import Footer from "../Component/Footer/Footer";
+import Spinner from "../Component/Spinner/Spinner";
 
 const Shop = () => {
   const { category } = useParams();
@@ -60,7 +61,7 @@ const Shop = () => {
           </h1>
           <hr className="m-8" />
         </div>
-        {isPending && <div>Loading...</div>}
+        {isPending && <Spinner />}
         {error && <div>Error: {error}</div>}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {products.map((item) => (

@@ -1,0 +1,24 @@
+.menu-icon {
+    font-size: 20px; 
+  }
+
+  .menu-user {
+    font-size: 20px;
+  }
+
+  .menu-cart {
+    font-size: 24px;
+  }
+  
+  @media (max-width: 768px) {
+    .menu-icon {
+      font-size: 18px; 
+    }
+    .menu-user {
+      font-size: 20px;
+    }
+    .menu-cart {
+      font-size: 18px;
+    }
+  }
+  

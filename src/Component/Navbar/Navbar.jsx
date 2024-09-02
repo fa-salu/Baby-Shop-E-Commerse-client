@@ -1,19 +1,32 @@
 import React, { useContext, useEffect, useState } from "react";
-import { FaSearch, FaCartArrowDown, FaUser, FaBars, FaTimes } from "react-icons/fa";
+import {
+  FaSearch,
+  FaCartArrowDown,
+  FaUser,
+  FaBars,
+  FaTimes,
+} from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { ShopContext } from "../../Context/CartItem/ShopContext";
 import SlideBar from "../CartSlidBar/SlideBar";
-import Cookies from 'js-cookie'
+import Cookies from "js-cookie";
+import "./Navbar.css";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  
+
   const navigate = useNavigate();
-  const { search, setSearch, filteredProducts, currentUser, getCartItems, cartItems } = useContext(ShopContext);
+  const {
+    search,
+    setSearch,
+    filteredProducts,
+    currentUser,
+    getCartItems,
+    cartItems,
+  } = useContext(ShopContext);
 
   const isAdmin = Cookies.get("isAdmin");
-
 
   useEffect(() => {
     if (currentUser) {
@@ -37,7 +50,7 @@ const Navbar = () => {
     <>
       {!isAdmin && (
         <div className="w-full bg-[#FFFFFF] text-gray-800 sticky top-0 z-10">
-          <nav className="container mx-auto flex items-center justify-between py-4 px-4 lg:px-0">
+          <nav className="container mx-auto flex items-center justify-between py-4 ml-4">
             <div className="text-2xl font-bold ml-5">
               Little<span className="text-pink-500">Love</span>
             </div>
@@ -66,7 +79,7 @@ const Navbar = () => {
                   type="text"
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search..."
-                  className="pl-10 pr-4 py-2 rounded-full text-black w-full sm:w-64"
+                  className="pl-10 pr-4 py-2 border rounded-full text-black w-full sm:w-64"
                 />
                 <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
               </div>
@@ -74,26 +87,28 @@ const Navbar = () => {
                 <div className="relative">
                   <FaCartArrowDown
                     onClick={toggleCart}
-                    size={24}
-                    className="hover:text-pink-500 cursor-pointer"
+                    className="menu-cart hover:text-pink-500 cursor-pointer"
                   />
 
                   <span className="absolute -top-2.5 left-3/4 bg-red-500 text-white rounded-full text-xs px-1">
-                  {cartItems.length}
+                    {cartItems.length}
                   </span>
                 </div>
               )}
               <FaUser
-                size={20}
                 onClick={handleClick}
-                className="hover:text-pink-500 cursor-pointer"
+                className="menu-user hover:text-pink-500 cursor-pointer"
               />
               <button
                 onClick={toggleMenu}
                 aria-label="Toggle menu"
                 className="lg:hidden"
               >
-                {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+                {isMenuOpen ? (
+                  <FaTimes className="menu-icon" />
+                ) : (
+                  <FaBars className="menu-icon" />
+                )}
               </button>
             </div>
           </nav>
@@ -149,8 +164,11 @@ const Navbar = () => {
                       <span className="text-gray-900 font-bold">
                         ${product.price}
                       </span>
-                      <button className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-md focus:outline-none">
-                        Add to Cart
+                      <button
+                        onClick={() => navigate(`/shop/${item._id}`)}
+                        className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded-md focus:outline-none"
+                      >
+                       View Cart
                       </button>
                     </div>
                   </div>
@@ -166,6 +184,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-
-

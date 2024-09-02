@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Hero.css"; // Ensure any custom styles are also included
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -25,7 +24,7 @@ const Hero = () => {
 
   return (
     <div
-      className="Hero_Body flex items-center justify-center min-h-screen"
+      className="flex items-center justify-center min-h-screen"
       style={{
         backgroundImage: `url(${images[currentImageIndex]})`,
         backgroundSize: "cover",
