@@ -10,7 +10,7 @@ const PaymentPage = () => {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
-  const [errorMessage, setErrorMessage] = useState(""); // State for error message
+  const [errorMessage, setErrorMessage] = useState(""); 
   const navigate = useNavigate();
   const token = Cookies.get("token");
   const currentUser = Cookies.get("currentUser");

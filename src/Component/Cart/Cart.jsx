@@ -18,7 +18,7 @@ const Cart = () => {
     const fetchProduct = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/users/product/${id}`
+          `https://babyshop-backend.onrender.com/users/product/${id}`
         );
         const data = await response.json();
         setProduct(data);
@@ -26,7 +26,7 @@ const Cart = () => {
         // Fetch related products based on category
         if (data.category) {
           const response = await fetch(
-            `http://localhost:5000/users/products/${data.category}`
+            `https://babyshop-backend.onrender.com/users/products/${data.category}`
           );
           const relatedData = await response.json();
 

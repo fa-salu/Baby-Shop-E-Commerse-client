@@ -33,8 +33,8 @@ const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
 
       const token = Cookies.get("token");
       const url = editProduct
-        ? `http://localhost:5000/admin/product/${editProduct._id}`
-        : "http://localhost:5000/admin/product";
+        ? `https://babyshop-backend.onrender.com/admin/product/${editProduct._id}`
+        : "https://babyshop-backend.onrender.com/admin/product";
       const method = editProduct ? "PUT" : "POST";
 
       const response = await fetch(url, {

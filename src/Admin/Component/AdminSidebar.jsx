@@ -12,6 +12,13 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
+  const handleNavigation = (path) => {
+    navigate(path);
+    if (isOpen) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <div className="flex">
       <div
@@ -28,40 +35,56 @@ const Sidebar = () => {
 
         <div className="mt-16 space-y-6">
           <div
-            onClick={() => navigate("/dashboard")}
+            onClick={() => handleNavigation("/dashboard")}
             className={`flex items-center py-2 px-4 text-white hover:bg-gray-700 rounded ${
               isOpen ? "justify-start" : "justify-center"
             }`}
           >
-            <FaTachometerAlt className="mr-3" />
-            {isOpen && <span>Dashboard</span>}
+            <FaTachometerAlt
+              className={`transition-transform duration-300 ${
+                isOpen ? "text-xl" : "text-3xl"
+              }`}
+            />
+            {isOpen && <span className="ml-3">Dashboard</span>}
           </div>
           <div
-            onClick={() => navigate("/categories")}
+            onClick={() => handleNavigation("/categories")}
             className={`flex items-center py-2 px-4 text-white hover:bg-gray-700 rounded ${
               isOpen ? "justify-start" : "justify-center"
             }`}
           >
-            <FaTags className="mr-3" />
-            {isOpen && <span>Categories</span>}
+            <FaTags
+              className={`transition-transform duration-300 ${
+                isOpen ? "text-xl" : "text-3xl"
+              }`}
+            />
+            {isOpen && <span className="ml-3">Categories</span>}
           </div>
           <div
-            onClick={() => navigate("/products")}
+            onClick={() => handleNavigation("/products")}
             className={`flex items-center py-2 px-4 text-white hover:bg-gray-700 rounded ${
               isOpen ? "justify-start" : "justify-center"
             }`}
           >
-            <FaBox className="mr-3" />
-            {isOpen && <span>Products</span>}
+            <FaBox
+              className={`transition-transform duration-300 ${
+                isOpen ? "text-xl" : "text-3xl"
+              }`}
+            />
+            {isOpen && <span className="ml-3">Products</span>}
           </div>
           <div
-            onClick={() => navigate("/customers")}
+            onClick={() => handleNavigation("/customers")}
             className={`flex items-center py-2 px-4 text-white hover:bg-gray-700 rounded ${
               isOpen ? "justify-start" : "justify-center"
             }`}
           >
-            <FaUsers className="mr-3" />
-            {isOpen && <span>Customers</span>}
+            <FaUsers
+              className={`transition-transform duration-300 ${
+                isOpen ? "text-xl" : "text-3xl"
+              }`}
+            />
+            {isOpen && <span className="ml-3">Customers</span>}
           </div>
         </div>
       </div>

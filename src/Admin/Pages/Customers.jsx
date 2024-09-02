@@ -5,7 +5,7 @@ import Spinner from "../../Component/Spinner/Spinner";
 
 const Customers = () => {
   const { data, isPending, error } = useFetch(
-    "http://localhost:5000/admin/users"
+    "https://babyshop-backend.onrender.com/admin/users"
   );
 
   return (

@@ -4,7 +4,7 @@ import useFetch from "../../utils/Api";
 import Spinner from "../Spinner/Spinner";
 
 const NewArrival = () => {
-  const { data, isPending, error } = useFetch("http://localhost:5000/users/products");
+  const { data, isPending, error } = useFetch("https://babyshop-backend.onrender.com/users/products");
   const navigate = useNavigate();
 
   if (isPending) return <Spinner />;

@@ -18,8 +18,8 @@ const Shop = () => {
   // Fetch products based on category
   const { data, isPending, error } = useFetch(
     category && category !== "All"
-      ? `http://localhost:5000/users/products/${category}`
-      : "http://localhost:5000/users/products"
+      ? `https://babyshop-backend.onrender.com/users/products/${category}`
+      : "https://babyshop-backend.onrender.com/users/products"
   );
 
   useEffect(() => {

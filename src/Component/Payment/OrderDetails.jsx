@@ -18,7 +18,7 @@ const OrderDetails = () => {
     const fetchOrderDetails = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/users/order/${userId}`,
+          `https://babyshop-backend.onrender.com/users/order/${userId}`,
           {
             method: "GET",
             headers: {

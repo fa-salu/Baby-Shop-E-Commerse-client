@@ -10,7 +10,7 @@ const Products = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const { data, isPending, error } = useFetch(
-    "http://localhost:5000/admin/products"
+    "https://babyshop-backend.onrender.com/admin/products"
   );
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const Products = () => {
   const handleDeleteProduct = async (productId) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/admin/product/delete/${productId}`,
+        `https://babyshop-backend.onrender.com/admin/product/delete/${productId}`,
         {
           method: "DELETE",
           headers: {

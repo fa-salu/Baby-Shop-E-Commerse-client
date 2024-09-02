@@ -14,14 +14,14 @@ const CustomerDetail = () => {
     data: user,
     isPending: userIsPending,
     error: userError,
-  } = useFetch(`http://localhost:5000/admin/user/${userId}`);
+  } = useFetch(`https://babyshop-backend.onrender.com/admin/user/${userId}`);
 
   // Fetching user's orders
   const {
     data: orders,
     isPending: ordersIsPending,
     error: ordersError,
-  } = useFetch(`http://localhost:5000/admin/order/${userId}`);
+  } = useFetch(`https://babyshop-backend.onrender.com/admin/order/${userId}`);
 
   // State for accordion
   const [expandedOrder, setExpandedOrder] = useState(null);

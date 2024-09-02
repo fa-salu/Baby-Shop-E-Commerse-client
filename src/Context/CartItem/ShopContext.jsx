@@ -9,7 +9,7 @@ export const ShopContextProvider = (props) => {
     data: products,
     isPending,
     error,
-  } = useFetch("http://localhost:5000/users/products");
+  } = useFetch("https://babyshop-backend.onrender.com/users/products");
 
   const [search, setSearch] = useState("");
   const [currentUser, setCurrentUser] = useState(null);
@@ -32,7 +32,7 @@ export const ShopContextProvider = (props) => {
     try {
       const token = Cookies.get("token");
       const response = await fetch(
-        `http://localhost:5000/users/cart/${userId}`,
+        `https://babyshop-backend.onrender.com/users/cart/${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@ export const ShopContextProvider = (props) => {
     setProductId(productId);
     try {
       const token = Cookies.get("token");
-      const response = await fetch("http://localhost:5000/users/cart", {
+      const response = await fetch("https://babyshop-backend.onrender.com/users/cart", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,7 +75,7 @@ export const ShopContextProvider = (props) => {
     try {
       const token = Cookies.get("token");
       const response = await fetch(
-        `http://localhost:5000/users/cart/remove/${userId}/${productId}`,
+        `https://babyshop-backend.onrender.com/users/cart/remove/${userId}/${productId}`,
         {
           method: "DELETE",
           headers: {
@@ -94,7 +94,7 @@ export const ShopContextProvider = (props) => {
     try {
       const token = Cookies.get("token");
       const response = await fetch(
-        `http://localhost:5000/users/cart/delete/${userId}/${productId}`,
+        `https://babyshop-backend.onrender.com/users/cart/delete/${userId}/${productId}`,
         {
           method: "DELETE",
           headers: {
@@ -113,7 +113,7 @@ export const ShopContextProvider = (props) => {
     try {
       const token = Cookies.get("token");
       const response = await fetch(
-        `http://localhost:5000/users/cart/${userId}`,
+        `https://babyshop-backend.onrender.com/users/cart/${userId}`,
         {
           method: "DELETE",
           headers: {
@@ -134,7 +134,7 @@ export const ShopContextProvider = (props) => {
     
     try {
       const token = Cookies.get("token");
-      const response = await fetch("http://localhost:5000/users/wishlist", {
+      const response = await fetch("https://babyshop-backend.onrender.com/users/wishlist", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -155,7 +155,7 @@ export const ShopContextProvider = (props) => {
   const removeFromWishlist = async (userId, productId) => {
     try {
       const token = Cookies.get("token");
-      const response = await fetch(`http://localhost:5000/users/wishlist/remove/${userId}/${productId}`, {
+      const response = await fetch(`https://babyshop-backend.onrender.com/users/wishlist/remove/${userId}/${productId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -177,7 +177,7 @@ export const ShopContextProvider = (props) => {
   const getWishlist = useCallback(async (userId) => {
     try {
       const token = Cookies.get("token");
-      const response = await fetch(`http://localhost:5000/users/wishlist/${userId}`, {
+      const response = await fetch(`https://babyshop-backend.onrender.com/users/wishlist/${userId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

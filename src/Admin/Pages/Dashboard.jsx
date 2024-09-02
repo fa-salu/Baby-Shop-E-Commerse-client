@@ -22,23 +22,23 @@ const Dashboard = () => {
     data: userData,
     isPending: userPending,
     error: userError,
-  } = useFetch("http://localhost:5000/admin/users");
+  } = useFetch("https://babyshop-backend.onrender.com/admin/users");
   const {
     data: dbData,
     isPending: dbPending,
     error: dbError,
-  } = useFetch("http://localhost:5000/admin/products");
+  } = useFetch("https://babyshop-backend.onrender.com/admin/products");
 
   const {
     data: revenueData,
     isPending: revenuePending,
     error: revenueError,
-  } = useFetch("http://localhost:5000/admin/revenue");
+  } = useFetch("https://babyshop-backend.onrender.com/admin/revenue");
   const {
     data: purchasedData,
     isPending: purchasedPending,
     error: purchasedError,
-  } = useFetch("http://localhost:5000/admin/purchase");
+  } = useFetch("https://babyshop-backend.onrender.com/admin/purchase");
 
   const [numUsers, setNumUsers] = useState(0);
   const [numItems, setNumItems] = useState(0);

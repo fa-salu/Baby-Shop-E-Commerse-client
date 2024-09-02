@@ -8,7 +8,7 @@ const Categories = () => {
   const itemsPerPage = 12;
 
   const { data, isPending, error } = useFetch(
-    `http://localhost:5000/admin/products`
+    `https://babyshop-backend.onrender.com/admin/products`
   );
 
   const categories = ["All", "Toys", "Clothing", "Feeding", "Footwear", "Bath"];
