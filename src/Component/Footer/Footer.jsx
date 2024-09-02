@@ -1,83 +1,92 @@
 import React from "react";
+import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-100 py-8 px-4">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div className="col-span-1 md:col-span-2 lg:col-span-1">
-          <h3 className="text-lg font-semibold mb-4">Contact Information</h3>
-          <p>123 Fifth Ave, New York, NY 12004.</p>
-          <p>+1 123 456 78 90</p>
-          <p>mail@example.com</p>
+    <footer className="text-gray-600 body-font bg-gray-100">
+      <div className="container flex flex-col flex-wrap px-5 py-8 mx-auto md:items-start lg:items-start md:flex-row">
+        <div className="flex-shrink-0 w-64 mx-auto text-center md:mx-0 md:text-left mb-6 md:mb-0">
+          <a className="flex items-center justify-center font-medium text-gray-900 title-font md:justify-start">
+            <span className="ml-3 text-xl font-bold">Litte<span className="text-pink-500">Love</span></span>
+          </a>
+          <p className="mt-2 text-sm text-gray-500">Visit us at our Baby Shop HQ. 123 Baby Lane, Malappuram, Manjeri city</p>
         </div>
-
-        <div className="col-span-1 md:col-span-1 lg:col-span-1">
-          <h3 className="text-lg font-semibold mb-4">Customer Service</h3>
-          <ul className="space-y-2">
-            <li>
-              <a href="#">Contact Us</a>
-            </li>
-            <li>
-              <a href="#">Help & FAQs</a>
-            </li>
-            <li>
-              <a href="#">Payment Method</a>
-            </li>
-            <li>
-              <a href="#">Delivery Information</a>
-            </li>
-            <li>
-              <a href="#">Track Your Order</a>
-            </li>
-            <li>
-              <a href="#">Return & Exchanges</a>
-            </li>
-          </ul>
+        <div className="flex flex-wrap flex-grow mx-8 text-center md:text-left">
+          <div className="w-full px-4 lg:w-1/4 md:w-1/2 mb-6 md:mb-0">
+            <h2 className="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">
+              About
+            </h2>
+            <nav className="list-none">
+              <li>
+                <a href="#" className="text-gray-600 hover:text-gray-800">Company</a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-600 hover:text-gray-800">Careers</a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-600 hover:text-gray-800">Blog</a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-600 hover:text-gray-800">Partners</a>
+              </li>
+            </nav>
+          </div>
+          <div className="w-full px-4 lg:w-1/4 md:w-1/2 mb-6 md:mb-0">
+            <h2 className="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">
+              Support
+            </h2>
+            <nav className="list-none">
+              <li>
+                <a href="#" className="text-gray-600 hover:text-gray-800">Help Center</a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-600 hover:text-gray-800">Contact Us</a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-600 hover:text-gray-800">Privacy Policy</a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-600 hover:text-gray-800">Terms of Service</a>
+              </li>
+            </nav>
+          </div>
+          <div className="w-full px-4 lg:w-1/4 md:w-1/2 mb-6 md:mb-0">
+            <h2 className="mb-3 text-sm font-medium tracking-widest text-gray-900 uppercase title-font">
+              Follow Us
+            </h2>
+            <nav className="list-none">
+              <li>
+                <a href="#" className="text-gray-600 hover:text-gray-800">Facebook</a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-600 hover:text-gray-800">Twitter</a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-600 hover:text-gray-800">Instagram</a>
+              </li>
+              <li>
+                <a href="#" className="text-gray-600 hover:text-gray-800">LinkedIn</a>
+              </li>
+            </nav>
+          </div>
         </div>
-
-        <div className="col-span-1 md:col-span-1 lg:col-span-1">
-          <h3 className="text-lg font-semibold mb-4">Categories</h3>
-          <ul className="space-y-2">
-            <li>
-              <a href="#">Clothing & Fashion</a>
-            </li>
-            <li>
-              <a href="#">Toys</a>
-            </li>
-            <li>
-              <a href="#">School Supplies</a>
-            </li>
-            <li>
-              <a href="#">Birthday Party Supplies</a>
-            </li>
-            <li>
-              <a href="#">Baby Diapering</a>
-            </li>
-          </ul>
+        <div className="flex flex-col items-center md:items-start mt-4 md:mt-0">
+          <p className="mt-2 text-sm text-gray-500">Follow us on our social media channels.</p>
+          <div className="inline-flex justify-center mt-4 space-x-3">
+            <a href="#" className="text-gray-500 cursor-pointer hover:text-gray-700 transition-colors">
+              <FaFacebookF size={20} />
+            </a>
+            <a href="#" className="text-gray-500 cursor-pointer hover:text-gray-700 transition-colors">
+              <FaTwitter size={20} />
+            </a>
+            <a href="#" className="text-gray-500 cursor-pointer hover:text-gray-700 transition-colors">
+              <FaInstagram size={20} />
+            </a>
+            <a href="#" className="text-gray-500 cursor-pointer hover:text-gray-700 transition-colors">
+              <FaLinkedinIn size={20} />
+            </a>
+          </div>
         </div>
-
-        <div className="col-span-1 md:col-span-2 lg:col-span-1">
-          <h3 className="text-lg font-semibold mb-4">Our Company</h3>
-          <ul className="space-y-2">
-            <li>
-              <a href="#">Corporate Information</a>
-            </li>
-            <li>
-              <a href="#">Privacy & Cookies Policy</a>
-            </li>
-            <li>
-              <a href="#">Terms & Condition</a>
-            </li>
-            <li>
-              <a href="#">Promo & Terms</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <hr className="mt-8 mb-4 bg-black " />
-      <div className="mt-8 text-center text-gray-600">
-        <p>Copyright © 2024 Baby Store | Powered by Baby Store</p>
       </div>
     </footer>
   );

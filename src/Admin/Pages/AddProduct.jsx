@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Cookies from "js-cookie";
 
 const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
   const [product, setProduct] = useState({
@@ -26,30 +27,34 @@ const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
     try {
       const updatedProduct = {
         ...product,
-        id: editProduct ? editProduct.id : Date.now().toString(),
         price: parseFloat(product.price),
         stars: parseFloat(product.stars),
       };
-      const response = await fetch(
-        editProduct
-          ? `http://localhost:8000/db/${editProduct.id}`
-          : "http://localhost:8000/db",
-        {
-          method: editProduct ? "PUT" : "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(updatedProduct),
-        }
-      );
+
+      const token = Cookies.get("token");
+      const url = editProduct
+        ? `http://localhost:5000/admin/product/${editProduct._id}`
+        : "http://localhost:5000/admin/product";
+      const method = editProduct ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedProduct),
+      });
+
       if (!response.ok) {
         throw new Error(`Failed to ${editProduct ? "update" : "add"} product`);
       }
-      const savedProduct = await response.json();
+
+      const result = await response.json();
       if (editProduct) {
-        onEdit(savedProduct);
+        onEdit(result.updateProduct);
       } else {
-        onAdd(savedProduct);
+        onAdd(result.newProduct);
       }
       onClose();
     } catch (error) {
@@ -67,6 +72,7 @@ const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
           {editProduct ? "Edit" : "Add"} Product
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Form fields for name, description, price, image, category, stars */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Name
@@ -116,7 +122,6 @@ const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
               value={product.image}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md"
-              required
             />
           </div>
           <div>
@@ -142,22 +147,21 @@ const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
               value={product.stars}
               onChange={handleChange}
               className="mt-1 p-2 w-full border rounded-md"
-              required
             />
           </div>
-          <div className="flex justify-end space-x-4">
+          <div className="flex justify-end">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+              className="px-4 py-2 text-sm font-medium text-white bg-gray-600 border border-transparent rounded-md shadow-sm hover:bg-gray-700"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="ml-4 px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700"
             >
-              {editProduct ? "Update" : "Add"}
+              {editProduct ? "Update" : "Add"} Product
             </button>
           </div>
         </form>

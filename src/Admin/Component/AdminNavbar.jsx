@@ -1,29 +1,27 @@
 import React, { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import Cookie from "js-cookie";
 
 const AdminNavbar = () => {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
-  const userData = JSON.parse(localStorage.getItem("admin"));
+
+  const userData = JSON.parse(Cookie.get("currentUser") || "{}");
 
   const handleLogout = () => {
-    localStorage.removeItem("admin");
-    localStorage.removeItem("isAdmin");
+    // Clear cookies
+    Cookie.remove("token");
+    Cookie.remove("isAdmin");
+    Cookie.remove("currentUser");
+
     navigate("/");
   };
 
   return (
-    <div className="w-full bg-gray-800 text-white shadow-lg fixed top-0 left-0 right-0 z-10">
+    <div className="w-full bg-[#13233A] text-white shadow-lg fixed top-0 left-0 right-0 z-10">
       <nav className="container mx-auto flex items-center justify-between py-4 px-4 lg:px-0">
         <div className="text-2xl font-bold ml-8">Admin</div>
-        <div className="flex-grow max-w-md px-4">
-          <input
-            type="text"
-            placeholder="Search..."
-            className="w-full py-2 px-4 rounded-md bg-gray-700 text-white placeholder-gray-400 focus:outline-none"
-          />
-        </div>
         <div className="relative">
           <FaUser
             className="text-2xl mr-8 hover:text-gray-300 cursor-pointer"

@@ -1,56 +1,150 @@
+import { Link, useParams } from "react-router-dom";
 import useFetch from "../../utils/Api";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import Spinner from "../../Component/Spinner/Spinner";
+import { BsFillArrowLeftSquareFill } from "react-icons/bs";
 
-const UserDetails = () => {
-  const { id } = useParams();
+
+const CustomerDetail = () => {
+  const { userId } = useParams();
+  console.log("userId from customer details: ", userId);
+
+  // Fetching user details
   const {
     data: user,
-    isPending,
-    error,
-  } = useFetch(`http://localhost:8000/user/${id}`);
-  const navigate = useNavigate();
+    isPending: userIsPending,
+    error: userError,
+  } = useFetch(`http://localhost:5000/admin/user/${userId}`);
 
-  const handleDeleteUser = async () => {
-    try {
-      const response = await fetch(`http://localhost:8000/user/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) {
-        throw new Error("Failed to delete user");
-      }
-    } catch (error) {
-      console.error("Error deleting user:", error.message);
-    }
-    navigate("/customers");
+  // Fetching user's orders
+  const {
+    data: orders,
+    isPending: ordersIsPending,
+    error: ordersError,
+  } = useFetch(`http://localhost:5000/admin/order/${userId}`);
+
+  // State for accordion
+  const [expandedOrder, setExpandedOrder] = useState(null);
+
+  // Function to toggle accordion
+  const toggleAccordion = (orderId) => {
+    setExpandedOrder(expandedOrder === orderId ? null : orderId);
   };
 
-  if (isPending) return <div className="p-4">Loading...</div>;
-  if (error) return <div className="p-4">Error: {error}</div>;
-  if (!user) return <div className="p-4">User not found</div>;
-
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">User Details</h2>
-      <div className="border p-4 rounded shadow-lg">
-        <div className="mb-4">
-          <h2 className="text-xl font-bold mb-2">User: {user.username}</h2>
-          <p className="text-gray-600">Email: {user.email}</p>
+    <div className="container p-4 overflow-auto w-full text-white">
+      {userIsPending && <Spinner />}
+      {userError && <div className="text-center text-red-500">Error: {userError}</div>}
+      {user && (
+        <div className="border p-4 rounded mb-6 w-full text-center bg-[#172F4A] shadow-md">
+          <h1 className="text-3xl font-bold text-center mb-4 bg-[#193351] p-4 rounded-md shadow-lg">
+            User Details
+          </h1>
+          <Link to={'/customers'}><BsFillArrowLeftSquareFill size={32} /></Link>
+          <h2 className="text-xl font-bold">User: {user.username}</h2>
+          <p className="text-gray-600 text-white">Email: {user.email}</p>
         </div>
-        <div>
-          <h2 className="text-xl font-bold mb-2">Order List</h2>
-          <div className="mb-2">Item Name: Baby Suit</div>
-          <div className="mb-2">Color: Black </div>
-          <div className="mb-2">Price: $ 1200 </div>
+      )}
+
+      <h2 className="text-2xl rounded-md font-semibold mt-8 mb-4 w-full">Orders</h2>
+      {ordersIsPending && <Spinner />}
+      {ordersError && <div className="text-center text-red-500">Error: {ordersError}</div>}
+      {orders && orders.length > 0 ? (
+        <div className="grid grid-cols-1 gap-4">
+          {orders.map((order) => (
+            <div
+              key={order._id}
+              className="border p-4 rounded-lg bg-[#193351] shadow-md"
+            >
+              <div
+                onClick={() => toggleAccordion(order._id)}
+                className="cursor-pointer flex justify-between items-center mb-4 border-b pb-2"
+              >
+                <h3 className="text-lg font-bold">Order ID: {order.orderId}</h3>
+                <button className="text-blue-500 focus:outline-none">
+                  {expandedOrder === order._id ? "-" : "+"}
+                </button>
+              </div>
+              {expandedOrder === order._id && (
+                <div className="mt-4">
+                  <div className="mb-4">
+                    <p>
+                      <strong>Name:</strong> {order.userDetails?.name || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Place:</strong> {order.userDetails?.place || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Phone:</strong> {order.userDetails?.phone || "N/A"}
+                    </p>
+                    <p>
+                      <strong>Address:</strong> {order.userDetails?.address || "N/A"}
+                    </p>
+                  </div>
+                  <hr className="my-2" />
+                  <div className="mb-4">
+                    <p>
+                      <strong>Total Price:</strong> ${order.totalPrice || "0.00"}
+                    </p>
+                    <p>
+                      <strong>Total Items:</strong> {order.totalItems || 0}
+                    </p>
+                    <p>
+                      <strong>Total Quantity:</strong> {order.totalQuantity || 0}
+                    </p>
+                    <p>
+                      <strong>Purchase Date:</strong> {order.purchaseDate ? new Date(order.purchaseDate).toLocaleString() : "N/A"}
+                    </p>
+                    <p>
+                      <strong>Payment Status:</strong> {order.paymentStatus || "N/A"}
+                    </p>
+                  </div>
+                  <h4 className="text-lg font-semibold mt-2 mb-2">Products</h4>
+                  <ul className="list-disc ml-5">
+                    {order.products && order.products.length > 0 ? (
+                      order.products.map((product, index) => (
+                        <li key={index} className="mb-4 flex items-center bg-[#172F4A] p-4 rounded-lg shadow-sm">
+                          <img
+                            src={
+                              product.productId?.image ||
+                              "http://example.com/default.jpg"
+                            }
+                            alt={`Product ${product.productId?.name}`}
+                            className="w-16 h-16 object-cover mr-4"
+                          />
+                          <div>
+                            <p>
+                              <strong>Product Name:</strong>{" "}
+                              {product.productId?.name || "N/A"}
+                            </p>
+                            <p>
+                              <strong>Description:</strong>{" "}
+                              {product.productId?.description || "N/A"}
+                            </p>
+                            <p>
+                              <strong>Price:</strong> $
+                              {product.productId?.price || "0.00"}
+                            </p>
+                            <p>
+                              <strong>Quantity:</strong> {product.quantity || 0}
+                            </p>
+                          </div>
+                        </li>
+                      ))
+                    ) : (
+                      <li>No products found.</li>
+                    )}
+                  </ul>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
-        <button
-          onClick={handleDeleteUser}
-          className="px-4 py-2 mt-4 bg-red-500 text-white rounded-md hover:bg-red-700"
-        >
-          Delete User
-        </button>
-      </div>
+      ) : (
+        <p className="text-center">No orders found.</p>
+      )}
     </div>
   );
 };
 
-export default UserDetails;
+export default CustomerDetail;

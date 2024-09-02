@@ -1,33 +1,33 @@
 import React from "react";
-import { FaArrowRight } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../../utils/Api";
+import Spinner from "../Spinner/Spinner";
 
 const NewArrival = () => {
   const { data, isPending, error } = useFetch("http://localhost:5000/users/products");
   const navigate = useNavigate();
 
-  if (isPending) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
+  if (isPending) return <Spinner />;
+  if (error) return <div className="text-center text-red-500 py-8">Error: {error}</div>;
 
   const New_Arrivals = data.slice(-4);
 
   return (
-    <div className="py-8 px-4">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold my-10 text-gray-800 text-center">
+    <div className="py-12 px-4 bg-gray-50">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-2xl font-semibold text-gray-700 uppercase text-center font-serif mb-4">
           NEW ARRIVALS
         </h1>
-        <p className="text-gray-700 my-8 text-center">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. <br />
-          beatae cupiditate amet itaque cumque consectetur dignissimos eligendi
-          optio mollitia? Illo.
+        <p className="text-bold text-gray-800 text-center mb-10 font-serif">
+          Discover the latest additions to our collection! <br />  Explore top-quality baby essentials
+          that are perfect for your little one's needs.
         </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {New_Arrivals.map((item) => (
             <div
-              key={item.id}
-              className="bg-white shadow-md rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300"
+              key={item._id}
+              onClick={() => navigate("/shop")}
+              className="relative bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 cursor-pointer"
             >
               <img
                 src={item.image}
@@ -35,22 +35,12 @@ const NewArrival = () => {
                 className="w-full h-52 object-cover"
               />
               <div className="p-4">
-                <h4 className="text-lg font-semibold mb-2 text-gray-900">
-                  {item.name}
-                </h4>
-                <p className="text-gray-700 mb-2">${item.price}</p>
-                <p className="text-yellow-500">
+                <h4 className="text-lg font-semibold font-serif mb-1 text-gray-900 text-center">{item.name}</h4>
+                <p className="text-gray-600 mb-2 font-serif text-center">Price: ₹{item.price}</p>
+                <p className="text-yellow-500 text-sm mb-4 text-center">
                   {"★".repeat(item.stars)}
                   {"☆".repeat(5 - item.stars)}
                 </p>
-              </div>
-              <div>
-                <button
-                  onClick={() => navigate("/shop")}
-                  className="flex items-center justify-center bg-red-400 hover:bg-red-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                >
-                  SHOP NOW <FaArrowRight className="ml-1" />
-                </button>
               </div>
             </div>
           ))}

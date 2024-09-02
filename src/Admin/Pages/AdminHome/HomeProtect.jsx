@@ -1,11 +1,13 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
+import Cookie from "js-cookie";
 
 const ProtectAdmin = ({ children }) => {
-  const isAdmin = JSON.parse(localStorage.getItem("isAdmin"));
+  const isAdmin = Cookie.get("isAdmin");
+  console.log(isAdmin);
 
-  if (!isAdmin) {
-    return <Navigate to="/" />;
+  if (isAdmin !== "true") {
+    return <Navigate to="/" replace />;
   }
 
   return children;

@@ -12,7 +12,6 @@ import Profile from "./Pages/Profile";
 import Testimonial from "./Pages/Testimonial";
 import Cart from "./Component/Cart/Cart";
 import CartItems from "./Component/Cart/CartItems";
-import CheckOut from "./Component/Payment/CheckOut";
 import ProtectRoute from "./Context/ProfileProtect/ProtectUserData";
 import AdminHome from "./Admin/Pages/AdminHome/AdminHome";
 import Dashboard from "./Admin/Pages/Dashboard";
@@ -21,6 +20,11 @@ import Products from "./Admin/Pages/Products";
 import Customers from "./Admin/Pages/Customers";
 import ProtectAdmin from "./Admin/Pages/AdminHome/HomeProtect";
 import UserDetails from "./Admin/Pages/CustomerDetials";
+import OrderDetails from "./Component/Payment/OrderDetails";
+import Wishlist from "./Pages/wishlist";
+import PaymentPage from "./Component/Payment/PlaceOrder";
+import Category from "./Component/Category/Category";
+import CategoryProducts from "./Component/Category/Categories";
 
 const App = () => {
   return (
@@ -47,7 +51,13 @@ const App = () => {
 
         <Route path="/shop/:id" element={<Cart />} />
         <Route path="/cartitems" element={<CartItems />} />
-        <Route path="/checkout" element={<CheckOut />} />
+        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/orderDetails" element={<OrderDetails />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/category" element={<Category />} />
+        <Route path="/categories/:category" element={<CategoryProducts />} />
+        <Route path="/category/:category" element={<Shop />} />
+
 
         {/* Admin routes */}
         <Route
@@ -99,7 +109,7 @@ const App = () => {
           }
         />
         <Route
-          path="/customers/:id"
+          path="/customers/:userId"
           element={
             <ProtectAdmin>
               <AdminHome>
@@ -108,6 +118,16 @@ const App = () => {
             </ProtectAdmin>
           }
         />
+        {/* <Route
+          path="/checkout/:userId"
+          element={
+            <ProtectAdmin>
+              <AdminHome>
+                <OrderDetails />
+              </AdminHome>
+            </ProtectAdmin>
+          }
+        /> */}
       </Routes>
     </>
   );

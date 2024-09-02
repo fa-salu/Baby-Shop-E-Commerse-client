@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaUserPlus } from "react-icons/fa"; // Import the icon from react-icons
 
 const validate = (values) => {
   const errors = {};
@@ -41,7 +42,7 @@ const Register = () => {
     confirm_password: "",
   });
   const [errors, setErrors] = useState({});
-  const [serverError, setServerError] = useState(""); // To store server error messages
+  const [serverError, setServerError] = useState(""); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +63,7 @@ const Register = () => {
           navigate("/login");
         } else {
           const errorData = await response.json();
-          setServerError(errorData.message); 
+          setServerError(errorData.message);
         }
       } catch (error) {
         console.error("Error:", error);
@@ -77,82 +78,71 @@ const Register = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+      <div className="w-full max-w-md p-20 space-y-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center text-gray-900">
-          Register
+          Little<span className="text-pink-500">Love</span>
         </h2>
+        <div className="my-6 border-b text-center w-full">
+            <div className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
+              Sign in with your email
+            </div>
+          </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label
-              htmlFor="username"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Username
-            </label>
+
             <input
               type="text"
               id="username"
               name="username"
               value={input.username}
               onChange={handleChange}
-              className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="w-full px-4 py-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+              placeholder="Username"
             />
             {errors.username && (
               <p className="text-red-500 text-xs mt-1">{errors.username}</p>
             )}
           </div>
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Email
-            </label>
+
             <input
               type="email"
               id="email"
               name="email"
               value={input.email}
               onChange={handleChange}
-              className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="w-full px-4 py-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+              placeholder="Email"
             />
             {errors.email && (
               <p className="text-red-500 text-xs mt-1">{errors.email}</p>
             )}
           </div>
           <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
+
             <input
               type="password"
               id="password"
               name="password"
               value={input.password}
               onChange={handleChange}
-              className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="w-full px-4 py-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+              placeholder="Password"
             />
             {errors.password && (
               <p className="text-red-500 text-xs mt-1">{errors.password}</p>
             )}
           </div>
           <div>
-            <label
-              htmlFor="confirm_password"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Confirm Password
-            </label>
+
             <input
               type="password"
               id="confirm_password"
               name="confirm_password"
               value={input.confirm_password}
               onChange={handleChange}
-              className="block w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="w-full px-4 py-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+              placeholder="Confirm Password"
             />
             {errors.confirm_password && (
               <p className="text-red-500 text-xs mt-1">
@@ -163,8 +153,9 @@ const Register = () => {
           <div>
             <button
               type="submit"
-              className="w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="mt-4 tracking-wide font-semibold bg-green-400 text-white w-full py-2 rounded-lg hover:bg-green-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
             >
+              <FaUserPlus className="mr-2" /> 
               Sign Up
             </button>
           </div>
@@ -174,7 +165,7 @@ const Register = () => {
         </form>
         <div className="text-center">
           <p className="text-sm text-gray-600">
-            Already have an account?
+            Already have an account?{" "}
             <Link
               to="/login"
               className="font-medium text-blue-600 hover:text-blue-500"
