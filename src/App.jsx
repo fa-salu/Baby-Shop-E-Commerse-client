@@ -25,10 +25,12 @@ import Wishlist from "./Pages/wishlist";
 import PaymentPage from "./Component/Payment/PlaceOrder";
 import Category from "./Component/Category/Category";
 import CategoryProducts from "./Component/Category/Categories";
+import ScrollToTop from "./Component/ScrollToTop/ScrollToTop";
 
 const App = () => {
   return (
     <>
+      <ScrollToTop />
       <Navbar />
 
       <Routes>
@@ -57,7 +59,6 @@ const App = () => {
         <Route path="/category" element={<Category />} />
         <Route path="/categories/:category" element={<CategoryProducts />} />
         <Route path="/category/:category" element={<Shop />} />
-
 
         {/* Admin routes */}
         <Route
