@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Cookie from "js-cookie";
+import { ShopContext } from "../../Context/CartItem/ShopContext";
 
 const AdminNavbar = () => {
   const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
+  const { setCurrentUser, setCartItems } = useContext(ShopContext)
 
   const userData = JSON.parse(Cookie.get("currentUser") || "{}");
 
   const handleLogout = () => {
-    // Clear cookies
+    setCurrentUser(null)
+    setCartItems([])
     Cookie.remove("token");
     Cookie.remove("isAdmin");
     Cookie.remove("currentUser");
