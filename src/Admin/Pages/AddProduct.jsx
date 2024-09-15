@@ -149,7 +149,7 @@ const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
               name="category"
               value={product.category}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full border rounded-md text-black"
               required
             />
           </div>
