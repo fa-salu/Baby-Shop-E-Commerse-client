@@ -26,6 +26,10 @@ const Navbar = () => {
     cartItems,
   } = useContext(ShopContext);
 
+   const clearSearch = () => {
+    setSearch('');
+  }
+
   const isAdmin = Cookies.get("isAdmin");
 
   useEffect(() => {
@@ -165,7 +169,10 @@ const Navbar = () => {
                         ${product.price}
                       </span>
                       <button
-                        onClick={() => navigate(`/shop/${product._id}`)}
+                        onClick={() => {
+                           clearSearch();
+                           navigate(`/shop/${product._id}`);
+                         }}
                         className="bg-green-500 hover:bg-green-600 text-white py-1 px-3 rounded-md focus:outline-none"
                       >
                        View Cart
