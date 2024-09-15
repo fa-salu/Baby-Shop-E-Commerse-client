@@ -98,7 +98,7 @@ const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
               name="name"
               value={product.name}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full border rounded-md text-black"
               required
             />
           </div>
@@ -111,7 +111,7 @@ const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
               name="description"
               value={product.description}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full border rounded-md text-black"
               required
             />
           </div>
@@ -124,7 +124,7 @@ const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
               name="price"
               value={product.price}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full border rounded-md text-black"
               required
             />
           </div>
@@ -137,7 +137,7 @@ const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
               name="image"
               value={product.image}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full border rounded-md text-black"
             />
           </div>
           <div>
@@ -154,7 +154,7 @@ const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-700 text-black">
               Stars
             </label>
             <input
@@ -162,7 +162,7 @@ const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
               name="stars"
               value={product.stars}
               onChange={handleChange}
-              className="mt-1 p-2 w-full border rounded-md"
+              className="mt-1 p-2 w-full border rounded-md text-black"
             />
           </div>
           <div className="flex justify-end">
