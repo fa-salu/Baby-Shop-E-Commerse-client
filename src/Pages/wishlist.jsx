@@ -66,7 +66,7 @@ const Wishlist = () => {
                   src={item.image}
                   alt={item.name}
                   className="w-full h-52 object-cover cursor-pointer"
-                  onClick={() => navigate(`/products/${item._id}`)}
+                  onClick={() => navigate(`/shop/${item._id}`)}
                 />
                 <div className="p-4">
                   <h4 className="text-lg font-semibold mb-2 text-gray-900">
