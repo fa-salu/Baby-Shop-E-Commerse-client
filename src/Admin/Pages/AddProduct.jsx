@@ -13,7 +13,23 @@ const AddProductModal = ({ onClose, onAdd, onEdit, editProduct }) => {
 
   useEffect(() => {
     if (editProduct) {
-      setProduct(editProduct);
+      setProduct({
+        name: editProduct.name || "",
+        description: editProduct.description || "",
+        price: editProduct.price || "",
+        image: editProduct.image || "",
+        category: editProduct.category || "",
+        stars: editProduct.stars || "",
+      });
+    } else {
+      setProduct({
+        name: "",
+        description: "",
+        price: "",
+        image: "",
+        category: "",
+        stars: "",
+      });
     }
   }, [editProduct]);
 
