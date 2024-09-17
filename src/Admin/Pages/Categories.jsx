@@ -75,7 +75,7 @@ const Categories = () => {
                 />
                 <h2 className="text-xl font-bold">{item.name}</h2>
                 <p className="text-gray-600">{item.description}</p>
-                <p className="text-lg font-semibold">${item.price}</p>
+                <p className="text-lg font-semibold">₹{item.price}</p>
                 <p className="text-gray-500">Category: {item.category}</p>
                 <p className="text-yellow-500">
                   {"★".repeat(item.stars)}
