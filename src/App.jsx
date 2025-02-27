@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./Component/Navbar/Navbar";
@@ -26,8 +26,14 @@ import PaymentPage from "./Component/Payment/PlaceOrder";
 import Category from "./Component/Category/Category";
 import CategoryProducts from "./Component/Category/Categories";
 import ScrollToTop from "./Component/ScrollToTop/ScrollToTop";
+import keepAlive from "./utils/keepAllive"; 
 
 const App = () => {
+
+  useEffect(() => {
+    keepAlive();  // ✅ Call the function when the app loads
+  }, []);
+  
   return (
     <>
       <ScrollToTop />
